@@ -114,7 +114,7 @@
 <body>
 <header>
   <h1>Estoque · Label Tag</h1>
-  <small id="versao" title="Data e hora desta versão">Versão 08/10/2026 14:31</small>
+  <small id="versao" title="Data e hora desta versão">Versão 08/10/2026 14:46</small>
   <span class="sp"></span>
   <small id="quem"></small>
   <button id="btnSair" class="oculto" type="button">Sair</button>
@@ -415,7 +415,20 @@ async function iniciar() {
   iniciado = true;
   $("btnSair").classList.remove("oculto");
   const { data, error } = await sb.from("perfis").select("*").eq("id", sessao.user.id).maybeSingle();
-  if (error || !data || !data.ativo) { $("quem").textContent = sessao.user.email; mostra("telaSemAcesso"); return; }
+  if (error || !data || !data.ativo) {
+    $("quem").textContent = sessao.user.email;
+    const box = document.querySelector("#telaSemAcesso .msg");
+    if (error) {
+      box.className = "card msg erro";
+      box.innerHTML = /schema|PGRST106/i.test(error.message || error.code || "")
+        ? `A gaveta <b>estoque</b> não está liberada no Supabase. Peça ao administrador: Project Settings → Data API → Exposed schemas → acrescentar <b>estoque</b>.`
+        : `Não foi possível verificar o seu acesso: ${erroTxt(error)}`;
+    } else {
+      box.className = "card msg aviso";
+      box.innerHTML = `O login <b>${esc(sessao.user.email)}</b> funciona, mas ${data ? "o seu acesso ao estoque está desativado" : "ainda não tem acesso ao estoque"}. Peça ao administrador para liberar este e-mail.`;
+    }
+    mostra("telaSemAcesso"); return;
+  }
   perfil = data;
   perfil.mov = perfil.pode_movimentar || perfil.admin;
   $("quem").textContent = perfil.nome;
