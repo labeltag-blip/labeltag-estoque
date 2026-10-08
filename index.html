@@ -114,7 +114,7 @@
 <body>
 <header>
   <h1>Estoque · Label Tag</h1>
-  <small id="versao" title="Data e hora desta versão">Versão 08/10/2026 14:46</small>
+  <small id="versao" title="Data e hora desta versão">Versão 08/10/2026 14:53</small>
   <span class="sp"></span>
   <small id="quem"></small>
   <button id="btnSair" class="oculto" type="button">Sair</button>
@@ -420,9 +420,10 @@ async function iniciar() {
     const box = document.querySelector("#telaSemAcesso .msg");
     if (error) {
       box.className = "card msg erro";
-      box.innerHTML = /schema|PGRST106/i.test(error.message || error.code || "")
-        ? `A gaveta <b>estoque</b> não está liberada no Supabase. Peça ao administrador: Project Settings → Data API → Exposed schemas → acrescentar <b>estoque</b>.`
-        : `Não foi possível verificar o seu acesso: ${erroTxt(error)}`;
+      const det = `<div class="sub" style="margin-top:6px">Detalhe técnico: ${esc([error.code, error.message, error.hint].filter(Boolean).join(" · "))}</div>`;
+      box.innerHTML = (error.code === "PGRST106" || /invalid schema/i.test(error.message || "")
+        ? `A gaveta <b>estoque</b> não está liberada no Supabase. Peça ao administrador: Data API → Exposed schemas → acrescentar <b>estoque</b>.`
+        : `Não foi possível verificar o seu acesso.`) + det;
     } else {
       box.className = "card msg aviso";
       box.innerHTML = `O login <b>${esc(sessao.user.email)}</b> funciona, mas ${data ? "o seu acesso ao estoque está desativado" : "ainda não tem acesso ao estoque"}. Peça ao administrador para liberar este e-mail.`;
