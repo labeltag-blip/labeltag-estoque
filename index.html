@@ -1,0 +1,908 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Estoque · Label Tag</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+<style>
+  :root{
+    --bg:#F6F4EF; --card:#FFFFFF; --ink:#1E2A38; --muted:#5A6472; --line:#DDD8CC;
+    --accent:#2F6FDE; --accent-ink:#FFFFFF; --warn-bg:#FFF4D6; --warn-ink:#7A5200;
+    --err-bg:#FDE7E7; --err-ink:#9B1C1C; --ok-bg:#E3F4E8; --ok-ink:#1F6B3A;
+    --verde:#2E9E5B; --amarelo:#E0A100; --vermelho:#D23B3B; --cinza:#9AA3AE;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--bg);color:var(--ink);font:15px/1.45 "Public Sans",system-ui,sans-serif}
+  header{position:relative;z-index:5;background:var(--ink);color:#fff;padding:10px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  header h1{font-size:17px;margin:0;font-weight:700;letter-spacing:.2px}
+  header .sp{flex:1}
+  header small{opacity:.7;font-size:12px;font-variant-numeric:tabular-nums}
+  header button{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4);border-radius:8px;padding:5px 10px;font:inherit;font-size:13px;cursor:pointer}
+  nav{display:flex;gap:4px;padding:8px 16px 0;overflow-x:auto;border-bottom:1px solid var(--line);background:var(--bg);position:sticky;top:0;z-index:4}
+  nav button{border:0;background:transparent;font:inherit;font-weight:600;color:var(--muted);padding:10px 12px;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap}
+  nav button.ativo{color:var(--ink);border-bottom-color:var(--accent)}
+  main{max-width:1100px;margin:0 auto;padding:16px}
+  .oculto{display:none!important}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px}
+  h2{font-size:18px;margin:0 0 10px}
+  h3{font-size:15px;margin:14px 0 8px}
+  label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin:10px 0 4px}
+  input,select,textarea{width:100%;font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:-1px}
+  button.prim,button.sec,button.perigo{font:inherit;font-weight:600;border-radius:8px;padding:10px 14px;cursor:pointer;border:1px solid transparent}
+  button.prim{background:var(--accent);color:var(--accent-ink)}
+  button.sec{background:#fff;color:var(--ink);border-color:var(--line)}
+  button.perigo{background:#fff;color:var(--err-ink);border-color:#E9B4B4}
+  button:disabled{opacity:.5;cursor:default}
+  .linha{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+  .linha>*{flex:1;min-width:140px}
+  .linha>.estreito{flex:0 0 auto;min-width:0}
+  .msg{border-radius:8px;padding:10px 12px;margin:10px 0;font-size:14px}
+  .msg.erro{background:var(--err-bg);color:var(--err-ink)}
+  .msg.aviso{background:var(--warn-bg);color:var(--warn-ink)}
+  .msg.ok{background:var(--ok-bg);color:var(--ok-ink)}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px}
+  .kpi b{display:block;font-size:24px;font-variant-numeric:tabular-nums}
+  .kpi span{font-size:13px;color:var(--muted)}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);padding:8px 6px;border-bottom:1px solid var(--line)}
+  td{padding:9px 6px;border-bottom:1px solid #EEEAE1;vertical-align:middle}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  tr.clicavel{cursor:pointer}
+  tr.clicavel:hover td{background:#FAF8F3}
+  .farol{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:middle}
+  .f-verde{background:var(--verde)} .f-amarelo{background:var(--amarelo)} .f-vermelho,.f-negativo{background:var(--vermelho)}
+  .tag{display:inline-block;font-size:12px;padding:2px 8px;border-radius:99px;background:#EEEAE1;color:var(--muted);white-space:nowrap}
+  .tag.disponivel{background:var(--ok-bg);color:var(--ok-ink)}
+  .tag.em_inspecao{background:var(--warn-bg);color:var(--warn-ink)}
+  .tag.reprovado{background:var(--err-bg);color:var(--err-ink)}
+  .sub{color:var(--muted);font-size:13px}
+  .grande{font-size:28px;font-weight:700;font-variant-numeric:tabular-nums}
+  .conv{font-size:13px;color:var(--ok-ink);background:var(--ok-bg);border-radius:6px;padding:6px 8px;margin-top:6px}
+  .conv.ruim{color:var(--err-ink);background:var(--err-bg)}
+  .opcoes{display:flex;gap:6px;flex-wrap:wrap}
+  .opcoes label{margin:0;display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;color:var(--ink);font-weight:600;cursor:pointer;background:#fff}
+  .opcoes input{width:auto}
+  .opcoes label:has(input:checked){border-color:var(--accent);background:#EEF3FD}
+  .rolos td input{padding:7px 8px}
+  .acoes{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  #toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:10px;font-weight:600;z-index:20;max-width:90vw}
+  .modal-fundo{position:fixed;inset:0;background:rgba(30,42,56,.45);z-index:10;display:flex;align-items:flex-start;justify-content:center;padding:24px 12px;overflow:auto}
+  .modal{background:var(--card);border-radius:14px;max-width:900px;width:100%;padding:18px}
+  .modal .topo{display:flex;align-items:flex-start;gap:10px}
+  .modal .topo h2{flex:1}
+  dl.ficha{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:0;font-size:14px}
+  dl.ficha dt{color:var(--muted)} dl.ficha dd{margin:0}
+  .rolagem{overflow-x:auto}
+  /* ===== Etiquetas A4 ===== */
+  #previa{background:#ccc;padding:12px;border-radius:10px;overflow:auto;max-height:70vh}
+  .folha{width:210mm;height:297mm;background:#fff;position:relative;margin:0 auto 12px;overflow:hidden}
+  .etq{position:absolute;display:flex;gap:3mm;padding:3mm;overflow:hidden;font-family:"Public Sans",Arial,sans-serif;color:#000}
+  .etq.corte{outline:0.2mm dashed #999}
+  .etq .qr{flex:0 0 auto}
+  .etq .qr svg{display:block}
+  .etq .txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:0.8mm;font-size:8.5pt;line-height:1.2}
+  .etq .cod{font-size:15pt;font-weight:700;letter-spacing:.3px}
+  .etq .nome{font-size:10pt;font-weight:700;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+  .etq .med{font-size:9.5pt;font-weight:600}
+  .etq .rod{margin-top:auto;font-size:7pt;color:#444}
+  @media (max-width:700px){
+    .kpis{grid-template-columns:repeat(2,1fr)}
+    .esconde-cel{display:none}
+    main{padding:12px}
+    .grande{font-size:24px}
+    header{padding:8px 12px;gap:8px}
+    header h1{font-size:16px}
+    header #versao{display:none}
+  }
+  @media print{
+    @page{size:A4;margin:0}
+    body{background:#fff}
+    body>*:not(#impressao){display:none!important}
+    #impressao{display:block!important}
+    .folha{margin:0;page-break-after:always;break-after:page}
+    .folha:last-child{page-break-after:auto;break-after:auto}
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Estoque · Label Tag</h1>
+  <small id="versao" title="Data e hora desta versão">Versão 08/10/2026 14:31</small>
+  <span class="sp"></span>
+  <small id="quem"></small>
+  <button id="btnSair" class="oculto" type="button">Sair</button>
+</header>
+
+<!-- ============ LOGIN ============ -->
+<section id="telaLogin" class="oculto">
+  <main>
+    <div class="card" style="max-width:420px;margin:40px auto">
+      <h2>Entrar</h2>
+      <p class="sub">Use o mesmo e-mail do TagLine. Você vai receber um link: abra-o <b>neste aparelho e neste navegador</b>.</p>
+      <label for="loginEmail">E-mail</label>
+      <input id="loginEmail" type="email" autocomplete="email" placeholder="nome@labeltag.com.br">
+      <div class="acoes"><button id="btnLogin" class="prim" type="button">Enviar link de acesso</button></div>
+      <div id="loginMsg"></div>
+    </div>
+  </main>
+</section>
+
+<!-- ============ SEM ACESSO ============ -->
+<section id="telaSemAcesso" class="oculto">
+  <main><div class="card msg aviso">Seu login funciona, mas você ainda não tem acesso ao estoque. Peça ao administrador para liberar o seu e-mail.</div></main>
+</section>
+
+<!-- ============ APP ============ -->
+<section id="telaApp" class="oculto">
+  <nav id="abas">
+    <button data-aba="estoque" class="ativo" type="button">Estoque</button>
+    <button data-aba="baixa" type="button" data-perm="mov">Baixa</button>
+    <button data-aba="inventario" type="button" data-perm="admin">Inventário inicial</button>
+    <button data-aba="etiquetas" type="button" data-perm="mov">Etiquetas</button>
+    <button data-aba="usuarios" type="button" data-perm="admin">Usuários</button>
+  </nav>
+  <main>
+    <!-- ESTOQUE -->
+    <div id="aba-estoque">
+      <div class="kpis">
+        <div class="kpi"><b id="kTotal">–</b><span>materiais</span></div>
+        <div class="kpi"><b id="kVerm" style="color:var(--vermelho)">–</b><span>no vermelho</span></div>
+        <div class="kpi"><b id="kAmar" style="color:var(--amarelo)">–</b><span>no amarelo</span></div>
+        <div class="kpi"><b id="kInsp">–</b><span>com material em inspeção</span></div>
+      </div>
+      <div class="card">
+        <div class="linha">
+          <div><label for="fBusca">Buscar</label><input id="fBusca" type="search" placeholder="nome, código Cigam ou fornecedor"></div>
+          <div><label for="fCat">Categoria</label><select id="fCat"><option value="">Todas</option></select></div>
+          <div><label for="fFarol">Situação</label>
+            <select id="fFarol"><option value="">Todas</option><option value="vermelho">Vermelho / negativo</option><option value="amarelo">Amarelo</option><option value="verde">Verde</option><option value="revisar">Unidade a revisar</option></select></div>
+        </div>
+        <div id="avisoMinimo" class="msg aviso oculto">Nenhum material tem estoque mínimo cadastrado ainda, então o farol fica vermelho para tudo que está zerado. Ele passa a fazer sentido depois da contagem inicial e do cadastro dos mínimos.</div>
+        <div class="rolagem" style="margin-top:12px">
+          <table>
+            <thead><tr><th></th><th>Material</th><th class="esconde-cel">Categoria</th><th class="num">Saldo</th><th class="num esconde-cel">Volumes</th><th class="num esconde-cel">Mínimo</th><th class="num esconde-cel custo">Valor</th></tr></thead>
+            <tbody id="listaMateriais"><tr><td colspan="7" class="sub">Carregando…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- BAIXA -->
+    <div id="aba-baixa" class="oculto">
+      <div class="card">
+        <h2>Baixa de material</h2>
+        <p class="sub" style="margin-top:0">Aponte a câmera do celular para o QR do rolo: ele abre direto aqui. Ou digite o código impresso na etiqueta.</p>
+        <div class="linha">
+          <div><label for="bCodigo">Código do volume</label><input id="bCodigo" placeholder="LT-000123 ou só 123" autocomplete="off" inputmode="text"></div>
+          <div class="estreito"><button id="bBuscar" class="prim" type="button">Buscar</button></div>
+        </div>
+        <div id="bMsg"></div>
+      </div>
+      <div id="bVolume" class="oculto">
+        <div class="card">
+          <div class="linha" style="align-items:flex-start">
+            <div>
+              <div class="grande" id="bCod"></div>
+              <div style="font-weight:700" id="bNome"></div>
+              <div class="sub" id="bInfo"></div>
+            </div>
+            <div class="estreito" style="text-align:right">
+              <div class="sub">Saldo do volume</div>
+              <div class="grande" id="bSaldo"></div>
+              <div id="bStatus"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card" id="bForm">
+          <h3 style="margin-top:0">O que aconteceu?</h3>
+          <div class="opcoes" id="bTipo">
+            <label><input type="radio" name="bTipo" value="saida_producao" checked> Usei na produção</label>
+            <label><input type="radio" name="bTipo" value="saida_consumo_interno"> Consumo interno</label>
+            <label><input type="radio" name="bTipo" value="ajuste_menos"> Ajuste −</label>
+            <label><input type="radio" name="bTipo" value="ajuste_mais"> Ajuste +</label>
+          </div>
+          <div class="linha">
+            <div><label for="bQtd" id="bQtdLbl">Quantidade</label><input id="bQtd" inputmode="decimal" placeholder="0"></div>
+            <div id="bUnidBox" class="oculto"><label for="bUnid">Medido em</label>
+              <select id="bUnid"><option value="m">metros</option><option value="m2">m²</option></select></div>
+          </div>
+          <div id="bConv" class="conv oculto"></div>
+          <div class="linha">
+            <div id="bSetorBox"><label for="bSetor">Setor</label><select id="bSetor"></select></div>
+            <div><label for="bOp">OP (opcional)</label><input id="bOp" placeholder="nº da OP"></div>
+          </div>
+          <label for="bObs" id="bObsLbl">Observação (opcional)</label>
+          <input id="bObs" placeholder="">
+          <div class="acoes">
+            <button id="bLancar" class="prim" type="button">Lançar</button>
+            <button id="bResto" class="sec" type="button" title="Dá baixa de todo o saldo que sobra e encerra o volume">Usei o resto do rolo</button>
+            <button id="bEncerrar" class="perigo" type="button" title="O volume acabou ou foi descartado; a diferença vira ajuste">Encerrar volume</button>
+          </div>
+          <div id="bFormMsg"></div>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0">Últimas movimentações deste volume</h3>
+          <div class="rolagem"><table><thead><tr><th>Quando</th><th>Tipo</th><th class="num">Qtd</th><th class="esconde-cel">Setor / OP</th><th class="esconde-cel">Quem</th></tr></thead><tbody id="bMovs"></tbody></table></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INVENTÁRIO -->
+    <div id="aba-inventario" class="oculto">
+      <div class="card">
+        <h2>Inventário inicial</h2>
+        <p class="sub" style="margin-top:0">Cadastre os volumes que já estão na prateleira. Cada linha vira um volume com QR próprio e já entra no saldo.</p>
+        <label for="iMat">Material</label>
+        <input id="iMat" list="iMatLista" placeholder="digite o nome ou o código Cigam">
+        <datalist id="iMatLista"></datalist>
+        <div id="iMatInfo" class="oculto" style="margin-top:12px"></div>
+      </div>
+      <div class="card oculto" id="iRolosCard">
+        <h3 style="margin-top:0">Volumes encontrados na contagem</h3>
+        <div class="linha">
+          <div><label for="iRepQtd" id="iRepLbl">Metros (etiqueta)</label><input id="iRepQtd" inputmode="decimal"></div>
+          <div id="iRepLargBox"><label for="iRepLarg">Largura (mm)</label><input id="iRepLarg" inputmode="decimal"></div>
+          <div><label for="iRepLote">Lote</label><input id="iRepLote"></div>
+          <div class="estreito"><label for="iRepN">Quantos iguais</label><input id="iRepN" type="number" min="1" max="200" value="1" style="width:90px"></div>
+          <div class="estreito"><button id="iAdd" class="sec" type="button">+ Acrescentar</button></div>
+        </div>
+        <div class="rolagem" style="margin-top:12px">
+          <table class="rolos"><thead><tr><th>#</th><th id="iThQtd">Metros</th><th id="iThLarg">Largura mm</th><th>Lote</th><th class="esconde-cel">Endereço</th><th class="num">Entra no estoque</th><th></th></tr></thead><tbody id="iRolos"></tbody></table>
+        </div>
+        <div id="iTotal" class="msg ok oculto"></div>
+        <div class="acoes"><button id="iSalvar" class="prim" type="button" disabled>Salvar volumes</button></div>
+        <div id="iMsg"></div>
+      </div>
+    </div>
+
+    <!-- ETIQUETAS -->
+    <div id="aba-etiquetas" class="oculto">
+      <div class="card">
+        <h2>Etiquetas QR (folha A4)</h2>
+        <div class="linha">
+          <div><label for="eMat">Material (opcional)</label><input id="eMat" list="iMatLista" placeholder="todos"></div>
+          <div><label for="eDesde">Volumes criados desde</label><input id="eDesde" type="date"></div>
+          <div class="estreito"><button id="eBuscar" class="sec" type="button">Listar</button></div>
+        </div>
+        <div class="rolagem" style="margin-top:12px">
+          <table><thead><tr><th><input type="checkbox" id="eTodos" style="width:auto" title="Marcar todos"></th><th>Código</th><th>Material</th><th class="esconde-cel">Lote</th><th class="num">Medida</th><th class="esconde-cel">Entrada</th></tr></thead><tbody id="eLista"><tr><td colspan="6" class="sub">Clique em Listar.</td></tr></tbody></table>
+        </div>
+        <h3>Folha</h3>
+        <div class="linha">
+          <div class="estreito"><label for="ePular">Pular posições</label><input id="ePular" type="number" min="0" max="7" value="0" style="width:90px" title="Para reaproveitar folha já usada: quantas etiquetas do início já foram usadas"></div>
+          <div class="estreito"><label for="eDx">Ajuste horizontal (mm)</label><input id="eDx" inputmode="decimal" value="0" style="width:110px"></div>
+          <div class="estreito"><label for="eDy">Ajuste vertical (mm)</label><input id="eDy" inputmode="decimal" value="0" style="width:110px"></div>
+          <div class="estreito"><label><input type="checkbox" id="eCorte" style="width:auto" checked> Linhas de corte</label></div>
+        </div>
+        <p class="sub">8 etiquetas por folha (2 × 4, 99 × 67,7 mm). Imprima em <b>tamanho real (100%)</b>, sem "ajustar à página". Use a folha de teste para calibrar os ajustes.</p>
+        <div class="acoes">
+          <button id="eImprimir" class="prim" type="button" disabled>Imprimir selecionadas</button>
+          <button id="eTeste" class="sec" type="button">Folha de teste</button>
+        </div>
+        <div id="eMsg"></div>
+      </div>
+      <div id="previa" class="oculto"></div>
+    </div>
+
+    <!-- USUÁRIOS -->
+    <div id="aba-usuarios" class="oculto">
+      <div class="card">
+        <h2>Quem acessa o estoque</h2>
+        <div class="rolagem"><table><thead><tr><th>Nome</th><th class="esconde-cel">E-mail</th><th>Ativo</th><th>Admin</th><th>Movimenta</th><th>Vê custos</th><th></th></tr></thead><tbody id="uLista"></tbody></table></div>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0" id="uTitulo">Dar acesso</h3>
+        <p class="sub" style="margin-top:0">A pessoa precisa já ter login (como as vendedoras do TagLine). Se não tiver, crie antes no Supabase: Authentication → Users → Add user.</p>
+        <div class="linha">
+          <div><label for="uEmail">E-mail</label><input id="uEmail" type="email"></div>
+          <div><label for="uNome">Nome</label><input id="uNome"></div>
+        </div>
+        <div class="opcoes" style="margin-top:10px">
+          <label><input type="checkbox" id="uAtivo" checked> Ativo</label>
+          <label><input type="checkbox" id="uMov" checked> Dá baixa e recebe</label>
+          <label><input type="checkbox" id="uCustos"> Vê custos</label>
+          <label><input type="checkbox" id="uAdmin"> Admin</label>
+        </div>
+        <div class="acoes"><button id="uSalvar" class="prim" type="button">Salvar</button><button id="uLimpar" class="sec" type="button">Limpar</button></div>
+        <div id="uMsg"></div>
+      </div>
+    </div>
+  </main>
+</section>
+
+<div id="impressao" class="oculto"></div>
+<div id="toast" class="oculto"></div>
+
+<script>
+"use strict";
+// ======================= CONFIGURAÇÃO =======================
+const SUPABASE_URL = "https://qbdzzngcwxljomqiboqh.supabase.co";
+const SUPABASE_KEY = "sb_publishable_JIFQyxCn9MYZwc_MFJfUNA_F3saGuEp";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, { db: { schema: "estoque" } });
+
+const SETORES = [["preparacao","Preparação"],["silk","Silk"],["impressao","Impressão"],["laser","Laser"],
+  ["corte_zund","Corte Zünd"],["alta_frequencia","Alta frequência"],["dtf","DTF"],["desenvolvimento","Desenvolvimento"],
+  ["expedicao","Expedição"],["outro","Outro"]];
+const TIPOS = {entrada_compra:"Entrada (compra)", saida_producao:"Produção", saida_consumo_interno:"Consumo interno",
+  ajuste_mais:"Ajuste +", ajuste_menos:"Ajuste −"};
+const STATUS = {em_inspecao:"Em inspeção", reprovado:"Reprovado", disponivel:"Disponível", encerrado:"Encerrado"};
+const UNID = {m:"m", m2:"m²", kg:"kg", L:"L", un:"un"};
+const UNID_ETIQ = {m:"Metros (etiqueta)", m2:"m² (etiqueta)", kg:"Kg", L:"Litros", un:"Unidades"};
+// Folha A4: 2 colunas x 4 linhas
+const FOLHA = {cols:2, rows:4, w:99, h:67.7, gapX:2, gapY:0};
+
+// ======================= UTILITÁRIOS =======================
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt = (n, d = 3) => n == null || isNaN(n) ? "–" : Number(n).toLocaleString("pt-BR", {maximumFractionDigits: d});
+const fmtR = n => n == null || isNaN(n) ? "–" : Number(n).toLocaleString("pt-BR", {style: "currency", currency: "BRL"});
+const fmtData = s => s ? new Date(s).toLocaleString("pt-BR", {day:"2-digit", month:"2-digit", year:"2-digit", hour:"2-digit", minute:"2-digit"}) : "–";
+const fmtDia = s => s ? new Date(s + (String(s).length === 10 ? "T12:00:00" : "")).toLocaleDateString("pt-BR") : "–";
+function num(s) {
+  s = String(s ?? "").trim().replace(/\s/g, "");
+  if (!s) return NaN;
+  if (s.includes(",")) s = s.replace(/\./g, "").replace(",", ".");
+  else if (/^\d{1,3}(\.\d{3})+$/.test(s)) s = s.replace(/\./g, "");
+  const n = Number(s);
+  return isFinite(n) ? n : NaN;
+}
+function msg(el, tipo, texto) { $(el).innerHTML = texto ? `<div class="msg ${tipo}">${texto}</div>` : ""; }
+function erroTxt(e) {
+  const t = (e && (e.message || e.error_description || e.details)) || String(e);
+  if (/JWT|jwt|token/.test(t)) return "Sua sessão expirou. Saia e entre de novo.";
+  if (/row-level security|permission denied/.test(t)) return "Você não tem permissão para isso.";
+  if (/Failed to fetch|NetworkError/.test(t)) return "Sem conexão com o servidor. Verifique a internet e tente de novo.";
+  return esc(t);
+}
+let toastT;
+function toast(t) { const el = $("toast"); el.textContent = t; el.classList.remove("oculto"); clearTimeout(toastT); toastT = setTimeout(() => el.classList.add("oculto"), 3500); }
+function lsGet(k) { try { return localStorage.getItem(k); } catch (_) { return null; } }
+function lsSet(k, v) { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (_) {} }
+function normCodigo(s) {
+  s = String(s || "").trim();
+  const m = s.match(/[?&]v=([^&#\s]+)/); if (m) s = decodeURIComponent(m[1]);
+  s = s.toUpperCase().replace(/\s/g, "");
+  const d = s.match(/^(?:LT-?)?(\d{1,6})$/);
+  return d ? "LT-" + d[1].padStart(6, "0") : s;
+}
+function linkVolume(codigo) { return location.origin + location.pathname + "?v=" + encodeURIComponent(codigo); }
+function m2DeMetros(metros, largura) { return metros * largura / 1000; }
+
+// ======================= ESTADO =======================
+let sessao = null, perfil = null;
+let materiais = [], porId = {}, custos = {}, referencias = {}, nomes = {};
+let volumeAtual = null;
+
+// ======================= LOGIN =======================
+$("btnLogin").onclick = async () => {
+  const email = $("loginEmail").value.trim();
+  if (!email) return msg("loginMsg", "erro", "Informe o e-mail.");
+  $("btnLogin").disabled = true;
+  try {
+    const { error } = await sb.auth.signInWithOtp({
+      email, options: { shouldCreateUser: false, emailRedirectTo: location.origin + location.pathname }
+    });
+    if (error) throw error;
+    msg("loginMsg", "ok", "Link enviado. Abra o e-mail <b>neste aparelho</b> e clique no link.");
+  } catch (e) {
+    msg("loginMsg", "erro", /not allowed|Signups not allowed|not found/i.test(e.message || "") ? "Esse e-mail não tem login. Fale com o administrador." : erroTxt(e));
+  } finally { $("btnLogin").disabled = false; }
+};
+$("btnSair").onclick = async () => { await sb.auth.signOut(); location.href = location.pathname; };
+
+// Guarda o QR lido antes do login, para abrir o volume depois de entrar
+(function () {
+  const v = new URLSearchParams(location.search).get("v");
+  if (v) lsSet("estoque_v_pendente", v);
+})();
+
+let iniciado = false;
+// setTimeout: o supabase-js não deve fazer consultas dentro do próprio aviso de login
+sb.auth.onAuthStateChange((_ev, s) => { sessao = s; if (_ev !== "TOKEN_REFRESHED") setTimeout(iniciar, 0); });
+sb.auth.getSession().then(({ data }) => { sessao = data.session; iniciar(); });
+
+async function iniciar() {
+  const mostra = id => ["telaLogin", "telaSemAcesso", "telaApp"].forEach(t => $(t).classList.toggle("oculto", t !== id));
+  if (!sessao) { perfil = null; iniciado = false; $("btnSair").classList.add("oculto"); $("quem").textContent = ""; mostra("telaLogin"); return; }
+  if (iniciado) return;
+  iniciado = true;
+  $("btnSair").classList.remove("oculto");
+  const { data, error } = await sb.from("perfis").select("*").eq("id", sessao.user.id).maybeSingle();
+  if (error || !data || !data.ativo) { $("quem").textContent = sessao.user.email; mostra("telaSemAcesso"); return; }
+  perfil = data;
+  perfil.mov = perfil.pode_movimentar || perfil.admin;
+  $("quem").textContent = perfil.nome;
+  document.querySelectorAll("[data-perm]").forEach(b => {
+    const ok = b.dataset.perm === "admin" ? perfil.admin : perfil.mov;
+    b.classList.toggle("oculto", !ok);
+  });
+  document.querySelectorAll(".custo").forEach(el => el.classList.toggle("oculto", !perfil.ve_custos));
+  mostra("telaApp");
+  $("bSetor").innerHTML = `<option value="">— escolha —</option>` + SETORES.map(([v, t]) => `<option value="${v}">${t}</option>`).join("");
+  const hoje = new Date(); hoje.setDate(hoje.getDate() - 7);
+  $("eDesde").value = hoje.toISOString().slice(0, 10);
+  const dx = lsGet("estoque_dx"), dy = lsGet("estoque_dy");
+  if (dx != null) $("eDx").value = dx; if (dy != null) $("eDy").value = dy;
+  await carregarEstoque();
+  const pend = lsGet("estoque_v_pendente");
+  if (pend && perfil.mov) {
+    lsSet("estoque_v_pendente", null);
+    history.replaceState(null, "", location.pathname);
+    irAba("baixa");
+    $("bCodigo").value = normCodigo(pend);
+    buscarVolume();
+  }
+}
+
+// ======================= ABAS =======================
+function irAba(nome) {
+  document.querySelectorAll("#abas button").forEach(b => b.classList.toggle("ativo", b.dataset.aba === nome));
+  ["estoque", "baixa", "inventario", "etiquetas", "usuarios"].forEach(a => $("aba-" + a).classList.toggle("oculto", a !== nome));
+  if (nome === "usuarios") carregarUsuarios();
+  if (nome === "estoque") carregarEstoque();
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll("#abas button").forEach(b => b.onclick = () => irAba(b.dataset.aba));
+
+// ======================= ESTOQUE =======================
+async function carregarEstoque() {
+  try {
+    const reqs = [
+      sb.from("vw_saldo_estoque").select("*"),
+      sb.from("materiais").select("id,codigo_interno,codigo_cigam,nome_labeltag,nome_fornecedor,codigo_fornecedor,categoria,tipo_volume,unidade_volume,unidade_estoque,unidade_compra,largura_mm,estoque_minimo,ponto_pedido,lead_time_dias,observacoes,ativo,fornecedores(nome)").eq("ativo", true),
+      sb.from("vw_nomes").select("id,nome"),
+    ];
+    if (perfil.ve_custos) reqs.push(sb.from("vw_custo_material").select("material_id,custo_unid_estoque,custo_ultima_compra"));
+    const res = await Promise.all(reqs);
+    const falha = res.find((r, i) => r.error && i !== 2); if (falha) throw falha.error; // nomes (i=2) é opcional
+    const saldo = {}; res[0].data.forEach(s => saldo[s.material_id] = s);
+    nomes = {}; (res[2].data || []).forEach(n => nomes[n.id] = n.nome);
+    custos = {}; if (res[3]) res[3].data.forEach(c => custos[c.material_id] = c);
+    if (perfil.admin) {
+      const r = await sb.from("referencia_appsheet").select("codigo_interno,saldo_atual,unidade_cigam");
+      referencias = {}; (r.data || []).forEach(x => referencias[x.codigo_interno] = x);
+    }
+    materiais = res[1].data.map(m => Object.assign({}, m, saldo[m.id] || {}, { id: m.id }));
+    materiais.sort((a, b) => a.nome_labeltag.localeCompare(b.nome_labeltag, "pt-BR"));
+    porId = {}; materiais.forEach(m => porId[m.id] = m);
+    const cats = [...new Set(materiais.map(m => m.categoria))].sort((a, b) => a.localeCompare(b, "pt-BR"));
+    const atual = $("fCat").value;
+    $("fCat").innerHTML = `<option value="">Todas</option>` + cats.map(c => `<option>${esc(c)}</option>`).join("");
+    $("fCat").value = atual;
+    $("iMatLista").innerHTML = materiais.map(m => `<option value="${esc(m.codigo_interno + " · " + m.nome_labeltag)}">`).join("");
+    $("avisoMinimo").classList.toggle("oculto", materiais.some(m => Number(m.estoque_minimo) > 0));
+    desenharLista();
+  } catch (e) {
+    $("listaMateriais").innerHTML = `<tr><td colspan="7"><div class="msg erro">${erroTxt(e)}</div></td></tr>`;
+  }
+}
+function desenharLista() {
+  const q = $("fBusca").value.trim().toLowerCase(), cat = $("fCat").value, f = $("fFarol").value;
+  const lista = materiais.filter(m => {
+    if (cat && m.categoria !== cat) return false;
+    if (f === "vermelho" && !["vermelho", "negativo"].includes(m.farol)) return false;
+    if (f === "amarelo" && m.farol !== "amarelo") return false;
+    if (f === "verde" && m.farol !== "verde") return false;
+    if (f === "revisar" && !/a revisar/i.test(m.observacoes || "")) return false;
+    if (q) {
+      const t = [m.nome_labeltag, m.nome_fornecedor, m.codigo_interno, m.codigo_cigam, m.fornecedores && m.fornecedores.nome].join(" ").toLowerCase();
+      if (!t.includes(q)) return false;
+    }
+    return true;
+  });
+  $("kTotal").textContent = materiais.length;
+  $("kVerm").textContent = materiais.filter(m => ["vermelho", "negativo"].includes(m.farol)).length;
+  $("kAmar").textContent = materiais.filter(m => m.farol === "amarelo").length;
+  $("kInsp").textContent = materiais.filter(m => Number(m.em_inspecao) > 0).length;
+  $("listaMateriais").innerHTML = lista.length ? lista.map(m => {
+    const u = UNID[m.unidade_estoque] || m.unidade_estoque;
+    const c = custos[m.id];
+    const valor = c ? Number(c.custo_unid_estoque) * Math.max(0, Number(m.saldo || 0)) : null;
+    return `<tr class="clicavel" data-id="${m.id}">
+      <td><span class="farol f-${m.farol || "vermelho"}" title="${esc(m.farol || "")}"></span></td>
+      <td><b>${esc(m.nome_labeltag)}</b><div class="sub">${esc(m.codigo_interno)}${m.fornecedores ? " · " + esc(m.fornecedores.nome) : ""}${/a revisar/i.test(m.observacoes || "") ? ' · <span class="tag reprovado">unidade a revisar</span>' : ""}</div></td>
+      <td class="esconde-cel">${esc(m.categoria)}</td>
+      <td class="num"><b>${fmt(m.saldo)}</b> ${u}${Number(m.em_inspecao) > 0 ? `<div class="sub">+${fmt(m.em_inspecao)} em inspeção</div>` : ""}</td>
+      <td class="num esconde-cel">${m.volumes_disponiveis ?? 0}</td>
+      <td class="num esconde-cel">${Number(m.estoque_minimo) > 0 ? fmt(m.estoque_minimo) : "–"}</td>
+      <td class="num esconde-cel custo ${perfil.ve_custos ? "" : "oculto"}">${valor == null ? "–" : fmtR(valor)}</td></tr>`;
+  }).join("") : `<tr><td colspan="7" class="sub">Nada encontrado.</td></tr>`;
+}
+["fBusca", "fCat", "fFarol"].forEach(id => $(id).addEventListener("input", desenharLista));
+$("listaMateriais").addEventListener("click", ev => { const tr = ev.target.closest("tr[data-id]"); if (tr) abrirMaterial(tr.dataset.id); });
+
+async function abrirMaterial(id) {
+  const m = porId[id]; if (!m) return;
+  const fundo = document.createElement("div");
+  fundo.className = "modal-fundo";
+  fundo.innerHTML = `<div class="modal"><div class="topo"><h2>${esc(m.nome_labeltag)}</h2><button class="sec" type="button" data-fechar>Fechar</button></div><div class="sub">Carregando…</div></div>`;
+  document.body.appendChild(fundo);
+  const fechar = () => fundo.remove();
+  fundo.addEventListener("click", ev => { if (ev.target === fundo || ev.target.hasAttribute("data-fechar")) fechar(); });
+  const { data: vols, error } = await sb.from("vw_saldo_volumes").select("*").eq("material_id", id).order("codigo");
+  const u = UNID[m.unidade_estoque];
+  const ref = referencias[m.codigo_interno];
+  const c = custos[m.id];
+  const abertos = (vols || []).filter(v => v.status !== "encerrado");
+  const ficha = `
+    <dl class="ficha" style="margin-top:10px">
+      <dt>Código Cigam</dt><dd>${esc(m.codigo_cigam || m.codigo_interno)}</dd>
+      <dt>Nome do fornecedor</dt><dd>${esc(m.nome_fornecedor || "–")}${m.codigo_fornecedor ? " (cód. " + esc(m.codigo_fornecedor) + ")" : ""}</dd>
+      <dt>Fornecedor</dt><dd>${esc(m.fornecedores ? m.fornecedores.nome : "não cadastrado")}</dd>
+      <dt>Categoria</dt><dd>${esc(m.categoria)}</dd>
+      <dt>Controle</dt><dd>${esc(m.tipo_volume)} · etiqueta em ${UNID[m.unidade_volume]} · estoque em ${u}${m.largura_mm ? " · largura padrão " + fmt(m.largura_mm, 1) + " mm" : ""}</dd>
+      <dt>Saldo</dt><dd><b>${fmt(m.saldo)} ${u}</b>${Number(m.em_inspecao) > 0 ? " (+" + fmt(m.em_inspecao) + " em inspeção)" : ""}</dd>
+      <dt>Mínimo / ponto de pedido</dt><dd>${fmt(m.estoque_minimo)} / ${fmt(m.ponto_pedido)} ${u}</dd>
+      ${c ? `<dt>Custo</dt><dd>${fmtR(c.custo_unid_estoque)} por ${u}${c.custo_ultima_compra ? " · última compra " + fmtR(c.custo_ultima_compra) : ""}</dd>` : ""}
+      ${ref ? `<dt>AppSheet (referência)</dt><dd>${fmt(ref.saldo_atual)} (${esc(ref.unidade_cigam)})</dd>` : ""}
+      ${m.observacoes ? `<dt>Observações</dt><dd>${esc(m.observacoes)}</dd>` : ""}
+    </dl>`;
+  const tabela = error ? `<div class="msg erro">${erroTxt(error)}</div>` : abertos.length ? `
+    <div class="rolagem"><table><thead><tr><th>Código</th><th class="esconde-cel">Lote</th><th class="num">Etiqueta</th><th class="num">Saldo</th><th>Situação</th><th class="esconde-cel">Endereço</th></tr></thead><tbody>
+    ${abertos.map(v => `<tr><td><a href="${esc(linkVolume(v.codigo))}" data-vol="${esc(v.codigo)}">${esc(v.codigo)}</a></td>
+      <td class="esconde-cel">${esc(v.lote || "–")}</td>
+      <td class="num">${fmt(v.qtd_etiqueta)} ${UNID[v.unidade_volume]}${v.largura_mm ? " × " + fmt(v.largura_mm, 1) + " mm" : ""}</td>
+      <td class="num">${fmt(v.saldo)} ${u}</td>
+      <td><span class="tag ${v.status}">${STATUS[v.status]}</span></td>
+      <td class="esconde-cel">${esc(v.endereco || "–")}</td></tr>`).join("")}
+    </tbody></table></div>` : `<p class="sub">Nenhum volume aberto.${perfil.admin ? " Use o Inventário inicial para cadastrar o que está na prateleira." : ""}</p>`;
+  fundo.querySelector(".modal").innerHTML = `
+    <div class="topo"><h2>${esc(m.nome_labeltag)}</h2><button class="sec" type="button" data-fechar>Fechar</button></div>
+    ${ficha}<h3>Volumes (${abertos.length})</h3>${tabela}
+    <div class="acoes">
+      ${perfil.admin ? `<button class="sec" type="button" data-acao="inv">Inventário deste material</button>` : ""}
+      ${perfil.mov && abertos.length ? `<button class="sec" type="button" data-acao="etq">Etiquetas deste material</button>` : ""}
+    </div>`;
+  fundo.querySelectorAll("a[data-vol]").forEach(a => a.onclick = ev => {
+    ev.preventDefault(); if (!perfil.mov) return; fechar(); irAba("baixa"); $("bCodigo").value = a.dataset.vol; buscarVolume();
+  });
+  const bInv = fundo.querySelector('[data-acao="inv"]');
+  if (bInv) bInv.onclick = () => { fechar(); irAba("inventario"); $("iMat").value = m.codigo_interno + " · " + m.nome_labeltag; escolherMaterialInv(); };
+  const bEtq = fundo.querySelector('[data-acao="etq"]');
+  if (bEtq) bEtq.onclick = () => { fechar(); irAba("etiquetas"); $("eMat").value = m.codigo_interno + " · " + m.nome_labeltag; $("eDesde").value = ""; listarEtiquetas(); };
+}
+function materialDoTexto(t) {
+  t = String(t || "").trim(); if (!t) return null;
+  const cod = t.split(" · ")[0].trim();
+  return materiais.find(m => m.codigo_interno === cod) ||
+         materiais.find(m => m.nome_labeltag.toLowerCase() === t.toLowerCase()) || null;
+}
+
+// ======================= BAIXA =======================
+$("bBuscar").onclick = buscarVolume;
+$("bCodigo").addEventListener("keydown", ev => { if (ev.key === "Enter") buscarVolume(); });
+async function buscarVolume() {
+  const cod = normCodigo($("bCodigo").value);
+  $("bCodigo").value = cod;
+  msg("bMsg", "", ""); msg("bFormMsg", "", "");
+  $("bVolume").classList.add("oculto");
+  if (!cod) return;
+  const { data: v, error } = await sb.from("vw_saldo_volumes").select("*").eq("codigo", cod).maybeSingle();
+  if (error) return msg("bMsg", "erro", erroTxt(error));
+  if (!v) return msg("bMsg", "erro", `Volume <b>${esc(cod)}</b> não encontrado.`);
+  volumeAtual = v;
+  const m = porId[v.material_id] || {};
+  const u = UNID[v.unidade_estoque];
+  $("bCod").textContent = v.codigo;
+  $("bNome").textContent = v.nome_labeltag;
+  $("bInfo").textContent = [m.categoria, v.lote ? "lote " + v.lote : null,
+    "etiqueta " + fmt(v.qtd_etiqueta) + " " + UNID[v.unidade_volume] + (v.largura_mm ? " × " + fmt(v.largura_mm, 1) + " mm" : ""),
+    "entrada " + fmtDia(String(v.data_entrada).slice(0, 10)), v.endereco ? "endereço " + v.endereco : null].filter(Boolean).join(" · ");
+  $("bSaldo").textContent = fmt(v.saldo) + " " + u;
+  $("bStatus").innerHTML = `<span class="tag ${v.status}">${STATUS[v.status]}</span>`;
+  const ok = v.status === "disponivel";
+  $("bForm").classList.toggle("oculto", !ok);
+  if (!ok) msg("bMsg", "aviso", v.status === "em_inspecao" ? "Este volume ainda está em inspeção e não pode ser usado." :
+      v.status === "reprovado" ? "Este volume foi reprovado no recebimento e não pode ser usado." : "Este volume já foi encerrado.");
+  const rolo = v.unidade_volume === "m" && v.unidade_estoque === "m2" && v.largura_mm;
+  $("bUnidBox").classList.toggle("oculto", !rolo);
+  $("bUnid").value = rolo ? "m" : "m2";
+  $("bQtd").value = ""; $("bOp").value = ""; $("bObs").value = "";
+  atualizarFormBaixa();
+  $("bVolume").classList.remove("oculto");
+  carregarMovsVolume();
+}
+async function carregarMovsVolume() {
+  const v = volumeAtual;
+  const { data, error } = await sb.from("movimentacoes").select("tipo,quantidade,data_hora,setor,op_numero,observacao,usuario_id")
+    .eq("volume_id", v.volume_id).order("data_hora", { ascending: false }).limit(10);
+  if (error) { $("bMovs").innerHTML = `<tr><td colspan="5">${erroTxt(error)}</td></tr>`; return; }
+  const u = UNID[v.unidade_estoque];
+  const setor = Object.fromEntries(SETORES);
+  $("bMovs").innerHTML = data.length ? data.map(x => `<tr><td>${fmtData(x.data_hora)}</td><td>${TIPOS[x.tipo]}${x.observacao ? `<div class="sub">${esc(x.observacao)}</div>` : ""}</td>
+    <td class="num">${["entrada_compra", "ajuste_mais"].includes(x.tipo) ? "+" : "−"}${fmt(x.quantidade)} ${u}</td>
+    <td class="esconde-cel">${esc(setor[x.setor] || "–")}${x.op_numero ? " · OP " + esc(x.op_numero) : ""}</td>
+    <td class="esconde-cel">${esc(nomes[x.usuario_id] || "–")}</td></tr>`).join("") : `<tr><td colspan="5" class="sub">Sem movimentações.</td></tr>`;
+}
+function tipoBaixa() { return document.querySelector('input[name="bTipo"]:checked').value; }
+function qtdBaixaEstoque() {
+  const v = volumeAtual; const q = num($("bQtd").value);
+  if (!(q > 0)) return NaN;
+  if (!$("bUnidBox").classList.contains("oculto") && $("bUnid").value === "m") return m2DeMetros(q, Number(v.largura_mm));
+  return q;
+}
+function atualizarFormBaixa() {
+  const v = volumeAtual; if (!v) return;
+  const t = tipoBaixa();
+  const saida = t.startsWith("saida_");
+  $("bSetorBox").classList.toggle("oculto", !saida);
+  $("bObsLbl").textContent = t.startsWith("ajuste_") ? "Motivo do ajuste (obrigatório)" : "Observação (opcional)";
+  const u = UNID[v.unidade_estoque];
+  const rolo = !$("bUnidBox").classList.contains("oculto");
+  $("bQtdLbl").textContent = rolo ? "Quantidade" : `Quantidade (${u})`;
+  const q = num($("bQtd").value), conv = $("bConv");
+  if (!(q > 0)) { conv.classList.add("oculto"); return; }
+  const qe = qtdBaixaEstoque();
+  let txt = rolo && $("bUnid").value === "m" ? `${fmt(q)} m × ${fmt(v.largura_mm, 1)} mm = <b>${fmt(qe)} m²</b>` : `<b>${fmt(qe)} ${u}</b>`;
+  const novo = Number(v.saldo) + (t === "ajuste_mais" ? qe : -qe);
+  txt += ` · saldo do volume fica ${fmt(novo)} ${u}`;
+  conv.innerHTML = txt;
+  conv.classList.toggle("ruim", novo < 0);
+  conv.classList.remove("oculto");
+}
+["bQtd", "bUnid"].forEach(id => $(id).addEventListener("input", atualizarFormBaixa));
+$("bTipo").addEventListener("change", atualizarFormBaixa);
+
+async function lancar(tipo, qtdEstoque, extras) {
+  const v = volumeAtual;
+  const reg = { volume_id: v.volume_id, tipo, quantidade: Math.round(qtdEstoque * 1000) / 1000,
+    setor: tipo.startsWith("saida_") ? $("bSetor").value || null : null,
+    op_numero: $("bOp").value.trim() || null, observacao: (extras && extras.obs) || $("bObs").value.trim() || null };
+  const { error } = await sb.from("movimentacoes").insert(reg);
+  if (error) throw error;
+}
+$("bLancar").onclick = async () => {
+  const v = volumeAtual, t = tipoBaixa(), qe = qtdBaixaEstoque(), u = UNID[v.unidade_estoque];
+  if (!(qe > 0)) return msg("bFormMsg", "erro", "Informe a quantidade.");
+  if (t.startsWith("saida_") && !$("bSetor").value) return msg("bFormMsg", "erro", "Escolha o setor.");
+  if (t.startsWith("ajuste_") && !$("bObs").value.trim()) return msg("bFormMsg", "erro", "Ajuste precisa de motivo.");
+  const novo = Number(v.saldo) + (t === "ajuste_mais" ? qe : -qe);
+  if (novo < -0.0005 && !confirm(`O saldo deste volume vai ficar negativo (${fmt(novo)} ${u}). Confere a quantidade?\n\nSe o rolo rendeu mais que a etiqueta, tudo bem: confirme.`)) return;
+  $("bLancar").disabled = true;
+  try { await lancar(t, qe); toast(`Lançado: ${fmt(qe)} ${u}`); await buscarVolume(); carregarEstoque(); }
+  catch (e) { msg("bFormMsg", "erro", erroTxt(e)); }
+  finally { $("bLancar").disabled = false; }
+};
+$("bResto").onclick = async () => {
+  const v = volumeAtual, u = UNID[v.unidade_estoque], saldo = Number(v.saldo);
+  if (!$("bSetor").value) { document.querySelector('input[value="saida_producao"]').checked = true; atualizarFormBaixa(); return msg("bFormMsg", "erro", "Escolha o setor que usou o resto."); }
+  if (!confirm(`Dar baixa de ${fmt(Math.max(saldo, 0))} ${u} (todo o saldo) e encerrar ${v.codigo}?`)) return;
+  $("bResto").disabled = true;
+  try {
+    if (saldo > 0) await lancar("saida_producao", saldo);
+    const { error } = await sb.from("volumes").update({ status: "encerrado", motivo: "Consumido por completo" }).eq("id", v.volume_id);
+    if (error) throw error;
+    toast(`${v.codigo} encerrado`); await buscarVolume(); carregarEstoque();
+  } catch (e) { msg("bFormMsg", "erro", erroTxt(e)); }
+  finally { $("bResto").disabled = false; }
+};
+$("bEncerrar").onclick = async () => {
+  const v = volumeAtual, u = UNID[v.unidade_estoque], saldo = Number(v.saldo);
+  const efeito = saldo > 0 ? `A sobra de ${fmt(saldo)} ${u} vai virar ajuste (perda/sobra não consumida).`
+    : saldo < 0 ? `O excesso de ${fmt(-saldo)} ${u} vai virar ajuste positivo (rolo rendeu mais).` : "O saldo já está zerado.";
+  const motivo = prompt(`Encerrar ${v.codigo}?\n\n${efeito}\n\nMotivo (ex.: ponta final, descartado, avariado):`, saldo > 0 ? "ponta final" : "");
+  if (motivo === null) return;
+  $("bEncerrar").disabled = true;
+  try {
+    const { error } = await sb.from("volumes").update({ status: "encerrado", motivo: motivo.trim() || null }).eq("id", v.volume_id);
+    if (error) throw error;
+    toast(`${v.codigo} encerrado`); await buscarVolume(); carregarEstoque();
+  } catch (e) { msg("bFormMsg", "erro", erroTxt(e)); }
+  finally { $("bEncerrar").disabled = false; }
+};
+
+// ======================= INVENTÁRIO =======================
+let invMat = null, invRolos = [];
+$("iMat").addEventListener("change", escolherMaterialInv);
+async function escolherMaterialInv() {
+  invMat = materialDoTexto($("iMat").value);
+  invRolos = []; msg("iMsg", "", "");
+  if (!invMat) { $("iMatInfo").classList.add("oculto"); $("iRolosCard").classList.add("oculto"); return; }
+  const m = invMat, u = UNID[m.unidade_estoque], ref = referencias[m.codigo_interno];
+  const linear = m.unidade_volume === "m";
+  $("iMatInfo").innerHTML = `<dl class="ficha">
+    <dt>Material</dt><dd><b>${esc(m.nome_labeltag)}</b> · ${esc(m.codigo_interno)}</dd>
+    <dt>Como lançar</dt><dd>${linear ? "cada rolo: <b>metros da etiqueta + largura</b> → o sistema calcula o m²" : "cada " + esc(m.tipo_volume) + ": quantidade em <b>" + UNID[m.unidade_volume] + "</b>"}</dd>
+    <dt>Já no sistema</dt><dd>${fmt(m.saldo)} ${u} em ${m.volumes_disponiveis ?? 0} volume(s)</dd>
+    ${ref ? `<dt>AppSheet dizia</dt><dd>${fmt(ref.saldo_atual)} (${esc(ref.unidade_cigam)})</dd>` : ""}
+    ${m.observacoes ? `<dt>Atenção</dt><dd>${esc(m.observacoes)}</dd>` : ""}</dl>`;
+  $("iMatInfo").classList.remove("oculto");
+  $("iRepLbl").textContent = UNID_ETIQ[m.unidade_volume];
+  $("iThQtd").textContent = linear ? "Metros" : UNID[m.unidade_volume];
+  $("iRepLargBox").classList.toggle("oculto", !linear);
+  $("iThLarg").classList.toggle("oculto", !linear);
+  $("iRepLarg").value = m.largura_mm ? String(m.largura_mm).replace(".", ",") : "";
+  $("iRepQtd").value = ""; $("iRepLote").value = ""; $("iRepN").value = 1;
+  $("iRolosCard").classList.remove("oculto");
+  desenharRolos();
+}
+$("iAdd").onclick = () => {
+  const m = invMat; if (!m) return;
+  const q = num($("iRepQtd").value), larg = num($("iRepLarg").value), n = Math.min(200, Math.max(1, parseInt($("iRepN").value) || 1));
+  if (!(q > 0)) return msg("iMsg", "erro", "Informe a quantidade da etiqueta.");
+  if (m.unidade_volume === "m" && !(larg > 0)) return msg("iMsg", "erro", "Informe a largura do rolo em mm.");
+  if (m.unidade_volume === "m" && larg < 100 && !confirm(`Largura ${fmt(larg)} mm parece pequena. É isso mesmo (e não ${fmt(larg * 1000)} mm)?`)) return;
+  msg("iMsg", "", "");
+  for (let i = 0; i < n; i++) invRolos.push({ qtd: q, larg: m.unidade_volume === "m" ? larg : null, lote: $("iRepLote").value.trim(), end: "" });
+  $("iRepN").value = 1;
+  desenharRolos();
+  $("iRepQtd").focus();
+};
+function qtdEstoqueRolo(r) { return invMat.unidade_volume === "m" ? m2DeMetros(r.qtd, r.larg) : r.qtd; }
+function desenharRolos() {
+  const m = invMat, u = UNID[m.unidade_estoque], linear = m.unidade_volume === "m";
+  $("iRolos").innerHTML = invRolos.map((r, i) => `<tr>
+    <td>${i + 1}</td>
+    <td><input data-i="${i}" data-c="qtd" value="${esc(String(r.qtd).replace(".", ","))}" inputmode="decimal" style="width:90px"></td>
+    <td class="${linear ? "" : "oculto"}"><input data-i="${i}" data-c="larg" value="${esc(r.larg == null ? "" : String(r.larg).replace(".", ","))}" inputmode="decimal" style="width:90px"></td>
+    <td><input data-i="${i}" data-c="lote" value="${esc(r.lote)}" style="width:110px"></td>
+    <td class="esconde-cel"><input data-i="${i}" data-c="end" value="${esc(r.end)}" style="width:100px" placeholder="ex.: P1-A3"></td>
+    <td class="num" data-tot="${i}">${isNaN(qtdEstoqueRolo(r)) ? "–" : fmt(qtdEstoqueRolo(r)) + " " + u}</td>
+    <td><button class="sec" type="button" data-del="${i}" title="Remover" style="padding:6px 10px">✕</button></td></tr>`).join("") ||
+    `<tr><td colspan="7" class="sub">Nenhum volume ainda. Preencha acima e clique em Acrescentar.</td></tr>`;
+  atualizarTotalInv();
+}
+$("iRolos").addEventListener("input", ev => {
+  const el = ev.target; if (!el.dataset.c) return;
+  const r = invRolos[+el.dataset.i];
+  r[el.dataset.c] = ["qtd", "larg"].includes(el.dataset.c) ? num(el.value) : el.value.trim();
+  const t = qtdEstoqueRolo(r);
+  document.querySelector(`[data-tot="${el.dataset.i}"]`).textContent = isNaN(t) || !(t > 0) ? "–" : fmt(t) + " " + UNID[invMat.unidade_estoque];
+  atualizarTotalInv();
+});
+$("iRolos").addEventListener("click", ev => { const b = ev.target.closest("[data-del]"); if (b) { invRolos.splice(+b.dataset.del, 1); desenharRolos(); } });
+function atualizarTotalInv() {
+  const u = UNID[invMat.unidade_estoque];
+  const validos = invRolos.every(r => qtdEstoqueRolo(r) > 0);
+  const total = invRolos.reduce((s, r) => s + (qtdEstoqueRolo(r) || 0), 0);
+  const ref = referencias[invMat.codigo_interno];
+  const el = $("iTotal");
+  if (!invRolos.length) { el.classList.add("oculto"); $("iSalvar").disabled = true; return; }
+  let t = `<b>${invRolos.length} volume(s) · ${fmt(total)} ${u}</b> vão entrar no estoque.`;
+  if (ref && ref.saldo_atual != null) {
+    const ja = Number(invMat.saldo || 0) + total, dif = ja - Number(ref.saldo_atual);
+    t += ` Com o que já está no sistema: ${fmt(ja)} ${u} · o AppSheet dizia ${fmt(ref.saldo_atual)} (diferença ${dif >= 0 ? "+" : ""}${fmt(dif)}).`;
+  }
+  el.innerHTML = validos ? t : "Há linha com quantidade ou largura inválida.";
+  el.className = "msg " + (validos ? "ok" : "erro");
+  $("iSalvar").disabled = !validos;
+}
+$("iSalvar").onclick = async () => {
+  const m = invMat;
+  if (!confirm(`Cadastrar ${invRolos.length} volume(s) de ${m.nome_labeltag} no estoque?`)) return;
+  $("iSalvar").disabled = true;
+  try {
+    const regs = invRolos.map(r => ({ material_id: m.id, lote: r.lote || null, qtd_etiqueta: r.qtd,
+      largura_mm: m.unidade_volume === "m" ? r.larg : null, endereco: r.end || null }));
+    const { data, error } = await sb.from("volumes").insert(regs).select("codigo");
+    if (error) throw error;
+    const cods = data.map(d => d.codigo).sort();
+    invRolos = [];
+    await carregarEstoque();
+    invMat = porId[m.id];
+    desenharRolos();
+    msg("iMsg", "ok", `${cods.length} volume(s) cadastrados: ${cods.map(esc).join(", ")}. <a href="#" id="iIrEtq">Imprimir as etiquetas agora</a>`);
+    $("iIrEtq").onclick = ev => { ev.preventDefault(); irAba("etiquetas"); $("eMat").value = m.codigo_interno + " · " + m.nome_labeltag; $("eDesde").value = ""; listarEtiquetas(cods); };
+  } catch (e) { msg("iMsg", "erro", erroTxt(e)); $("iSalvar").disabled = false; }
+};
+
+// ======================= ETIQUETAS =======================
+let etqLista = [];
+$("eBuscar").onclick = () => listarEtiquetas();
+async function listarEtiquetas(marcar) {
+  msg("eMsg", "", "");
+  let q = sb.from("vw_etiquetas").select("*").in("status", ["disponivel", "em_inspecao"]).order("codigo").limit(500);
+  const mt = $("eMat").value.trim();
+  if (mt) { const m = materialDoTexto(mt); if (!m) return msg("eMsg", "erro", "Material não encontrado."); q = q.eq("codigo_interno", m.codigo_interno); }
+  if ($("eDesde").value) q = q.gte("data_entrada", $("eDesde").value);
+  const { data, error } = await q;
+  if (error) return msg("eMsg", "erro", erroTxt(error));
+  etqLista = data;
+  const sel = new Set(marcar || []);
+  $("eLista").innerHTML = data.length ? data.map((v, i) => `<tr>
+    <td><input type="checkbox" data-i="${i}" style="width:auto" ${marcar ? (sel.has(v.codigo) ? "checked" : "") : "checked"}></td>
+    <td><b>${esc(v.codigo)}</b></td><td>${esc(v.nome_labeltag)}</td><td class="esconde-cel">${esc(v.lote || "–")}</td>
+    <td class="num">${medidaEtq(v)}</td><td class="esconde-cel">${fmtDia(v.data_entrada)}</td></tr>`).join("")
+    : `<tr><td colspan="6" class="sub">Nenhum volume nesse filtro.</td></tr>`;
+  $("eTodos").checked = !marcar;
+  atualizarBotaoImprimir();
+}
+function medidaEtq(v) {
+  return v.unidade_volume === "m" ? `${fmt(v.qtd_etiqueta)} m × ${fmt(v.largura_mm, 1)} mm = ${fmt(v.qtd_inicial)} m²`
+    : `${fmt(v.qtd_etiqueta)} ${UNID[v.unidade_volume]}`;
+}
+function selecionadas() { return [...document.querySelectorAll("#eLista input[data-i]:checked")].map(c => etqLista[+c.dataset.i]); }
+function atualizarBotaoImprimir() { const n = selecionadas().length; $("eImprimir").disabled = !n; $("eImprimir").textContent = n ? `Imprimir ${n} etiqueta(s)` : "Imprimir selecionadas"; }
+$("eLista").addEventListener("change", atualizarBotaoImprimir);
+$("eTodos").onchange = () => { document.querySelectorAll("#eLista input[data-i]").forEach(c => c.checked = $("eTodos").checked); atualizarBotaoImprimir(); };
+["eDx", "eDy"].forEach(id => $(id).addEventListener("change", () => lsSet("estoque_" + id.slice(1).toLowerCase(), String(num($(id).value) || 0))));
+
+function svgQR(texto) {
+  const q = qrcode(0, "M"); q.addData(texto); q.make();
+  return q.createSvgTag({ cellSize: 2, margin: 0, scalable: true });
+}
+function montarFolhas(etqs, pular, teste) {
+  const dx = num($("eDx").value) || 0, dy = num($("eDy").value) || 0, corte = $("eCorte").checked;
+  const porFolha = FOLHA.cols * FOLHA.rows;
+  const ml = (210 - FOLHA.cols * FOLHA.w - (FOLHA.cols - 1) * FOLHA.gapX) / 2 + dx;
+  const mt = (297 - FOLHA.rows * FOLHA.h - (FOLHA.rows - 1) * FOLHA.gapY) / 2 + dy;
+  const posicoes = Array(pular).fill(null).concat(etqs);
+  const qr = Math.min(FOLHA.h - 8, 40);
+  let html = "";
+  for (let p = 0; p < posicoes.length; p += porFolha) {
+    html += `<div class="folha">`;
+    posicoes.slice(p, p + porFolha).forEach((v, k) => {
+      if (!v) return;
+      const col = k % FOLHA.cols, row = Math.floor(k / FOLHA.cols);
+      const x = ml + col * (FOLHA.w + FOLHA.gapX), y = mt + row * (FOLHA.h + FOLHA.gapY);
+      const st = `left:${x}mm;top:${y}mm;width:${FOLHA.w}mm;height:${FOLHA.h}mm`;
+      if (teste) { html += `<div class="etq corte" style="${st};outline:0.3mm solid #000;align-items:center;justify-content:center;font-size:10pt">Posição ${p + k + 1}<br>${FOLHA.w} × ${FOLHA.h} mm</div>`; return; }
+      html += `<div class="etq ${corte ? "corte" : ""}" style="${st}">
+        <div class="qr" style="width:${qr}mm;height:${qr}mm">${svgQR(linkVolume(v.codigo)).replace("<svg ", `<svg width="${qr}mm" height="${qr}mm" `)}</div>
+        <div class="txt">
+          <div class="cod">${esc(v.codigo)}</div>
+          <div class="nome">${esc(v.nome_labeltag)}</div>
+          <div>Cód. ${esc(v.codigo_interno)}${v.lote ? " · Lote " + esc(v.lote) : ""}</div>
+          <div class="med">${medidaEtq(v)}</div>
+          <div>Entrada ${fmtDia(v.data_entrada)}${v.nf_numero ? " · NF " + esc(v.nf_numero) : ""}</div>
+          ${v.fornecedor ? `<div>${esc(v.fornecedor)}</div>` : ""}
+          <div class="rod">Label Tag · Estoque · aponte a câmera para dar baixa</div>
+        </div></div>`;
+    });
+    html += `</div>`;
+  }
+  return html;
+}
+function imprimir(html) {
+  $("impressao").innerHTML = html;
+  $("previa").innerHTML = html;
+  $("previa").classList.remove("oculto");
+  setTimeout(() => window.print(), 300);
+}
+$("eImprimir").onclick = () => {
+  const etqs = selecionadas(); if (!etqs.length) return;
+  const pular = Math.min(7, Math.max(0, parseInt($("ePular").value) || 0));
+  imprimir(montarFolhas(etqs, pular, false));
+};
+$("eTeste").onclick = () => imprimir(montarFolhas(Array(8).fill({}), 0, true));
+
+// ======================= USUÁRIOS =======================
+let usuarios = [];
+async function carregarUsuarios() {
+  if (!perfil || !perfil.admin) return;
+  const { data, error } = await sb.rpc("est_fn_listar_perfis");
+  if (error) { $("uLista").innerHTML = `<tr><td colspan="7">${erroTxt(error)}</td></tr>`; return; }
+  usuarios = data;
+  const s = b => b ? "✔" : "–";
+  $("uLista").innerHTML = data.map((u, i) => `<tr><td>${esc(u.nome)}</td><td class="esconde-cel">${esc(u.email)}</td>
+    <td>${s(u.ativo)}</td><td>${s(u.admin)}</td><td>${s(u.pode_movimentar || u.admin)}</td><td>${s(u.ve_custos)}</td>
+    <td><button class="sec" type="button" data-u="${i}" style="padding:6px 10px">Editar</button></td></tr>`).join("");
+}
+$("uLista").addEventListener("click", ev => {
+  const b = ev.target.closest("[data-u]"); if (!b) return;
+  const u = usuarios[+b.dataset.u];
+  $("uEmail").value = u.email; $("uNome").value = u.nome; $("uAtivo").checked = u.ativo; $("uAdmin").checked = u.admin;
+  $("uMov").checked = u.pode_movimentar; $("uCustos").checked = u.ve_custos; $("uTitulo").textContent = "Editar acesso";
+  $("uEmail").scrollIntoView({ behavior: "smooth", block: "center" });
+});
+$("uLimpar").onclick = () => { ["uEmail", "uNome"].forEach(id => $(id).value = ""); $("uAtivo").checked = true; $("uMov").checked = true; $("uCustos").checked = false; $("uAdmin").checked = false; $("uTitulo").textContent = "Dar acesso"; msg("uMsg", "", ""); };
+$("uSalvar").onclick = async () => {
+  $("uSalvar").disabled = true;
+  try {
+    const { error } = await sb.rpc("est_fn_salvar_perfil", { p_email: $("uEmail").value, p_nome: $("uNome").value,
+      p_ativo: $("uAtivo").checked, p_admin: $("uAdmin").checked, p_pode_movimentar: $("uMov").checked, p_ve_custos: $("uCustos").checked });
+    if (error) throw error;
+    msg("uMsg", "ok", "Salvo."); carregarUsuarios();
+  } catch (e) { msg("uMsg", "erro", erroTxt(e)); }
+  finally { $("uSalvar").disabled = false; }
+};
+</script>
+</body>
+</html>
