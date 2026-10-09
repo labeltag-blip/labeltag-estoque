@@ -131,6 +131,8 @@
   .passo .num.ok{background:var(--verde)}
   .item-card{border-left:5px solid var(--accent)}
   .item-resumo{display:flex;gap:12px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0;cursor:pointer;background:#fff}
+  .novo-mat{border:1px dashed #6B46C1;background:#F6F2FD;border-radius:10px;padding:10px 12px;margin-top:8px}
+  .novo-tit{font-size:14px;margin-bottom:6px}
   .item-resumo:hover{border-color:var(--accent);background:#F7F9FE}
   .item-resumo>*{pointer-events:none}
   .mini-foto{width:56px;height:56px;border-radius:8px;object-fit:cover;border:1px solid var(--line);flex:0 0 auto;background:#EEEAE1}
@@ -194,7 +196,7 @@
 <body>
 <header>
   <div class="marca"><svg class="logo" viewBox="0 0 285.46 69" role="img" aria-label="Label Tag"><title>Label Tag</title><path fill="currentColor" d="M 235.45 64.27 L 238.35 64.27 L 236.9 60.42 Z M 239.27 66.71 L 238.61 64.94 L 235.19 64.94 L 234.52 66.71 L 233.76 66.71 L 236.53 59.52 L 237.27 59.52 L 240.04 66.71 Z M 227.34 66.83 C 226.25 66.83 225.35 66.48 224.64 65.75 C 223.92 65.04 223.57 64.16 223.57 63.11 C 223.57 62.07 223.92 61.19 224.64 60.47 C 225.35 59.75 226.25 59.39 227.34 59.39 C 228 59.39 228.61 59.55 229.17 59.87 C 229.72 60.19 230.15 60.62 230.45 61.16 L 229.82 61.53 C 229.59 61.09 229.25 60.74 228.81 60.48 C 228.36 60.22 227.88 60.09 227.34 60.09 C 226.44 60.09 225.71 60.38 225.14 60.96 C 224.57 61.55 224.29 62.26 224.29 63.11 C 224.29 63.96 224.57 64.68 225.14 65.26 C 225.71 65.84 226.44 66.14 227.34 66.14 C 227.88 66.14 228.36 66 228.81 65.75 C 229.25 65.48 229.59 65.13 229.82 64.7 L 230.45 65.05 C 230.16 65.6 229.73 66.03 229.17 66.35 C 228.61 66.67 228 66.83 227.34 66.83 Z M 215.48 60.2 L 215.48 63.15 L 217.64 63.15 C 218.03 63.15 218.37 63.01 218.65 62.72 C 218.93 62.43 219.07 62.08 219.07 61.68 C 219.07 61.26 218.93 60.91 218.65 60.62 C 218.37 60.34 218.03 60.2 217.64 60.2 Z M 219.18 66.71 L 217.5 63.83 L 215.48 63.83 L 215.48 66.71 L 214.76 66.71 L 214.76 59.52 L 217.64 59.52 C 218.23 59.52 218.74 59.73 219.16 60.15 C 219.58 60.57 219.79 61.08 219.79 61.68 C 219.79 62.16 219.65 62.59 219.36 62.97 C 219.07 63.36 218.7 63.61 218.24 63.74 L 220 66.71 Z M 206.3 64.27 L 209.2 64.27 L 207.75 60.42 Z M 210.12 66.71 L 209.45 64.94 L 206.04 64.94 L 205.37 66.71 L 204.61 66.71 L 207.38 59.52 L 208.12 59.52 L 210.88 66.71 Z M 200.73 59.52 L 200.73 66.71 L 200.02 66.71 L 200.02 60.61 L 197.5 64.82 L 197.39 64.82 L 194.88 60.61 L 194.88 66.71 L 194.16 66.71 L 194.16 59.52 L 195.04 59.52 L 197.45 63.54 L 199.85 59.52 Z M 183.12 64.27 L 186.03 64.27 L 184.57 60.42 Z M 186.95 66.71 L 186.29 64.94 L 182.87 64.94 L 182.2 66.71 L 181.44 66.71 L 184.21 59.52 L 184.95 59.52 L 187.71 66.71 Z M 177.13 66.14 C 176.64 66.6 176 66.83 175.2 66.83 C 174.41 66.83 173.76 66.6 173.27 66.14 C 172.77 65.67 172.53 65.05 172.53 64.27 L 172.53 59.52 L 173.25 59.52 L 173.25 64.27 C 173.25 64.84 173.42 65.3 173.76 65.63 C 174.11 65.97 174.59 66.14 175.2 66.14 C 175.82 66.14 176.3 65.97 176.64 65.63 C 176.98 65.3 177.15 64.84 177.15 64.27 L 177.15 59.52 L 177.88 59.52 L 177.88 64.27 C 177.88 65.05 177.63 65.67 177.13 66.14 Z M 166.02 66.83 C 165.36 66.83 164.8 66.68 164.33 66.37 C 163.86 66.05 163.54 65.62 163.35 65.07 L 163.96 64.71 C 164.09 65.16 164.34 65.51 164.68 65.76 C 165.04 66.01 165.48 66.14 166.03 66.14 C 166.57 66.14 166.98 66.02 167.28 65.78 C 167.58 65.54 167.73 65.23 167.73 64.84 C 167.73 64.46 167.59 64.18 167.32 63.99 C 167.04 63.79 166.59 63.6 165.96 63.39 C 165.21 63.14 164.72 62.95 164.48 62.79 C 163.93 62.46 163.66 61.99 163.66 61.37 C 163.66 60.75 163.87 60.27 164.29 59.92 C 164.72 59.57 165.24 59.39 165.87 59.39 C 166.43 59.39 166.91 59.54 167.33 59.83 C 167.74 60.12 168.04 60.49 168.24 60.95 L 167.64 61.29 C 167.3 60.49 166.71 60.09 165.87 60.09 C 165.42 60.09 165.06 60.2 164.79 60.42 C 164.51 60.64 164.38 60.95 164.38 61.34 C 164.38 61.69 164.5 61.96 164.75 62.14 C 164.99 62.32 165.4 62.5 165.97 62.68 C 166.23 62.77 166.42 62.83 166.53 62.87 C 166.64 62.91 166.81 62.97 167.02 63.05 C 167.24 63.14 167.4 63.22 167.5 63.28 C 167.61 63.35 167.73 63.44 167.88 63.55 C 168.02 63.66 168.13 63.78 168.2 63.89 C 168.26 64 168.32 64.14 168.37 64.3 C 168.42 64.46 168.45 64.63 168.45 64.82 C 168.45 65.43 168.22 65.92 167.78 66.29 C 167.33 66.65 166.75 66.83 166.02 66.83 Z M 154.54 66.86 C 156.1 66.86 157.21 66.03 157.21 64.64 C 157.21 63.12 155.99 62.74 154.9 62.41 C 153.78 62.07 153.6 61.85 153.6 61.52 C 153.6 61.23 153.86 60.97 154.38 60.97 C 155.03 60.97 155.37 61.29 155.62 61.81 L 157.01 61 C 156.48 59.94 155.55 59.37 154.38 59.37 C 153.13 59.37 151.96 60.17 151.96 61.56 C 151.96 62.94 153.01 63.45 154.07 63.75 C 155.16 64.05 155.57 64.22 155.57 64.66 C 155.57 64.94 155.37 65.25 154.59 65.25 C 153.78 65.25 153.34 64.85 153.08 64.25 L 151.66 65.07 C 152.06 66.14 153.03 66.86 154.54 66.86 Z M 144.66 65.25 C 143.49 65.25 142.56 64.4 142.56 63.11 C 142.56 61.83 143.49 60.97 144.66 60.97 C 145.83 60.97 146.76 61.83 146.76 63.11 C 146.76 64.4 145.83 65.25 144.66 65.25 Z M 144.66 66.86 C 146.73 66.86 148.4 65.23 148.4 63.11 C 148.4 61 146.73 59.37 144.66 59.37 C 142.59 59.37 140.92 61 140.92 63.11 C 140.92 65.23 142.59 66.86 144.66 66.86 Z M 137.04 59.52 L 135.4 59.52 L 133.45 62.71 L 131.49 59.52 L 129.85 59.52 L 129.85 66.71 L 131.49 66.71 L 131.49 62.53 L 133.35 65.58 L 133.54 65.58 L 135.4 62.53 L 135.4 66.71 L 137.04 66.71 Z M 121.94 64.04 L 122.79 61.39 L 123.63 64.04 Z M 124.48 66.71 L 126.28 66.71 L 123.83 59.52 L 121.74 59.52 L 119.29 66.71 L 121.09 66.71 L 121.45 65.58 L 124.12 65.58 Z M 114.08 59.52 L 114.08 63.42 L 111.3 59.52 L 110.07 59.52 L 110.07 66.71 L 111.71 66.71 L 111.71 62.8 L 114.49 66.71 L 115.72 66.71 L 115.72 59.52 Z M 104.24 66.71 L 105.89 66.71 L 105.89 59.52 L 104.24 59.52 Z M 97.85 66.86 C 99.41 66.86 100.52 66.03 100.52 64.64 C 100.52 63.12 99.3 62.74 98.21 62.41 C 97.09 62.07 96.91 61.85 96.91 61.52 C 96.91 61.23 97.17 60.97 97.68 60.97 C 98.34 60.97 98.68 61.29 98.93 61.81 L 100.32 61 C 99.79 59.94 98.87 59.37 97.68 59.37 C 96.44 59.37 95.27 60.17 95.27 61.56 C 95.27 62.94 96.32 63.45 97.39 63.75 C 98.46 64.05 98.88 64.22 98.88 64.66 C 98.88 64.94 98.68 65.25 97.9 65.25 C 97.09 65.25 96.64 64.85 96.39 64.25 L 94.97 65.07 C 95.37 66.14 96.34 66.86 97.85 66.86 Z M 89.09 66.86 C 90.65 66.86 91.76 66.03 91.76 64.64 C 91.76 63.12 90.54 62.74 89.45 62.41 C 88.33 62.07 88.15 61.85 88.15 61.52 C 88.15 61.23 88.41 60.97 88.93 60.97 C 89.58 60.97 89.92 61.29 90.17 61.81 L 91.56 61 C 91.03 59.94 90.11 59.37 88.93 59.37 C 87.68 59.37 86.51 60.17 86.51 61.56 C 86.51 62.94 87.56 63.45 88.62 63.75 C 89.71 64.05 90.12 64.22 90.12 64.66 C 90.12 64.94 89.92 65.25 89.14 65.25 C 88.33 65.25 87.89 64.85 87.63 64.25 L 86.21 65.07 C 86.61 66.14 87.58 66.86 89.09 66.86 Z M 78.82 64.04 L 79.66 61.39 L 80.51 64.04 Z M 81.36 66.71 L 83.16 66.71 L 80.71 59.52 L 78.61 59.52 L 76.17 66.71 L 77.96 66.71 L 78.33 65.58 L 81 65.58 Z M 81.36 66.71 "/><path fill="currentColor" d="M 14.1 39.7 L 14.1 0.98 L 2.75 0.98 L 2.75 50.62 L 31.81 50.62 L 31.81 39.7 Z M 59.77 15.17 L 59.77 18.5 C 57.44 15.81 53.95 14.18 49.2 14.18 C 39.91 14.18 32.24 22.34 32.24 32.89 C 32.24 43.47 39.91 51.63 49.2 51.63 C 53.95 51.63 57.44 50 59.77 47.29 L 59.77 50.62 L 70.41 50.62 L 70.41 15.17 Z M 51.34 41.56 C 46.43 41.56 42.88 38.23 42.88 32.89 C 42.88 27.58 46.43 24.25 51.34 24.25 C 56.21 24.25 59.77 27.58 59.77 32.89 C 59.77 38.23 56.21 41.56 51.34 41.56 Z M 97.38 14.18 C 92.63 14.18 89.13 15.81 86.8 18.5 L 86.8 0.98 L 76.17 0.98 L 76.17 50.62 L 86.8 50.62 L 86.8 47.29 C 89.13 50 92.63 51.63 97.38 51.63 C 106.67 51.63 114.33 43.47 114.33 32.89 C 114.33 22.34 106.67 14.18 97.38 14.18 Z M 95.23 41.56 C 90.36 41.56 86.8 38.23 86.8 32.89 C 86.8 27.58 90.36 24.25 95.23 24.25 C 100.14 24.25 103.7 27.58 103.7 32.89 C 103.7 38.23 100.14 41.56 95.23 41.56 Z M 127.82 37.15 L 152.98 37.15 C 153.26 35.81 153.41 34.39 153.41 32.89 C 153.41 22.18 145.75 14.18 135.39 14.18 C 124.2 14.18 116.54 22.34 116.54 32.89 C 116.54 43.47 124.05 51.63 136.18 51.63 C 142.9 51.63 148.17 49.15 151.63 44.32 C 148.78 42.69 145.93 41.05 143.11 39.42 C 141.7 40.99 139.22 42.11 136.31 42.11 C 132.41 42.11 129.16 40.85 127.82 37.15 Z M 127.6 29.21 C 128.58 25.61 131.28 23.61 135.33 23.61 C 138.52 23.61 141.7 25.1 142.84 29.21 Z M 157.39 50.62 L 168.03 50.62 L 168.03 0.98 L 157.39 0.98 Z M 207.48 0.98 L 170.61 0.98 L 170.61 11.91 L 183.36 11.91 L 183.36 50.62 L 194.7 50.62 L 194.7 11.91 L 207.48 11.91 Z M 229.4 15.17 L 229.4 18.5 C 227.07 15.81 223.57 14.18 218.82 14.18 C 209.54 14.18 201.87 22.34 201.87 32.89 C 201.87 43.47 209.54 51.63 218.82 51.63 C 223.57 51.63 227.07 50 229.4 47.29 L 229.4 50.62 L 240.04 50.62 L 240.04 15.17 Z M 220.97 41.56 C 216.06 41.56 212.51 38.23 212.51 32.89 C 212.51 27.58 216.06 24.25 220.97 24.25 C 225.84 24.25 229.4 27.58 229.4 32.89 C 229.4 38.23 225.84 41.56 220.97 41.56 Z M 271.82 15.17 L 271.82 18.78 C 269.49 15.88 266.09 14.18 261.46 14.18 C 251.41 14.18 244.02 22.41 244.02 32.18 C 244.02 41.98 251.41 50.21 261.46 50.21 C 266.09 50.21 269.49 48.5 271.82 45.59 L 271.82 50.07 C 271.82 55.1 268.75 57.65 263.82 57.65 C 259.13 57.65 257.08 55.68 255.73 53.2 C 252.69 54.94 249.66 56.69 246.66 58.44 C 249.91 64.25 256.07 67.04 263.45 67.04 C 272.89 67.04 282.18 62 282.18 50.07 L 282.18 15.17 Z M 263.24 40.41 C 258.21 40.41 254.66 37.08 254.66 32.18 C 254.66 27.31 258.21 23.98 263.24 23.98 C 268.27 23.98 271.82 27.31 271.82 32.18 C 271.82 37.08 268.27 40.41 263.24 40.41 "/></svg><div><h1>Estoque</h1><small>matérias-primas · etiquetas · baixas</small></div></div>
-  <span id="versao" title="Data e hora desta versão">Versão 09/10/2026 14:08</span>
+  <span id="versao" title="Data e hora desta versão">Versão 09/10/2026 14:32</span>
   <div class="h-dir"><small id="quem"></small><button id="btnSair" class="btn-h oculto" type="button">Sair</button></div>
 </header>
 <nav id="abas" class="abas oculto">
@@ -1294,14 +1296,23 @@ async function abrirRecebimento(id, itemId) {
       ${passo(2, "Itens da nota", itens.length > 0)}
       <p class="sub" style="margin:0 0 6px">Um item para cada linha da nota fiscal. Dá para salvar todos primeiro (<b>Salvar e lançar o próximo item</b>) e depois tocar em cada um para lançar os rolos, conferir e liberar.</p>
       <div class="linha">
-        <div style="flex:3"><label>Material</label><input id="raMat" list="iMatLista" placeholder="digite o nome ou o código"></div>
+        <div style="flex:3"><label>Material</label><input id="raMat" list="iMatLista" placeholder="escolha da lista ou digite como está na nota" autocomplete="off"></div>
         <div><label>A NF vem em</label><select id="raUn">${UN_NF.map(([k, t]) => `<option value="${k}">${t}</option>`).join("")}</select></div>
         <div><label>Quantidade na NF</label><input id="raQtd" inputmode="decimal"></div>
         <div class="estreito"><label>Nº de rolos/volumes</label><input id="raVol" type="number" min="1" max="500" inputmode="numeric" style="width:110px" placeholder="ex.: 4"></div>
       </div>
+      <div id="raNovo" class="novo-mat oculto">
+        <div class="novo-tit"><span class="tag prov">material novo</span> Não está no cadastro: será criado como <b>provisório</b> com o nome digitado. O administrador completa depois.</div>
+        <div id="raPareceidos"></div>
+        <div class="linha">
+          <div><label>Categoria</label><select id="raCat"></select><input id="raCatNova" class="oculto" placeholder="nome da nova categoria" style="margin-top:6px"></div>
+          <div id="raBaseBox" class="oculto"><label>O material é medido em</label><select id="raBase"><option value="m2">m² (rolo)</option><option value="m">metro linear (rolo)</option><option value="kg">kg</option><option value="L">litro</option><option value="un">unidade</option></select></div>
+          <div id="raLargBox"><label>Largura do rolo (mm)</label><input id="raLarg" inputmode="decimal"></div>
+          <div><label>Código do produto na NF <span class="sub">(opcional)</span></label><input id="raCodF" autocomplete="off"></div>
+        </div>
+      </div>
       <div class="acoes" style="margin-top:8px"><button class="prim" type="button" data-r="add-item" data-depois="abrir">Salvar e abrir o item</button>
         <button class="sec" type="button" data-r="add-item" data-depois="proximo">Salvar e lançar o próximo item</button></div>
-      <p class="sub" style="margin:8px 0 0">Material não está na lista? <a href="#" data-r="provisorio">Cadastrar provisório</a> (o administrador completa depois).</p>
       <div id="raMsg"></div>
       <div style="margin-top:12px">${itens.map(i => {
         const m = i.materiais, rs = resumoItem(i), insp = i.recebimento_inspecoes || [], ok = insp.filter(x => x.resultado).length;
@@ -1318,6 +1329,31 @@ async function abrirRecebimento(id, itemId) {
     $("raMat").addEventListener("change", () => {
       const m = materialDoTexto($("raMat").value);
       if (m && m.id !== box.dataset.ultMat) { box.dataset.ultMat = m.id; if (UN_NF.some(o => o[0] === m.unidade_compra)) $("raUn").value = m.unidade_compra; }
+    });
+    const cats = [...new Set(materiais.map(x => x.categoria))].sort((a, b) => a.localeCompare(b, "pt-BR"));
+    $("raCat").innerHTML = `<option value="">— escolha —</option>${cats.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join("")}<option value="__nova">➕ Nova categoria…</option>`;
+    $("raCat").onchange = () => { const nova = $("raCat").value === "__nova"; $("raCatNova").classList.toggle("oculto", !nova); if (nova) $("raCatNova").focus(); };
+    const ajustaNovo = () => {
+      const t = $("raMat").value.trim(), m = materialDoTexto(t), novo = !!t && !m;
+      $("raNovo").classList.toggle("oculto", !novo);
+      if (!novo) return;
+      const un = $("raUn").value, base = un === "rolo" ? $("raBase").value : un;
+      $("raBaseBox").classList.toggle("oculto", un !== "rolo");
+      $("raLargBox").classList.toggle("oculto", !["m", "m2"].includes(base));
+      // parecidos: evita cadastrar de novo um material que já existe com outro nome
+      const palavras = t.toLowerCase().split(/[^a-z0-9à-ú]+/i).filter(w => w.length >= 4);
+      // pontua pelo nº de palavras em comum; com 2+ palavras digitadas exige pelo menos 2 em comum
+      const minimo = Math.min(2, palavras.length);
+      const par = palavras.length ? materiais.map(x => { const n = (x.nome_labeltag + " " + (x.nome_fornecedor || "")).toLowerCase(); return [x, palavras.filter(w => n.includes(w)).length]; })
+        .filter(([, k]) => k >= minimo).sort((a, b) => b[1] - a[1]).slice(0, 4).map(([x]) => x) : [];
+      $("raPareceidos").innerHTML = par.length ? `<div class="sub" style="margin:4px 0 6px">Será um destes? ${par.map(x => `<a href="#" data-usar="${x.id}">${esc(x.nome_labeltag)}</a>`).join(" · ")}</div>` : "";
+    };
+    $("raMat").addEventListener("input", () => { msgEm($("raMsg"), "", ""); ajustaNovo(); }); $("raMat").addEventListener("change", ajustaNovo);
+    $("raUn").addEventListener("change", ajustaNovo); $("raBase").addEventListener("change", ajustaNovo);
+    $("raPareceidos").addEventListener("click", ev => {
+      const a = ev.target.closest("[data-usar]"); if (!a) return; ev.preventDefault();
+      const x = porId[a.dataset.usar]; $("raMat").value = x.codigo_interno + " · " + x.nome_labeltag;
+      $("raMat").dispatchEvent(new Event("change"));
     });
   }
   preencherFotos(box);
@@ -1434,10 +1470,27 @@ $("rDetalhe").addEventListener("click", async ev => {
   try {
     if (acao === "voltar") { carregarRecebimentos(); window.scrollTo(0, 0); return; }
     if (acao === "add-item") {
-      const m = materialDoTexto($("raMat").value), q = num($("raQtd").value), nv = parseInt($("raVol").value);
-      if (!m) return msgEm($("raMsg"), "erro", "Escolha o material na lista.");
+      const texto = $("raMat").value.trim(), q = num($("raQtd").value), nv = parseInt($("raVol").value);
+      let m = materialDoTexto(texto);
+      if (!texto) return msgEm($("raMsg"), "erro", "Escolha o material da lista ou digite o nome como está na nota.");
       if (!(q > 0)) return msgEm($("raMsg"), "erro", "Informe a quantidade da NF.");
       if (!(nv >= 1 && nv <= 500)) return msgEm($("raMsg"), "erro", "Informe quantos rolos/volumes deste item chegaram (contando os volumes físicos).");
+      if (!m) {
+        // material novo: cadastro provisório na própria linha da nota
+        const cat = $("raCat").value === "__nova" ? $("raCatNova").value.trim() : $("raCat").value;
+        if (!cat) return msgEm($("raMsg"), "erro", "Material novo: escolha a categoria (ou ➕ Nova categoria).");
+        const un = $("raUn").value, base = un === "rolo" ? $("raBase").value : un, larg = num($("raLarg").value);
+        if (["m", "m2"].includes(base) && !(larg > 0)) return msgEm($("raMsg"), "erro", "Material novo em rolo: informe a largura do rolo em mm.");
+        if (["m", "m2"].includes(base) && larg < 100 && !confirm(`Largura ${fmt(larg)} mm parece pequena. É isso mesmo (e não ${fmt(larg * 1000)} mm)?`)) return;
+        b.disabled = true;
+        const { data: novoMat, error: eM } = await sb.rpc("est_fn_material_provisorio", { p_nome: texto, p_categoria: cat, p_unidade: base,
+          p_largura: ["m", "m2"].includes(base) ? larg : null, p_nome_fornecedor: texto, p_codigo_fornecedor: $("raCodF").value.trim() || null });
+        b.disabled = false;
+        if (eM) throw eM;
+        await carregarEstoque();
+        m = porId[novoMat];
+        if (!m) throw new Error("Material criado, mas não foi possível carregá-lo. Recarregue a página.");
+      }
       const { data: novo, error } = await sb.from("recebimento_itens").insert({ recebimento_id: recAtual, material_id: m.id, qtd_nf: q, unidade_nf: $("raUn").value, qtd_volumes: nv }).select("id").single();
       if (error) throw error;
       if (b.dataset.depois === "proximo") {
