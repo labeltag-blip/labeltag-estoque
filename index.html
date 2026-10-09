@@ -130,6 +130,8 @@
   .passo .num{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;font-size:13px;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
   .passo .num.ok{background:var(--verde)}
   .item-card{border-left:5px solid var(--accent)}
+  .item-wrap .secao{margin-bottom:20px}
+  .secao-tit{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#6B7280;margin-bottom:8px}
   .item-resumo{display:flex;gap:12px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0;cursor:pointer;background:#fff}
   .esp-form{border:1px solid var(--line);border-radius:10px;padding:4px 12px 10px;background:#FBFAF7}
   .esp-rot{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted,#6B7280);margin:8px 0 -2px}
@@ -160,7 +162,8 @@
     .esp-l .esp-val{text-align:right}
     .esp-l .esp-val:last-child{grid-column:2/4;text-align:left}
   }
-  .ult{margin-top:10px;border:1px solid var(--line);border-radius:10px;padding:6px 10px;background:#fff}
+  .ult-resumo{margin-top:10px;padding:8px 10px;border-radius:8px;background:#F4F1EA;font-size:14px}
+  .ult{margin-top:6px;border:1px solid var(--line);border-radius:10px;padding:6px 10px;background:#fff}
   .ult summary{cursor:pointer}
   .ln{border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden;margin-top:6px}
   .ln-cab,.ln-l{display:grid;grid-template-columns:58px 140px 1fr 120px 150px 92px;gap:8px;align-items:center;padding:6px 10px}
@@ -186,6 +189,17 @@
     .ln-l>:nth-child(4){grid-area:un}.ln-l>:nth-child(5){grid-area:qtd}.ln-l>:nth-child(6){grid-area:vol}
     .ln-extra{grid-template-columns:1fr;padding-left:10px}
   }
+  .compra-cab{display:flex;gap:12px;align-items:flex-start}
+  .compra-num{display:flex;gap:14px;flex-wrap:wrap;margin:4px 0 2px;font-size:14px}
+  .compra-sols{margin-top:8px;border-top:1px dashed var(--line);padding-top:6px}
+  .compra-sol{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:3px 0;font-size:14px}
+  .seq-tag{display:inline-block;font-size:11px;font-weight:700;color:#6B7280;border:1px solid var(--line);border-radius:6px;padding:0 5px;vertical-align:1px}
+  .seq-tag:empty{display:none}
+  tr.linha-falta td:first-child{box-shadow:inset 4px 0 0 var(--err-ink)}
+  tr.linha-falta{background:#FFF6F6}
+  .mat-linha{display:flex;gap:10px;align-items:center}
+  .lista-foto{width:40px;height:40px;flex:0 0 40px;border-radius:7px;object-fit:cover;border:1px solid var(--line);background:#EEEAE1;cursor:zoom-in}
+  .lista-foto.vazia{cursor:default;background:repeating-linear-gradient(45deg,#F4F1EA,#F4F1EA 4px,#EEEAE1 4px,#EEEAE1 8px)}
   .novo-mat{border:1px dashed #6B46C1;background:#F6F2FD;border-radius:10px;padding:10px 12px;margin-top:8px}
   .novo-tit{font-size:14px;margin-bottom:6px}
   .item-resumo:hover{border-color:var(--accent);background:#F7F9FE}
@@ -252,7 +266,7 @@
 <body>
 <header>
   <div class="marca"><svg class="logo" viewBox="0 0 285.46 69" role="img" aria-label="Label Tag"><title>Label Tag</title><path fill="currentColor" d="M 235.45 64.27 L 238.35 64.27 L 236.9 60.42 Z M 239.27 66.71 L 238.61 64.94 L 235.19 64.94 L 234.52 66.71 L 233.76 66.71 L 236.53 59.52 L 237.27 59.52 L 240.04 66.71 Z M 227.34 66.83 C 226.25 66.83 225.35 66.48 224.64 65.75 C 223.92 65.04 223.57 64.16 223.57 63.11 C 223.57 62.07 223.92 61.19 224.64 60.47 C 225.35 59.75 226.25 59.39 227.34 59.39 C 228 59.39 228.61 59.55 229.17 59.87 C 229.72 60.19 230.15 60.62 230.45 61.16 L 229.82 61.53 C 229.59 61.09 229.25 60.74 228.81 60.48 C 228.36 60.22 227.88 60.09 227.34 60.09 C 226.44 60.09 225.71 60.38 225.14 60.96 C 224.57 61.55 224.29 62.26 224.29 63.11 C 224.29 63.96 224.57 64.68 225.14 65.26 C 225.71 65.84 226.44 66.14 227.34 66.14 C 227.88 66.14 228.36 66 228.81 65.75 C 229.25 65.48 229.59 65.13 229.82 64.7 L 230.45 65.05 C 230.16 65.6 229.73 66.03 229.17 66.35 C 228.61 66.67 228 66.83 227.34 66.83 Z M 215.48 60.2 L 215.48 63.15 L 217.64 63.15 C 218.03 63.15 218.37 63.01 218.65 62.72 C 218.93 62.43 219.07 62.08 219.07 61.68 C 219.07 61.26 218.93 60.91 218.65 60.62 C 218.37 60.34 218.03 60.2 217.64 60.2 Z M 219.18 66.71 L 217.5 63.83 L 215.48 63.83 L 215.48 66.71 L 214.76 66.71 L 214.76 59.52 L 217.64 59.52 C 218.23 59.52 218.74 59.73 219.16 60.15 C 219.58 60.57 219.79 61.08 219.79 61.68 C 219.79 62.16 219.65 62.59 219.36 62.97 C 219.07 63.36 218.7 63.61 218.24 63.74 L 220 66.71 Z M 206.3 64.27 L 209.2 64.27 L 207.75 60.42 Z M 210.12 66.71 L 209.45 64.94 L 206.04 64.94 L 205.37 66.71 L 204.61 66.71 L 207.38 59.52 L 208.12 59.52 L 210.88 66.71 Z M 200.73 59.52 L 200.73 66.71 L 200.02 66.71 L 200.02 60.61 L 197.5 64.82 L 197.39 64.82 L 194.88 60.61 L 194.88 66.71 L 194.16 66.71 L 194.16 59.52 L 195.04 59.52 L 197.45 63.54 L 199.85 59.52 Z M 183.12 64.27 L 186.03 64.27 L 184.57 60.42 Z M 186.95 66.71 L 186.29 64.94 L 182.87 64.94 L 182.2 66.71 L 181.44 66.71 L 184.21 59.52 L 184.95 59.52 L 187.71 66.71 Z M 177.13 66.14 C 176.64 66.6 176 66.83 175.2 66.83 C 174.41 66.83 173.76 66.6 173.27 66.14 C 172.77 65.67 172.53 65.05 172.53 64.27 L 172.53 59.52 L 173.25 59.52 L 173.25 64.27 C 173.25 64.84 173.42 65.3 173.76 65.63 C 174.11 65.97 174.59 66.14 175.2 66.14 C 175.82 66.14 176.3 65.97 176.64 65.63 C 176.98 65.3 177.15 64.84 177.15 64.27 L 177.15 59.52 L 177.88 59.52 L 177.88 64.27 C 177.88 65.05 177.63 65.67 177.13 66.14 Z M 166.02 66.83 C 165.36 66.83 164.8 66.68 164.33 66.37 C 163.86 66.05 163.54 65.62 163.35 65.07 L 163.96 64.71 C 164.09 65.16 164.34 65.51 164.68 65.76 C 165.04 66.01 165.48 66.14 166.03 66.14 C 166.57 66.14 166.98 66.02 167.28 65.78 C 167.58 65.54 167.73 65.23 167.73 64.84 C 167.73 64.46 167.59 64.18 167.32 63.99 C 167.04 63.79 166.59 63.6 165.96 63.39 C 165.21 63.14 164.72 62.95 164.48 62.79 C 163.93 62.46 163.66 61.99 163.66 61.37 C 163.66 60.75 163.87 60.27 164.29 59.92 C 164.72 59.57 165.24 59.39 165.87 59.39 C 166.43 59.39 166.91 59.54 167.33 59.83 C 167.74 60.12 168.04 60.49 168.24 60.95 L 167.64 61.29 C 167.3 60.49 166.71 60.09 165.87 60.09 C 165.42 60.09 165.06 60.2 164.79 60.42 C 164.51 60.64 164.38 60.95 164.38 61.34 C 164.38 61.69 164.5 61.96 164.75 62.14 C 164.99 62.32 165.4 62.5 165.97 62.68 C 166.23 62.77 166.42 62.83 166.53 62.87 C 166.64 62.91 166.81 62.97 167.02 63.05 C 167.24 63.14 167.4 63.22 167.5 63.28 C 167.61 63.35 167.73 63.44 167.88 63.55 C 168.02 63.66 168.13 63.78 168.2 63.89 C 168.26 64 168.32 64.14 168.37 64.3 C 168.42 64.46 168.45 64.63 168.45 64.82 C 168.45 65.43 168.22 65.92 167.78 66.29 C 167.33 66.65 166.75 66.83 166.02 66.83 Z M 154.54 66.86 C 156.1 66.86 157.21 66.03 157.21 64.64 C 157.21 63.12 155.99 62.74 154.9 62.41 C 153.78 62.07 153.6 61.85 153.6 61.52 C 153.6 61.23 153.86 60.97 154.38 60.97 C 155.03 60.97 155.37 61.29 155.62 61.81 L 157.01 61 C 156.48 59.94 155.55 59.37 154.38 59.37 C 153.13 59.37 151.96 60.17 151.96 61.56 C 151.96 62.94 153.01 63.45 154.07 63.75 C 155.16 64.05 155.57 64.22 155.57 64.66 C 155.57 64.94 155.37 65.25 154.59 65.25 C 153.78 65.25 153.34 64.85 153.08 64.25 L 151.66 65.07 C 152.06 66.14 153.03 66.86 154.54 66.86 Z M 144.66 65.25 C 143.49 65.25 142.56 64.4 142.56 63.11 C 142.56 61.83 143.49 60.97 144.66 60.97 C 145.83 60.97 146.76 61.83 146.76 63.11 C 146.76 64.4 145.83 65.25 144.66 65.25 Z M 144.66 66.86 C 146.73 66.86 148.4 65.23 148.4 63.11 C 148.4 61 146.73 59.37 144.66 59.37 C 142.59 59.37 140.92 61 140.92 63.11 C 140.92 65.23 142.59 66.86 144.66 66.86 Z M 137.04 59.52 L 135.4 59.52 L 133.45 62.71 L 131.49 59.52 L 129.85 59.52 L 129.85 66.71 L 131.49 66.71 L 131.49 62.53 L 133.35 65.58 L 133.54 65.58 L 135.4 62.53 L 135.4 66.71 L 137.04 66.71 Z M 121.94 64.04 L 122.79 61.39 L 123.63 64.04 Z M 124.48 66.71 L 126.28 66.71 L 123.83 59.52 L 121.74 59.52 L 119.29 66.71 L 121.09 66.71 L 121.45 65.58 L 124.12 65.58 Z M 114.08 59.52 L 114.08 63.42 L 111.3 59.52 L 110.07 59.52 L 110.07 66.71 L 111.71 66.71 L 111.71 62.8 L 114.49 66.71 L 115.72 66.71 L 115.72 59.52 Z M 104.24 66.71 L 105.89 66.71 L 105.89 59.52 L 104.24 59.52 Z M 97.85 66.86 C 99.41 66.86 100.52 66.03 100.52 64.64 C 100.52 63.12 99.3 62.74 98.21 62.41 C 97.09 62.07 96.91 61.85 96.91 61.52 C 96.91 61.23 97.17 60.97 97.68 60.97 C 98.34 60.97 98.68 61.29 98.93 61.81 L 100.32 61 C 99.79 59.94 98.87 59.37 97.68 59.37 C 96.44 59.37 95.27 60.17 95.27 61.56 C 95.27 62.94 96.32 63.45 97.39 63.75 C 98.46 64.05 98.88 64.22 98.88 64.66 C 98.88 64.94 98.68 65.25 97.9 65.25 C 97.09 65.25 96.64 64.85 96.39 64.25 L 94.97 65.07 C 95.37 66.14 96.34 66.86 97.85 66.86 Z M 89.09 66.86 C 90.65 66.86 91.76 66.03 91.76 64.64 C 91.76 63.12 90.54 62.74 89.45 62.41 C 88.33 62.07 88.15 61.85 88.15 61.52 C 88.15 61.23 88.41 60.97 88.93 60.97 C 89.58 60.97 89.92 61.29 90.17 61.81 L 91.56 61 C 91.03 59.94 90.11 59.37 88.93 59.37 C 87.68 59.37 86.51 60.17 86.51 61.56 C 86.51 62.94 87.56 63.45 88.62 63.75 C 89.71 64.05 90.12 64.22 90.12 64.66 C 90.12 64.94 89.92 65.25 89.14 65.25 C 88.33 65.25 87.89 64.85 87.63 64.25 L 86.21 65.07 C 86.61 66.14 87.58 66.86 89.09 66.86 Z M 78.82 64.04 L 79.66 61.39 L 80.51 64.04 Z M 81.36 66.71 L 83.16 66.71 L 80.71 59.52 L 78.61 59.52 L 76.17 66.71 L 77.96 66.71 L 78.33 65.58 L 81 65.58 Z M 81.36 66.71 "/><path fill="currentColor" d="M 14.1 39.7 L 14.1 0.98 L 2.75 0.98 L 2.75 50.62 L 31.81 50.62 L 31.81 39.7 Z M 59.77 15.17 L 59.77 18.5 C 57.44 15.81 53.95 14.18 49.2 14.18 C 39.91 14.18 32.24 22.34 32.24 32.89 C 32.24 43.47 39.91 51.63 49.2 51.63 C 53.95 51.63 57.44 50 59.77 47.29 L 59.77 50.62 L 70.41 50.62 L 70.41 15.17 Z M 51.34 41.56 C 46.43 41.56 42.88 38.23 42.88 32.89 C 42.88 27.58 46.43 24.25 51.34 24.25 C 56.21 24.25 59.77 27.58 59.77 32.89 C 59.77 38.23 56.21 41.56 51.34 41.56 Z M 97.38 14.18 C 92.63 14.18 89.13 15.81 86.8 18.5 L 86.8 0.98 L 76.17 0.98 L 76.17 50.62 L 86.8 50.62 L 86.8 47.29 C 89.13 50 92.63 51.63 97.38 51.63 C 106.67 51.63 114.33 43.47 114.33 32.89 C 114.33 22.34 106.67 14.18 97.38 14.18 Z M 95.23 41.56 C 90.36 41.56 86.8 38.23 86.8 32.89 C 86.8 27.58 90.36 24.25 95.23 24.25 C 100.14 24.25 103.7 27.58 103.7 32.89 C 103.7 38.23 100.14 41.56 95.23 41.56 Z M 127.82 37.15 L 152.98 37.15 C 153.26 35.81 153.41 34.39 153.41 32.89 C 153.41 22.18 145.75 14.18 135.39 14.18 C 124.2 14.18 116.54 22.34 116.54 32.89 C 116.54 43.47 124.05 51.63 136.18 51.63 C 142.9 51.63 148.17 49.15 151.63 44.32 C 148.78 42.69 145.93 41.05 143.11 39.42 C 141.7 40.99 139.22 42.11 136.31 42.11 C 132.41 42.11 129.16 40.85 127.82 37.15 Z M 127.6 29.21 C 128.58 25.61 131.28 23.61 135.33 23.61 C 138.52 23.61 141.7 25.1 142.84 29.21 Z M 157.39 50.62 L 168.03 50.62 L 168.03 0.98 L 157.39 0.98 Z M 207.48 0.98 L 170.61 0.98 L 170.61 11.91 L 183.36 11.91 L 183.36 50.62 L 194.7 50.62 L 194.7 11.91 L 207.48 11.91 Z M 229.4 15.17 L 229.4 18.5 C 227.07 15.81 223.57 14.18 218.82 14.18 C 209.54 14.18 201.87 22.34 201.87 32.89 C 201.87 43.47 209.54 51.63 218.82 51.63 C 223.57 51.63 227.07 50 229.4 47.29 L 229.4 50.62 L 240.04 50.62 L 240.04 15.17 Z M 220.97 41.56 C 216.06 41.56 212.51 38.23 212.51 32.89 C 212.51 27.58 216.06 24.25 220.97 24.25 C 225.84 24.25 229.4 27.58 229.4 32.89 C 229.4 38.23 225.84 41.56 220.97 41.56 Z M 271.82 15.17 L 271.82 18.78 C 269.49 15.88 266.09 14.18 261.46 14.18 C 251.41 14.18 244.02 22.41 244.02 32.18 C 244.02 41.98 251.41 50.21 261.46 50.21 C 266.09 50.21 269.49 48.5 271.82 45.59 L 271.82 50.07 C 271.82 55.1 268.75 57.65 263.82 57.65 C 259.13 57.65 257.08 55.68 255.73 53.2 C 252.69 54.94 249.66 56.69 246.66 58.44 C 249.91 64.25 256.07 67.04 263.45 67.04 C 272.89 67.04 282.18 62 282.18 50.07 L 282.18 15.17 Z M 263.24 40.41 C 258.21 40.41 254.66 37.08 254.66 32.18 C 254.66 27.31 258.21 23.98 263.24 23.98 C 268.27 23.98 271.82 27.31 271.82 32.18 C 271.82 37.08 268.27 40.41 263.24 40.41 "/></svg><div><h1>Estoque</h1><small>matérias-primas · etiquetas · baixas</small></div></div>
-  <span id="versao" title="Data e hora desta versão">Versão 09/10/2026 15:30</span>
+  <span id="versao" title="Data e hora desta versão">Versão 09/10/2026 19:15</span>
   <div class="h-dir"><small id="quem"></small><button id="btnSair" class="btn-h oculto" type="button">Sair</button></div>
 </header>
 <nav id="abas" class="abas oculto">
@@ -260,7 +274,8 @@
     <button data-aba="baixa" type="button" data-perm="mov">Baixa</button>
     <button data-aba="recebimento" type="button" data-perm="mov">Recebimento<span id="badgeRec" class="badge oculto"></span></button>
     <button data-aba="cadastrar" type="button" data-perm="admin">A cadastrar<span id="badgeCad" class="badge prov-badge oculto"></span></button>
-    <button data-aba="inventario" type="button" data-perm="admin">Inventário inicial</button>
+    <button data-aba="compras" type="button" data-perm="compras">Compras<span id="badgeCompras" class="badge oculto"></span></button>
+    <button data-aba="inventario" type="button" data-perm="admin" title="Inventário inicial">Inventário</button>
     <button data-aba="etiquetas" type="button" data-perm="mov">Etiquetas</button>
     <button data-aba="usuarios" type="button" data-perm="admin">Usuários</button>
   </nav>
@@ -357,6 +372,7 @@
             </div>
           </div>
         </div>
+        <div class="card" id="bMaterial"></div>
         <div class="card" id="bForm">
           <h3 style="margin-top:0">O que aconteceu?</h3>
           <div class="opcoes" id="bTipo">
@@ -448,6 +464,16 @@
       <div id="previa" class="oculto"></div>
     </div>
 
+    <!-- COMPRAS -->
+    <div id="aba-compras" class="oculto">
+      <div class="card">
+        <h2>O que comprar</h2>
+        <p class="sub" style="margin:0">Junta o que <b>o sistema sinalizou</b> (saldo no ponto de pedido ou abaixo, só para materiais com mínimo ou ponto de pedido cadastrado) e o que <b>alguém pediu</b> (botão 🛒 Solicitar compra no rolo ou no material). A compra continua sendo feita por fora; aqui é para enxergar e marcar.</p>
+        <label class="sub" style="display:flex;gap:6px;align-items:center;margin-top:8px;cursor:pointer"><input type="checkbox" id="cVerResolvidas" style="width:auto;margin:0"> Mostrar também comprados/cancelados (últimos 30 dias)</label>
+      </div>
+      <div id="cmLista"><div class="card sub">Carregando…</div></div>
+    </div>
+
     <!-- A CADASTRAR -->
     <div id="aba-cadastrar" class="oculto">
       <div class="card">
@@ -461,7 +487,7 @@
     <div id="aba-usuarios" class="oculto">
       <div class="card">
         <h2>Quem acessa o estoque</h2>
-        <div class="rolagem"><table><thead><tr><th>Nome</th><th class="esconde-cel">E-mail</th><th>Ativo</th><th>Admin</th><th>Movimenta</th><th>Vê custos</th><th></th></tr></thead><tbody id="uLista"></tbody></table></div>
+        <div class="rolagem"><table><thead><tr><th>Nome</th><th class="esconde-cel">E-mail</th><th>Ativo</th><th>Admin</th><th>Movimenta</th><th>Vê custos</th><th>Compras</th><th></th></tr></thead><tbody id="uLista"></tbody></table></div>
       </div>
       <div class="card">
         <h3 style="margin-top:0" id="uTitulo">Dar acesso</h3>
@@ -474,6 +500,7 @@
           <label><input type="checkbox" id="uAtivo" checked> Ativo</label>
           <label><input type="checkbox" id="uMov" checked> Dá baixa e recebe</label>
           <label><input type="checkbox" id="uCustos"> Vê custos</label>
+          <label><input type="checkbox" id="uCompras"> Vê compras</label>
           <label><input type="checkbox" id="uAdmin"> Admin</label>
         </div>
         <div class="acoes"><button id="uSalvar" class="prim" type="button">Salvar</button><button id="uLimpar" class="sec" type="button">Limpar</button></div>
@@ -617,9 +644,10 @@ async function iniciar() {
   }
   perfil = data;
   perfil.mov = perfil.pode_movimentar || perfil.admin;
+  perfil.compras = !!perfil.ve_compras || perfil.admin;
   $("quem").textContent = perfil.nome;
   document.querySelectorAll("[data-perm]").forEach(b => {
-    const ok = b.dataset.perm === "admin" ? perfil.admin : perfil.mov;
+    const ok = b.dataset.perm === "admin" ? perfil.admin : b.dataset.perm === "compras" ? perfil.compras : perfil.mov;
     b.classList.toggle("oculto", !ok);
   });
   document.querySelectorAll(".custo").forEach(el => el.classList.toggle("oculto", !perfil.ve_custos));
@@ -630,7 +658,7 @@ async function iniciar() {
   const dx = lsGet("estoque_dx"), dy = lsGet("estoque_dy");
   if (dx != null) $("eDx").value = dx; if (dy != null) $("eDy").value = dy;
   await carregarEstoque();
-  atualizarBadgeRec();
+  atualizarBadgeRec(); atualizarBadgeCompras();
   if (perfil.mov) { const k = $("kInsp").closest(".kpi"); k.classList.add("link"); k.title = "Abrir recebimentos"; k.onclick = () => irAba("recebimento"); }
   const pend = lsGet("estoque_v_pendente");
   if (pend && perfil.mov) {
@@ -645,9 +673,10 @@ async function iniciar() {
 // ======================= ABAS =======================
 function irAba(nome, abrirRec) {
   document.querySelectorAll("#abas button").forEach(b => b.classList.toggle("ativo", b.dataset.aba === nome));
-  ["estoque", "baixa", "recebimento", "cadastrar", "inventario", "etiquetas", "usuarios"].forEach(a => $("aba-" + a).classList.toggle("oculto", a !== nome));
+  ["estoque", "baixa", "recebimento", "cadastrar", "compras", "inventario", "etiquetas", "usuarios"].forEach(a => $("aba-" + a).classList.toggle("oculto", a !== nome));
   if (nome === "usuarios") carregarUsuarios();
   if (nome === "cadastrar") carregarCadastrar();
+  if (nome === "compras") carregarCompras();
   if (nome === "recebimento") { if (abrirRec) abrirRecebimento(abrirRec[0], abrirRec[1]); else carregarRecebimentos(); }
   if (nome === "estoque") carregarEstoque();
   window.scrollTo(0, 0);
@@ -723,7 +752,8 @@ function desenharLista() {
     const valor = c ? Number(c.custo_unid_estoque) * Math.max(0, Number(m.saldo || 0)) : null;
     return `<tr class="clicavel ${ehProv(m) ? "linha-prov" : ""}" data-id="${m.id}">
       <td><span class="farol f-${m.farol || "vermelho"}" title="${esc(m.farol || "")}"></span></td>
-      <td><b>${esc(m.nome_labeltag)}</b><div class="sub">${esc(m.codigo_interno)}${m.fornecedores ? " · " + esc(m.fornecedores.nome) : ""}${tagMat(m)}</div></td>
+      <td><div class="mat-linha">${m.foto_caminho ? `<img class="lista-foto" data-cam="${esc(miniDe(m.foto_caminho))}" data-full="${esc(m.foto_caminho)}" alt="" title="Ver foto">` : `<span class="lista-foto vazia" title="sem foto"></span>`}
+        <div><b>${esc(m.nome_labeltag)}</b><div class="sub">${esc(m.codigo_interno)}${m.fornecedores ? " · " + esc(m.fornecedores.nome) : ""}${tagMat(m)}</div></div></div></td>
       <td class="esconde-cel">${esc(m.categoria)}</td>
       <td class="num"><b>${fmt(m.saldo)}</b> ${u}${Number(m.em_inspecao) > 0 ? `<div class="sub">+${fmt(m.em_inspecao)} em inspeção</div>` : ""}</td>
       <td class="num esconde-cel">${m.volumes_disponiveis ?? 0}</td>
@@ -731,9 +761,10 @@ function desenharLista() {
       <td class="num custo ${perfil.ve_custos ? "" : "oculto"}">${c ? fmtR(c.custo_unid_estoque) + `<div class="sub">por ${u}</div>` : "–"}</td>
       <td class="num esconde-cel custo ${perfil.ve_custos ? "" : "oculto"}">${valor == null ? "–" : fmtR(valor)}</td></tr>`;
   }).join("") : `<tr><td colspan="8" class="sub">Nada encontrado.</td></tr>`;
+  preencherFotos($("listaMateriais"));
 }
 ["fBusca", "fCat", "fFarol"].forEach(id => $(id).addEventListener("input", desenharLista));
-$("listaMateriais").addEventListener("click", ev => { const tr = ev.target.closest("tr[data-id]"); if (tr) abrirMaterial(tr.dataset.id); });
+$("listaMateriais").addEventListener("click", ev => { if (ev.target.closest("img[data-cam]")) return; const tr = ev.target.closest("tr[data-id]"); if (tr) abrirMaterial(tr.dataset.id); });
 
 async function abrirMaterial(id) {
   const m = porId[id]; if (!m) return;
@@ -782,7 +813,7 @@ async function abrirMaterial(id) {
     </dl>`;
   const tabela = error ? `<div class="msg erro">${erroTxt(error)}</div>` : abertos.length ? `
     <div class="rolagem"><table><thead><tr><th>Código</th><th class="esconde-cel">Lote</th><th class="num">Etiqueta</th><th class="num">Saldo</th><th>Situação</th><th class="esconde-cel">Endereço</th></tr></thead><tbody>
-    ${abertos.map(v => `<tr data-volrow="${esc(v.codigo)}" style="cursor:pointer" title="Abrir o volume"><td style="white-space:nowrap">${qrMini(v.codigo)}<a href="${esc(linkVolume(v.codigo))}" data-vol="${esc(v.codigo)}">${esc(v.codigo)}</a></td>
+    ${abertos.map(v => `<tr data-volrow="${esc(v.codigo)}" style="cursor:pointer" title="Abrir o volume"><td style="white-space:nowrap">${qrMini(v.codigo)}<a href="${esc(linkVolume(v.codigo))}" data-vol="${esc(v.codigo)}">${esc(v.codigo)}</a> <span class="seq-tag" data-seq="${esc(v.codigo)}"></span></td>
       <td class="esconde-cel">${esc(v.lote || "–")}</td>
       <td class="num">${fmt(v.qtd_etiqueta)} ${UNID[v.unidade_volume]}${v.largura_mm ? " × " + fmt(v.largura_mm, 1) + " mm" : ""}</td>
       <td class="num">${fmt(v.saldo)} ${u}</td>
@@ -821,6 +852,7 @@ async function abrirMaterial(id) {
       ${perfil.admin ? `<button class="prim" type="button" data-acao="edit">Editar cadastro</button>` : ""}
       ${perfil.admin ? `<button class="sec" type="button" data-acao="inv">Inventário deste material</button>` : ""}
       ${perfil.mov && abertos.length ? `<button class="sec" type="button" data-acao="etq">Etiquetas deste material</button>` : ""}
+      <button class="sec" type="button" data-acao="compra">🛒 Solicitar compra</button>
     </div>`;
   preencherFotos(fundo);
   const inpFoto = fundo.querySelector("input[data-fotomat]");
@@ -843,6 +875,9 @@ async function abrirMaterial(id) {
   fundo.querySelectorAll("[data-abrirrec]").forEach(a => a.onclick = ev => {
     ev.preventDefault(); fechar(); irAba("recebimento", [a.dataset.abrirrec, a.dataset.abriritem]);
   });
+  fundo.querySelector('[data-acao="compra"]').onclick = () => solicitarCompra(m.id, null);
+  if (abertos.length) sb.from("vw_etiquetas").select("codigo,vol_seq,vol_total").in("codigo", abertos.map(v => v.codigo)).then(({ data }) =>
+    (data || []).forEach(x => { const el = fundo.querySelector(`[data-seq="${x.codigo}"]`); if (el && x.vol_total) el.textContent = `${x.vol_seq} de ${x.vol_total}`; }));
   const bEtq = fundo.querySelector('[data-acao="etq"]');
   if (bEtq) bEtq.onclick = () => { fechar(); irAba("etiquetas"); $("eMat").value = m.codigo_interno + " · " + m.nome_labeltag; $("eDesde").value = ""; listarEtiquetas(); };
 }
@@ -1089,22 +1124,28 @@ async function subirFoto(pasta, file) {
     if (error) throw error;
     return cam;
   }
-  const blob = await comprimirFoto(file);
-  const caminho = `${pasta}/${novoId()}.jpg`;
+  // foto de produto: mais caprichada (tela cheia com zoom) + miniatura para listas; nota/carga/rolo: mais leve
+  const produto = pasta.startsWith("materiais/");
+  const blob = await comprimirFoto(file, produto ? 2400 : 1400, produto ? 0.85 : 0.7);
+  const id = novoId(), caminho = `${pasta}/${id}.jpg`;
   const { error } = await sb.storage.from(BUCKET).upload(caminho, blob, { contentType: "image/jpeg", upsert: false });
   if (error) throw error;
+  if (produto) {
+    try { const mini = await comprimirFoto(file, 240, 0.7); await sb.storage.from(BUCKET).upload(miniDe(caminho), mini, { contentType: "image/jpeg", upsert: false }); } catch (_) { /* sem miniatura: a lista usa a foto inteira */ }
+  }
   return caminho;
 }
 const cacheUrl = {};
+const miniDe = c => String(c || "").replace(/\.jpg$/i, "_t.jpg");
 async function preencherFotos(raiz) {
   const imgs = [...raiz.querySelectorAll("img[data-cam]")];
-  const faltam = [...new Set(imgs.map(i => i.dataset.cam).filter(c => !cacheUrl[c]))];
+  const faltam = [...new Set(imgs.flatMap(i => [i.dataset.cam, i.dataset.full]).filter(c => c && !cacheUrl[c]))];
   if (faltam.length) {
     const { data, error } = await sb.storage.from(BUCKET).createSignedUrls(faltam, 3600);
     if (!error) (data || []).forEach(d => { if (d.signedUrl) cacheUrl[d.path] = d.signedUrl; });
   }
   imgs.forEach(i => {
-    const url = cacheUrl[i.dataset.cam];
+    const url = cacheUrl[i.dataset.cam] || (i.dataset.full && cacheUrl[i.dataset.full]);
     if (!url) { i.alt = "foto indisponível"; return; }
     if (/\.pdf$/i.test(i.dataset.cam)) { i.src = ICONE_PDF; i.dataset.url = url; i.style.objectFit = "contain"; i.style.background = "#fff"; i.title = (i.title || "") + " · PDF (clique para abrir)"; }
     else i.src = url;
@@ -1121,10 +1162,82 @@ function verFoto(src) {
 const ICONE_PDF = "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M10 3h20l10 10v32H10z" fill="#fff" stroke="#C0392B" stroke-width="2"/><path d="M30 3v10h10" fill="none" stroke="#C0392B" stroke-width="2"/><rect x="6" y="24" width="30" height="13" rx="2" fill="#C0392B"/><text x="21" y="34" font-family="Arial" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">PDF</text></svg>');
 document.addEventListener("click", ev => {
   const i = ev.target.closest("img[data-cam]"); if (!i || !i.src) return;
-  if (i.dataset.url) window.open(i.dataset.url, "_blank", "noopener"); else verFoto(i.src);
+  if (i.dataset.url) window.open(i.dataset.url, "_blank", "noopener");
+  else verFoto((i.dataset.full && cacheUrl[i.dataset.full]) || i.src);
 });
 const thumbs = lista => lista.length ? `<div class="fotos">${lista.map(f => `<img data-cam="${esc(f.caminho)}" alt="${esc(f.tipo)}" title="${esc(f.tipo.replace("_", " "))} · ${fmtData(f.enviado_em)}">`).join("")}</div>` : "";
-const btFoto = (attrs, txt = "📷 Foto", aceita = "image/*") => `<label class="bt-foto">${txt}<input type="file" accept="${aceita}" ${attrs}></label>`;
+const btFoto = (attrs, txt = "📷 Foto", aceita = "image/*", varias = false) => `<label class="bt-foto">${txt}<input type="file" accept="${aceita}" ${varias ? "multiple" : ""} ${attrs}></label>`;
+
+// ======================= COMPRAS =======================
+// automático: só materiais com mínimo ou ponto de pedido cadastrado e saldo no ponto ou abaixo
+const precisaComprar = m => (Number(m.ponto_pedido) > 0 || Number(m.estoque_minimo) > 0) && Number(m.saldo || 0) <= Math.max(Number(m.ponto_pedido) || 0, Number(m.estoque_minimo) || 0);
+async function atualizarBadgeCompras() {
+  if (!perfil || !perfil.compras) return;
+  const { data, error } = await sb.from("solicitacoes_compra").select("material_id").eq("status", "aberta");
+  const ids = new Set(materiais.filter(precisaComprar).map(m => m.id));
+  if (!error) (data || []).forEach(x => ids.add(x.material_id));
+  const n = ids.size;
+  $("badgeCompras").textContent = n || ""; $("badgeCompras").classList.toggle("oculto", !n);
+}
+async function solicitarCompra(materialId, volumeCodigo) {
+  const m = porId[materialId];
+  const obs = prompt(`🛒 Solicitar compra de ${m ? m.nome_labeltag : "material"}\n\nObservação (opcional): quantidade, urgência, para qual pedido…`, "");
+  if (obs === null) return false;
+  const { error } = await sb.from("solicitacoes_compra").insert({ material_id: materialId, volume_codigo: volumeCodigo || null, observacao: obs.trim() || null, solicitado_por: sessao.user.id });
+  if (error) { toast("Erro: " + erroTxt(error).replace(/<[^>]+>/g, "")); return false; }
+  toast("Pedido de compra registrado. Quem cuida das compras vai ver na aba Compras.");
+  atualizarBadgeCompras();
+  return true;
+}
+$("cVerResolvidas").addEventListener("change", () => carregarCompras());
+async function carregarCompras() {
+  const box = $("cmLista");
+  if (!materiais.length) await carregarEstoque();
+  let q = sb.from("solicitacoes_compra").select("*").order("solicitado_em", { ascending: false });
+  if ($("cVerResolvidas").checked) q = q.or(`status.eq.aberta,resolvido_em.gte.${new Date(Date.now() - 30 * 86400000).toISOString()}`); else q = q.eq("status", "aberta");
+  const { data: sols, error } = await q;
+  if (error) { box.innerHTML = `<div class="card"><div class="msg erro">${erroTxt(error)}</div></div>`; return; }
+  const porMat = {};
+  materiais.filter(precisaComprar).forEach(m => porMat[m.id] = { m, auto: true, sols: [] });
+  sols.forEach(x => { const m = porId[x.material_id]; if (!m) return; (porMat[m.id] = porMat[m.id] || { m, auto: precisaComprar(m), sols: [] }).sols.push(x); });
+  const linhas = Object.values(porMat).sort((a, b) => (b.sols.some(x => x.status === "aberta") - a.sols.some(x => x.status === "aberta")) || a.m.nome_labeltag.localeCompare(b.m.nome_labeltag, "pt-BR"));
+  if (!linhas.length) { box.innerHTML = `<div class="card"><div class="msg ok" style="margin:0">Nada para comprar agora.</div></div>`; atualizarBadgeCompras(); return; }
+  // última compra (preço só para quem vê custos)
+  const ids = linhas.map(l => l.m.id), ult = {};
+  const { data: ents } = await sb.from("vw_entradas").select("material_id,item_id,data_chegada,nf_numero,fornecedor").in("material_id", ids).order("data_chegada", { ascending: false });
+  (ents || []).forEach(e => { if (!ult[e.material_id]) ult[e.material_id] = e; });
+  const pr = {};
+  if (perfil.ve_custos) { const ii = Object.values(ult).map(e => e.item_id); if (ii.length) { const r = await sb.from("recebimento_custo").select("item_id,preco_nf,custo_unitario").in("item_id", ii); (r.data || []).forEach(x => pr[x.item_id] = x); } }
+  const st = { aberta: '<span class="tag em_inspecao">aberta</span>', comprada: '<span class="tag disponivel">comprada</span>', cancelada: '<span class="tag">cancelada</span>' };
+  box.innerHTML = linhas.map(({ m, auto, sols }) => {
+    const u = UNID[m.unidade_estoque], e = ult[m.id], p = e && pr[e.item_id], abertas = sols.filter(x => x.status === "aberta");
+    return `<div class="card compra" data-compra="${m.id}">
+      <div class="compra-cab">${m.foto_caminho ? `<img data-cam="${esc(m.foto_caminho)}" alt="" class="mini-foto">` : `<div class="mini-foto vazia">sem foto</div>`}
+        <div style="flex:1;min-width:0"><b>${esc(m.nome_labeltag)}</b>${tagMat(m)} <span class="sub">${esc(m.codigo_interno)} · ${esc(m.categoria)}</span>
+          <div class="compra-num"><span>Saldo <b class="${Number(m.saldo || 0) <= Number(m.estoque_minimo || 0) ? "atrasado" : ""}">${fmt(m.saldo || 0)} ${u}</b></span>
+            <span>Mínimo <b>${fmt(m.estoque_minimo)}</b></span><span>Ponto de pedido <b>${fmt(m.ponto_pedido)}</b></span>
+            ${Number(m.lead_time_dias) ? `<span>Prazo <b>${m.lead_time_dias} dias</b></span>` : ""}</div>
+          <div class="sub">Última compra: ${e ? `${fmtDia(String(e.data_chegada).slice(0, 10))} · NF ${esc(e.nf_numero)} · ${esc(e.fornecedor)}${perfil.ve_custos ? ` · <b>${p ? fmtR(p.custo_unitario) + "/" + u : "preço não lançado"}</b>` : ""}` : "—"}</div></div>
+        <div style="text-align:right">${auto ? '<span class="tag reprovado">⚠ no ponto de pedido</span>' : ""}</div></div>
+      ${sols.length ? `<div class="compra-sols">${sols.map(x => `<div class="compra-sol"><span>🙋 <b>${esc(nomes[x.solicitado_por] || "–")}</b> pediu em ${fmtData(x.solicitado_em)}${x.volume_codigo ? ` · rolo ${esc(x.volume_codigo)}` : ""}${x.observacao ? ` · <i>${esc(x.observacao)}</i>` : ""}</span>
+        <span>${st[x.status]}${x.status !== "aberta" && x.resolvido_por ? ` <span class="sub">por ${esc(nomes[x.resolvido_por] || "–")}</span>` : ""}</span></div>`).join("")}</div>` : ""}
+      <div class="acoes" style="margin-top:6px">
+        ${abertas.length ? `<button class="prim mini" type="button" data-cmp="comprada" data-ids="${abertas.map(x => x.id).join(",")}">✓ Comprado</button>
+          <button class="sec mini" type="button" data-cmp="cancelada" data-ids="${abertas.map(x => x.id).join(",")}">Cancelar pedido${abertas.length > 1 ? "s" : ""}</button>` : ""}
+        <button class="sec mini" type="button" data-cmpficha="${m.id}">Abrir material</button></div>
+    </div>`; }).join("");
+  preencherFotos(box);
+  atualizarBadgeCompras();
+}
+$("cmLista").addEventListener("click", async ev => {
+  const f = ev.target.closest("[data-cmpficha]"); if (f) return abrirMaterial(f.dataset.cmpficha);
+  const b = ev.target.closest("[data-cmp]"); if (!b) return;
+  b.disabled = true;
+  const { error } = await sb.rpc("est_fn_resolver_compra", { p_ids: b.dataset.ids.split(","), p_status: b.dataset.cmp });
+  if (error) { b.disabled = false; return toast("Erro: " + erroTxt(error).replace(/<[^>]+>/g, "")); }
+  toast(b.dataset.cmp === "comprada" ? "Marcado como comprado" : "Pedido cancelado");
+  carregarCompras();
+});
 
 // ======================= A CADASTRAR (provisórios por NF) =======================
 async function carregarCadastrar() {
@@ -1182,11 +1295,19 @@ async function atualizarBadgeRec() {
   b.textContent = count || "";
   b.classList.toggle("oculto", !count);
 }
+// o que ainda falta preencher numa nota (vermelho na lista): foto da NF, itens, volumes lançados
+function faltaPreencher(r) {
+  const it = r.recebimento_itens || [], f = [];
+  if (!(r.recebimento_fotos || []).some(x => x.tipo === "nota_fiscal")) f.push("foto da NF");
+  if (!it.length) f.push("itens da nota");
+  else if (it.some(i => i.status === "aguardando" && (i.volumes || []).length < Math.max(1, Number(i.qtd_volumes) || 0))) f.push("volumes");
+  return f;
+}
 async function carregarRecebimentos() {
   $("rLista").classList.remove("oculto"); $("rDetalhe").classList.add("oculto"); recAtual = null;
   const [pend, rec, dev] = await Promise.all([
     sb.from("vw_inspecao_pendente").select("*").order("data_chegada"),
-    sb.from("recebimentos").select("id,nf_numero,data_chegada,transportadora,fornecedores(nome),recebimento_itens(id,status)").order("data_chegada", { ascending: false }).limit(40),
+    sb.from("recebimentos").select("id,nf_numero,data_chegada,transportadora,fornecedores(nome),recebimento_itens(id,status,qtd_volumes,volumes(id)),recebimento_fotos(tipo)").order("data_chegada", { ascending: false }).limit(40),
     sb.from("vw_devolucoes_pendentes").select("*").order("decidido_em"),
   ]);
   const erro = [pend, rec, dev].find(r => r.error);
@@ -1197,15 +1318,16 @@ async function carregarRecebimentos() {
   const gl = Object.values(grupos);
   $("rPendentes").innerHTML = gl.length ? `<div class="rolagem"><table><thead><tr><th>NF</th><th>Fornecedor</th><th>Itens aguardando</th><th class="num">Dias</th><th class="esconde-cel">Pendências</th></tr></thead><tbody>
     ${gl.map(g => { const d = Math.max(...g.map(x => diasDesde(x.data_chegada))); const semNF = !g[0].tem_foto_nf; const ver = g.reduce((s, x) => s + Number(x.verificacoes_pendentes), 0);
-      return `<tr class="clicavel" data-rec="${g[0].recebimento_id}"><td><b>${esc(g[0].nf_numero)}</b><div class="sub">${fmtDia(String(g[0].data_chegada).slice(0, 10))}</div></td><td>${esc(g[0].fornecedor)}</td>
+      return `<tr class="clicavel ${semNF || g.some(x => !Number(x.volumes)) ? "linha-falta" : ""}" data-rec="${g[0].recebimento_id}"><td><b>${esc(g[0].nf_numero)}</b><div class="sub">${fmtDia(String(g[0].data_chegada).slice(0, 10))}</div></td><td>${esc(g[0].fornecedor)}</td>
       <td>${g.map(x => esc(x.nome_labeltag)).join("<br>")}</td>
       <td class="num ${d >= 2 ? "atrasado pisca" : ""}">${d}</td>
-      <td class="esconde-cel">${[semNF ? '<span class="tag reprovado">sem foto da NF</span>' : "", ver ? `<span class="tag em_inspecao">${ver} verificação(ões)</span>` : "", g.some(x => x.divergencia_nf) ? '<span class="tag reprovado">diverge da NF</span>' : "", g.some(x => !Number(x.volumes)) ? '<span class="tag">sem volumes</span>' : ""].join(" ")}</td></tr>`; }).join("")}
+      <td class="esconde-cel">${[semNF ? '<span class="tag reprovado">sem foto da NF</span>' : "", ver ? `<span class="tag em_inspecao">${ver} verificação(ões)</span>` : "", g.some(x => x.divergencia_nf) ? '<span class="tag reprovado">diverge da NF</span>' : "", g.some(x => !Number(x.volumes)) ? '<span class="tag reprovado">sem volumes</span>' : ""].join(" ")}</td></tr>`; }).join("")}
     </tbody></table></div>` : `<p class="sub">Nada aguardando inspeção. 👍</p>`;
   $("rRecentes").innerHTML = rec.data.length ? `<div class="rolagem"><table><thead><tr><th>NF</th><th>Fornecedor</th><th class="esconde-cel">Chegada</th><th>Situação</th></tr></thead><tbody>
     ${rec.data.map(r => { const it = r.recebimento_itens || []; const ag = it.filter(i => i.status === "aguardando").length;
-      return `<tr class="clicavel" data-rec="${r.id}"><td><b>${esc(r.nf_numero)}</b></td><td>${esc(r.fornecedores ? r.fornecedores.nome : "")}</td><td class="esconde-cel">${fmtData(r.data_chegada)}</td>
-      <td>${!it.length ? '<span class="tag">sem itens</span>' : ag ? `<span class="tag em_inspecao">${ag} de ${it.length} aguardando</span>` : `<span class="tag disponivel">concluído</span>`}</td></tr>`; }).join("")}
+      const falta = faltaPreencher(r);
+      return `<tr class="clicavel ${falta.length ? "linha-falta" : ""}" data-rec="${r.id}"><td><b>${esc(r.nf_numero)}</b></td><td>${esc(r.fornecedores ? r.fornecedores.nome : "")}</td><td class="esconde-cel">${fmtData(r.data_chegada)}</td>
+      <td>${falta.length ? `<span class="tag reprovado">⚠ falta: ${falta.join(", ")}</span>` : ag ? `<span class="tag em_inspecao">${ag} de ${it.length} aguardando conferência</span>` : `<span class="tag disponivel">✓ concluído</span>`}</td></tr>`; }).join("")}
     </tbody></table></div>` : `<p class="sub">Nenhum recebimento ainda.</p>`;
   $("rDevCard").classList.toggle("oculto", !dev.data.length);
   $("rDev").innerHTML = dev.data.map(d => `<div class="item-rec"><b>${esc(d.fornecedor)}</b> · NF ${esc(d.nf_numero)} · ${esc(d.nome_labeltag)}
@@ -1383,7 +1505,8 @@ async function abrirRecebimento(id, itemId) {
     <div class="card">
       ${passo(1, "Fotos da nota e da carga", temNF)}
       ${temNF ? "" : `<div class="msg aviso">Tire a <b>foto da nota fiscal</b>. Sem ela não dá para liberar os itens.</div>`}
-      <div class="acoes" style="margin-top:4px">${btFoto('data-fotorec="nota_fiscal"', "📷 Foto ou PDF da NF", "image/*,application/pdf,.pdf")}${btFoto('data-fotorec="carga"', "📷 Foto da carga")}</div>
+      <div class="acoes" style="margin-top:4px">${btFoto('data-fotorec="nota_fiscal"', "📷 Foto ou PDF da NF", "image/*,application/pdf,.pdf", true)}${btFoto('data-fotorec="carga"', "📷 Fotos da carga", "image/*", true)}${btFoto('data-fotorec="etiqueta_rolo"', "📷 Etiquetas dos rolos", "image/*", true)}</div>
+      <div class="sub" style="margin-top:4px">Pode escolher várias fotos de uma vez. Rolo sem etiqueta? Sem problema, a foto da etiqueta é opcional.</div>
       ${thumbs(fotosRec)}
     </div>
     <div class="card">
@@ -1423,7 +1546,7 @@ async function abrirRecebimento(id, itemId) {
       <div class="acoes" style="margin-top:8px"><button class="prim" type="button" data-r="add-item" data-depois="proximo">💾 Salvar item e gerar etiquetas</button>
         <button class="sec" type="button" data-r="add-item" data-depois="abrir">Salvar e abrir o item</button></div>
       <div id="raMsg"></div>
-      ${itens.length ? `<div class="linha" style="align-items:center;margin:16px 0 4px"><h3 style="margin:0">Espelho da nota (${itens.length} ${itens.length === 1 ? "item" : "itens"})</h3>
+      ${itens.length ? `</div><div class="card"><div class="linha" style="align-items:center;margin:0 0 4px"><h3 style="margin:0">Espelho da nota (${itens.length} ${itens.length === 1 ? "item" : "itens"})</h3>
         <div class="estreito"><button class="sec mini" type="button" data-r="etq-nf">🏷️ Imprimir etiquetas da nota</button></div></div>
         <div class="esp-cab"><span class="esp-tag"></span><span class="esp-cod">Código</span><span class="esp-desc">Descrição</span><span class="esp-qtd">Qtd. NF / conferida</span>${perfil.ve_custos ? `<span class="esp-val">Unitário</span><span class="esp-val">Total</span>` : `<span class="esp-val">Volumes</span><span class="esp-val">Situação</span>`}</div>
         ${itens.map(i => espelhoItem(i, precos[i.id], true)).join("")}
@@ -1496,11 +1619,13 @@ async function abrirRecebimento(id, itemId) {
 async function ultimasCompras(el) {
   const matId = el.dataset.ultcompras, itemId = el.dataset.item, m = porId[matId];
   const { data } = await sb.from("vw_entradas").select("*").eq("material_id", matId).neq("item_id", itemId).order("data_chegada", { ascending: false }).limit(5);
-  if (!data || !data.length) { el.innerHTML = `<div class="sub" style="margin-top:8px">📜 Primeira compra deste material no painel (sem histórico).</div>`; return; }
+  if (!data || !data.length) { el.innerHTML = `<div class="ult-resumo">📜 Última compra: <b>—</b>${perfil.ve_custos ? " · Preço: <b>—</b>" : ""} <span class="sub">(primeira compra deste material no painel)</span></div>`; return; }
   let pr = {};
   if (perfil.ve_custos) { const r = await sb.from("recebimento_custo").select("item_id,preco_nf,custo_unitario,valor_total_nf").in("item_id", data.map(e => e.item_id)); (r.data || []).forEach(x => pr[x.item_id] = x); }
   const u = m ? UNID[m.unidade_estoque] : "";
-  el.innerHTML = `<details class="ult" open><summary><b>📜 Últimas compras</b> <span class="sub">(${data.length})</span></summary>
+  const e0 = data[0], p0 = pr[e0.item_id];
+  el.innerHTML = `<div class="ult-resumo">📜 Última compra: <b>${fmtDia(String(e0.data_chegada).slice(0, 10))}</b> · NF <b>${esc(e0.nf_numero)}</b> · ${esc(e0.fornecedor)}${perfil.ve_custos ? ` · Preço: <b>${p0 && p0.preco_nf != null ? fmtR(p0.preco_nf) : "—"}</b>${p0 ? ` (${fmtR(p0.custo_unitario)}/${u})` : ""}` : ""}</div>
+    <details class="ult"><summary><b>Ver as últimas compras</b> <span class="sub">(${data.length})</span></summary>
     <div class="rolagem"><table><thead><tr><th>Data</th><th>NF</th><th class="esconde-cel">Fornecedor</th><th class="num">Qtd. NF</th><th class="num">Aprovado</th>${perfil.ve_custos ? `<th class="num">Preço NF</th><th class="num">Custo/${u}</th>` : ""}</tr></thead><tbody>
     ${data.map(e => { const p = pr[e.item_id]; return `<tr><td>${fmtDia(String(e.data_chegada).slice(0, 10))}</td><td>${esc(e.nf_numero)}</td><td class="esconde-cel">${esc(e.fornecedor)}</td>
       <td class="num">${fmt(e.qtd_nf)}</td><td class="num">${fmt(e.qtd_aprovada)} ${UNID[e.unidade_estoque]}</td>
@@ -1567,7 +1692,7 @@ function renderItemRec(i, fotos, preco, temNF) {
         <div class="estreito"><button class="prim" type="button" data-r="add-vol" data-id="${i.id}">Lançar</button></div></div>
     </div>` : "";
   const volsHtml = vols.length ? `<div class="rolagem"><table><thead><tr><th>Código</th><th>Etiqueta</th><th class="esconde-cel">Lote</th><th class="num">${uE}</th><th>Conferência</th>${ag ? "<th></th>" : ""}</tr></thead><tbody>
-    ${vols.map(v => `<tr class="${v.status === "reprovado" ? "linha-rep" : ""}"><td style="white-space:nowrap">${qrMini(v.codigo)}<b>${esc(v.codigo)}</b>${thumbs(fVol(v.id))}</td><td>${fmt(v.qtd_etiqueta)} ${UNID[m.unidade_volume]}${v.largura_mm ? " × " + fmt(v.largura_mm, 1) + " mm" : ""}</td>
+    ${vols.map(v => `<tr class="${v.status === "reprovado" ? "linha-rep" : ""}"><td style="white-space:nowrap">${qrMini(v.codigo)}<b>${esc(v.codigo)}</b> <span class="seq-tag">${vols.indexOf(v) + 1} de ${vols.length}</span>${thumbs(fVol(v.id))}</td><td>${fmt(v.qtd_etiqueta)} ${UNID[m.unidade_volume]}${v.largura_mm ? " × " + fmt(v.largura_mm, 1) + " mm" : ""}</td>
       <td class="esconde-cel">${esc(v.lote || "–")}</td><td class="num">${fmt(v.qtd_inicial)}</td>
       <td>${v.status === "reprovado" ? `<span class="tag reprovado">✗ reprovado</span><div class="sub">${esc(v.motivo || "")}</div>` : v.status === "em_inspecao" ? '<span class="tag disponivel">✓ OK</span>' : `<span class="tag ${v.status}">${STATUS[v.status]}</span>`}</td>
       ${ag ? `<td style="white-space:nowrap">${btFoto(`data-fotovol="${v.id}" data-item="${i.id}"`, "📷")}
@@ -1609,13 +1734,14 @@ function renderItemRec(i, fotos, preco, temNF) {
       ${["reprovado", "aprovado_parcial"].includes(i.status) ? `<div class="linha" style="margin-top:6px"><div><label>NF de devolução</label><input data-devnf="${i.id}" value="${esc(i.nf_devolucao || "")}"></div>
         <div><label>Fornecedor avisado em</label><input type="date" data-devdt="${i.id}" value="${i.fornecedor_avisado_em ? String(i.fornecedor_avisado_em).slice(0, 10) : ""}"></div>
         <div class="estreito"><button class="sec" type="button" data-devsalvar="${i.id}">Salvar</button></div></div>` : ""}`;
-  return `<div class="card item-card" data-item-card="${i.id}" data-mat="${m.id}">
-    ${cabMat}
-    ${passo(1, `${m.tipo_volume === "rolo" ? "Rolos" : "Volumes"} que chegaram — conforme a etiqueta do fornecedor`, vols.length > 0)}
-    ${form}${volsHtml}
-    ${passo(2, "Verificações", insp.length > 0 && !pend, insp.length ? `<span class="sub">${insp.length - pend} de ${insp.length}</span>` : "")}${chkHtml}
-    ${precoHtml}${decisao}
-    <div data-itemmsg="${i.id}"></div></div>`;
+  return `<div class="item-wrap" data-item-card="${i.id}" data-mat="${m.id}">
+    <div class="card item-card secao"><div class="secao-tit">Item da nota e material</div>${cabMat}</div>
+    <div class="card item-card secao">${passo(1, `${m.tipo_volume === "rolo" ? "Rolos" : "Volumes"} que chegaram — conforme a etiqueta do fornecedor`, vols.length > 0)}
+    ${form}${volsHtml}</div>
+    <div class="card item-card secao">${passo(2, "Verificações", insp.length > 0 && !pend, insp.length ? `<span class="sub">${insp.length - pend} de ${insp.length}</span>` : "")}${chkHtml}</div>
+    ${precoHtml ? `<div class="card item-card secao">${precoHtml}</div>` : ""}
+    <div class="card item-card secao">${decisao}
+    <div data-itemmsg="${i.id}"></div></div></div>`;
 }
 const msgItem = (id, tipo, t) => { const el = document.querySelector(`[data-itemmsg="${id}"]`); if (el) msgEm(el, tipo, t); else toast(t.replace(/<[^>]+>/g, "")); };
 $("rDetalhe").addEventListener("click", async ev => {
@@ -1800,10 +1926,14 @@ $("rDetalhe").addEventListener("change", async ev => {
     else if (inp.dataset.fotochk) Object.assign(reg, { tipo: "inspecao", inspecao_id: inp.dataset.fotochk, item_id: inp.dataset.item });
     else return;
     inp.closest("label").classList.add("enviando");
-    reg.caminho = await subirFoto(recAtual, file);
-    const { error } = await sb.from("recebimento_fotos").insert(reg);
-    if (error) throw error;
-    toast(ehPdf(file) ? "PDF da nota enviado" : "Foto enviada"); abrirRecebimento(recAtual);
+    const arqs = inp.dataset.fotorec ? [...inp.files] : [file];
+    if (arqs.length > 1 && arqs.some(f => ehPdf(f)) && inp.dataset.fotorec !== "nota_fiscal") throw new Error("PDF só é aceito para a nota fiscal.");
+    for (const f of arqs) {
+      const caminho = await subirFoto(recAtual, f);
+      const { error } = await sb.from("recebimento_fotos").insert(Object.assign({}, reg, { caminho }));
+      if (error) throw error;
+    }
+    toast(arqs.length > 1 ? `${arqs.length} arquivos enviados` : ehPdf(file) ? "PDF da nota enviado" : "Foto enviada"); abrirRecebimento(recAtual);
   } catch (e) { toast("Erro: " + (e.message || e)); const l = inp.closest && inp.closest("label"); if (l) l.classList.remove("enviando"); }
 });
 $("rDetalhe").addEventListener("input", ev => {
@@ -1914,6 +2044,31 @@ async function buscarVolume() {
   atualizarFormBaixa();
   $("bVolume").classList.remove("oculto");
   carregarMovsVolume();
+  fichaMaterialBaixa(v);
+}
+// ficha do material ao escanear: códigos, "1 de 4", saldo total, onde estão os outros rolos, pedir compra
+async function fichaMaterialBaixa(v) {
+  const box = $("bMaterial"), m = porId[v.material_id] || {}, u = UNID[v.unidade_estoque];
+  box.innerHTML = `<div class="sub">Carregando o material…</div>`;
+  const [et, outros] = await Promise.all([
+    sb.from("vw_etiquetas").select("vol_seq,vol_total,codigo_fornecedor,nf_numero,recebido_por").eq("codigo", v.codigo).maybeSingle(),
+    sb.from("vw_saldo_volumes").select("codigo,saldo,status,endereco,lote").eq("material_id", v.material_id).in("status", ["disponivel", "em_inspecao"]).order("codigo"),
+  ]);
+  const e = et.data || {}, todos = outros.data || [], lista = todos.filter(x => x.codigo !== v.codigo);
+  // saldo atualizado na hora: soma dos rolos disponíveis (inclui este)
+  const total = todos.filter(x => x.status === "disponivel").reduce((t, x) => t + Number(x.saldo || 0), 0);
+  if (e.vol_total) $("bInfo").textContent = `volume ${e.vol_seq} de ${e.vol_total} · ` + $("bInfo").textContent;
+  const farol = total <= Number(m.estoque_minimo || 0) ? "🔴 abaixo do mínimo" : total <= Number(m.ponto_pedido || 0) ? "🟡 no ponto de pedido" : "🟢 ok";
+  box.innerHTML = `<h3 style="margin-top:0">Material no estoque</h3>
+    <div class="compra-num" style="margin-top:0"><span>Interno <b>${esc(m.codigo_interno || "–")}</b></span>${e.codigo_fornecedor ? `<span>Fornecedor <b>${esc(e.codigo_fornecedor)}</b></span>` : ""}${e.nf_numero ? `<span>NF <b>${esc(e.nf_numero)}</b></span>` : ""}</div>
+    <div class="compra-num"><span>Saldo total <b>${fmt(total)} ${u}</b></span><span>${todos.length} rolo(s) abertos</span>${Number(m.estoque_minimo) ? `<span>Mínimo <b>${fmt(m.estoque_minimo)}</b></span>` : ""}${Number(m.ponto_pedido) ? `<span>Ponto de pedido <b>${fmt(m.ponto_pedido)}</b></span>` : ""}${Number(m.estoque_minimo) || Number(m.ponto_pedido) ? `<span>${farol}</span>` : ""}</div>
+    ${lista.length ? `<div class="rolagem" style="margin-top:6px"><table><thead><tr><th>Outros rolos</th><th class="num">Saldo</th><th>Onde está</th><th>Situação</th></tr></thead><tbody>
+      ${lista.map(x => `<tr data-outro="${esc(x.codigo)}" style="cursor:pointer"><td><b>${esc(x.codigo)}</b>${x.lote ? ` <span class="sub">lote ${esc(x.lote)}</span>` : ""}</td><td class="num">${fmt(x.saldo)} ${u}</td><td>${esc(x.endereco || "–")}</td><td><span class="tag ${x.status}">${STATUS[x.status]}</span></td></tr>`).join("")}
+    </tbody></table></div>` : `<div class="sub" style="margin-top:6px">Este é o único rolo aberto deste material.</div>`}
+    <div class="acoes" style="margin-top:8px"><button class="sec" type="button" data-bcompra>🛒 Solicitar compra</button><button class="sec" type="button" data-bficha>Ficha do material</button></div>`;
+  box.querySelector("[data-bcompra]").onclick = () => solicitarCompra(v.material_id, v.codigo);
+  box.querySelector("[data-bficha]").onclick = () => abrirMaterial(v.material_id);
+  box.querySelectorAll("[data-outro]").forEach(tr => tr.onclick = () => { $("bCodigo").value = tr.dataset.outro; buscarVolume(); window.scrollTo(0, 0); });
 }
 async function carregarMovsVolume() {
   const v = volumeAtual;
@@ -2161,10 +2316,12 @@ async function abrirQR(codigo) {
   const { data } = await sb.from("vw_etiquetas").select("*").eq("codigo", codigo).maybeSingle();
   const info = f.querySelector("[data-qinfo]"), bts = f.querySelector("[data-qbts]");
   if (!data) { info.textContent = ""; }
-  else info.innerHTML = `<div style="font-weight:700;color:var(--ink)">${esc(data.nome_labeltag)}</div>
-    <div>Cód. ${esc(data.codigo_interno)}${data.lote ? " · Lote " + esc(data.lote) : ""}</div>
-    <div>${medidaEtq(data)}</div>
-    <div><span class="tag ${data.status}">${STATUS[data.status] || data.status}</span>${data.nf_numero ? " · NF " + esc(data.nf_numero) : ""}</div>`;
+  else info.innerHTML = `${data.vol_total ? `<div style="font-size:18px;font-weight:800;color:var(--ink);margin:-4px 0 4px">volume ${data.vol_seq} de ${data.vol_total}</div>` : ""}
+    <div style="font-weight:700;color:var(--ink)">${esc(data.nome_labeltag)}</div>
+    <div>Interno <b>${esc(data.codigo_interno)}</b>${data.codigo_fornecedor ? ` · Fornecedor <b>${esc(data.codigo_fornecedor)}</b>` : ""}</div>
+    <div>${medidaEtq(data)}${data.lote ? " · Lote <b>" + esc(data.lote) + "</b>" : ""}</div>
+    <div>Entrada ${fmtDia(data.data_entrada)}${data.nf_numero ? " · NF " + esc(data.nf_numero) : ""}${data.recebido_por && nomes[data.recebido_por] ? " · receb. " + esc(nomes[data.recebido_por]) : ""}</div>
+    <div style="margin-top:4px"><span class="tag ${data.status}">${STATUS[data.status] || data.status}</span></div>`;
   const imprimivel = data && ["disponivel", "em_inspecao"].includes(data.status);
   const mat = data ? materiais.find(x => x.codigo_interno === data.codigo_interno) : null;
   const prov = mat && ehProv(mat);
@@ -2175,7 +2332,8 @@ async function abrirQR(codigo) {
     acoes.innerHTML = `${prov ? `<div class="msg prov" style="width:100%;margin:0">Material com <b>cadastro provisório</b>.</div>` : ""}
       ${perfil.admin && mat ? `<button class="${prov ? "prim" : "sec"}" type="button" data-qedit>✎ ${prov ? "Completar cadastro" : "Editar cadastro"} do material</button>` : ""}
       ${perfil.mov && data.recebimento_id ? `<button class="sec" type="button" data-qrec>${data.status === "em_inspecao" ? "✎ Corrigir no recebimento" : "Ver no recebimento"}</button>` : ""}
-      ${perfil.mov && data.status === "disponivel" ? `<button class="sec" type="button" data-qbaixa>Dar baixa</button>` : ""}`;
+      ${perfil.mov && data.status === "disponivel" ? `<button class="sec" type="button" data-qbaixa>Dar baixa</button>` : ""}
+      ${mat ? `<button class="sec" type="button" data-qcompra>🛒 Solicitar compra</button>` : ""}`;
     info.after(acoes);
     const be = acoes.querySelector("[data-qedit]");
     if (be) be.onclick = async () => {
@@ -2185,6 +2343,8 @@ async function abrirQR(codigo) {
     };
     const br = acoes.querySelector("[data-qrec]");
     if (br) br.onclick = () => { fecharTudo(); irAba("recebimento", [data.recebimento_id, data.recebimento_item_id]); };
+    const bc = acoes.querySelector("[data-qcompra]");
+    if (bc) bc.onclick = () => solicitarCompra(mat.id, codigo);
     const bb = acoes.querySelector("[data-qbaixa]");
     if (bb) bb.onclick = () => { fecharTudo(); irAba("baixa"); $("bCodigo").value = codigo; buscarVolume(); };
   }
@@ -2219,9 +2379,10 @@ function montarFolhas(etqs, pular, teste) {
         <div class="txt">
           <div class="cod">${esc(v.codigo)}${v.vol_total ? `<span class="seq">${v.vol_seq} de ${v.vol_total}</span>` : ""}</div>
           <div class="nome">${esc(v.nome_labeltag)}</div>
-          <div>Cód. ${esc(v.codigo_interno)} · Lote <b>${esc(v.lote || fmtDia(v.data_entrada))}</b></div>
+          <div>Interno <b>${esc(v.codigo_interno)}</b>${v.codigo_fornecedor ? ` · Fornecedor <b>${esc(v.codigo_fornecedor)}</b>` : ""}</div>
           <div class="med">${medidaEtq(v)}</div>
-          <div>${v.nf_numero ? "NF <b>" + esc(v.nf_numero) + "</b> · " : ""}Entrada ${fmtDia(v.data_entrada)}${v.recebido_por && nomes[v.recebido_por] ? " · Receb. " + esc(nomes[v.recebido_por]) : ""}</div>
+          ${v.lote ? `<div>Lote <b>${esc(v.lote)}</b></div>` : ""}
+          <div>Entrada <b>${fmtDia(v.data_entrada)}</b>${v.nf_numero ? " · NF <b>" + esc(v.nf_numero) + "</b>" : ""}${v.recebido_por && nomes[v.recebido_por] ? " · Receb. " + esc(nomes[v.recebido_por]) : ""}</div>
           ${v.fornecedor ? `<div>${esc(v.fornecedor)}</div>` : ""}
           <div class="rod">Label Tag · Estoque · aponte a câmera para dar baixa</div>
         </div></div>`;
@@ -2248,26 +2409,26 @@ let usuarios = [];
 async function carregarUsuarios() {
   if (!perfil || !perfil.admin) return;
   const { data, error } = await sb.rpc("est_fn_listar_perfis");
-  if (error) { $("uLista").innerHTML = `<tr><td colspan="7">${erroTxt(error)}</td></tr>`; return; }
+  if (error) { $("uLista").innerHTML = `<tr><td colspan="8">${erroTxt(error)}</td></tr>`; return; }
   usuarios = data;
   const s = b => b ? "✔" : "–";
   $("uLista").innerHTML = data.map((u, i) => `<tr><td>${esc(u.nome)}</td><td class="esconde-cel">${esc(u.email)}</td>
-    <td>${s(u.ativo)}</td><td>${s(u.admin)}</td><td>${s(u.pode_movimentar || u.admin)}</td><td>${s(u.ve_custos)}</td>
+    <td>${s(u.ativo)}</td><td>${s(u.admin)}</td><td>${s(u.pode_movimentar || u.admin)}</td><td>${s(u.ve_custos)}</td><td>${s(u.ve_compras || u.admin)}</td>
     <td><button class="sec" type="button" data-u="${i}" style="padding:6px 10px">Editar</button></td></tr>`).join("");
 }
 $("uLista").addEventListener("click", ev => {
   const b = ev.target.closest("[data-u]"); if (!b) return;
   const u = usuarios[+b.dataset.u];
   $("uEmail").value = u.email; $("uNome").value = u.nome; $("uAtivo").checked = u.ativo; $("uAdmin").checked = u.admin;
-  $("uMov").checked = u.pode_movimentar; $("uCustos").checked = u.ve_custos; $("uTitulo").textContent = "Editar acesso";
+  $("uMov").checked = u.pode_movimentar; $("uCustos").checked = u.ve_custos; $("uCompras").checked = !!u.ve_compras; $("uTitulo").textContent = "Editar acesso";
   $("uEmail").scrollIntoView({ behavior: "smooth", block: "center" });
 });
-$("uLimpar").onclick = () => { ["uEmail", "uNome"].forEach(id => $(id).value = ""); $("uAtivo").checked = true; $("uMov").checked = true; $("uCustos").checked = false; $("uAdmin").checked = false; $("uTitulo").textContent = "Dar acesso"; msg("uMsg", "", ""); };
+$("uLimpar").onclick = () => { ["uEmail", "uNome"].forEach(id => $(id).value = ""); $("uAtivo").checked = true; $("uMov").checked = true; $("uCustos").checked = false; $("uCompras").checked = false; $("uAdmin").checked = false; $("uTitulo").textContent = "Dar acesso"; msg("uMsg", "", ""); };
 $("uSalvar").onclick = async () => {
   $("uSalvar").disabled = true;
   try {
     const { error } = await sb.rpc("est_fn_salvar_perfil", { p_email: $("uEmail").value, p_nome: $("uNome").value,
-      p_ativo: $("uAtivo").checked, p_admin: $("uAdmin").checked, p_pode_movimentar: $("uMov").checked, p_ve_custos: $("uCustos").checked });
+      p_ativo: $("uAtivo").checked, p_admin: $("uAdmin").checked, p_pode_movimentar: $("uMov").checked, p_ve_custos: $("uCustos").checked, p_ve_compras: $("uCompras").checked });
     if (error) throw error;
     msg("uMsg", "ok", "Salvo."); carregarUsuarios();
   } catch (e) { msg("uMsg", "erro", erroTxt(e)); }
