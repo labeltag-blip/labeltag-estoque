@@ -118,6 +118,26 @@
   .passo .num{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;font-size:13px;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
   .passo .num.ok{background:var(--verde)}
   .item-card{border-left:5px solid var(--accent)}
+  .item-resumo{display:flex;gap:12px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0;cursor:pointer;background:#fff}
+  .item-resumo:hover{border-color:var(--accent);background:#F7F9FE}
+  .item-resumo>*{pointer-events:none}
+  .mini-foto{width:56px;height:56px;border-radius:8px;object-fit:cover;border:1px solid var(--line);flex:0 0 auto;background:#EEEAE1}
+  .mini-foto.vazia{display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted);text-align:center}
+  .mat-cab{display:flex;gap:16px;align-items:flex-start}
+  .mat-foto{flex:0 0 auto;text-align:center}
+  .mat-foto img,.mat-foto .vazia{width:130px;height:130px;border-radius:10px;object-fit:cover;border:1px solid var(--line);cursor:zoom-in;background:#EEEAE1}
+  .mat-foto .vazia{display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--muted);padding:8px;cursor:default;border-style:dashed}
+  .instr{background:var(--warn-bg);border-radius:10px;padding:10px 12px;margin-top:10px;color:var(--warn-ink)}
+  .instr-tit{font-weight:700;margin-bottom:4px}
+  .instr-txt{color:var(--ink)}
+  .resumo-item{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 6px}
+  .resumo-item>div{flex:1;min-width:130px;background:#F6F4EF;border-radius:8px;padding:8px 10px}
+  .resumo-item span{display:block}
+  .resumo-item b{font-variant-numeric:tabular-nums}
+  .form-rolo{background:#F3F6FD;border:1px solid #D5E0F7;border-radius:10px;padding:4px 12px 12px;margin-bottom:10px}
+  tr.linha-rep td{background:#FDF4F4}
+  details.add-chk{margin-top:10px;border:1px dashed var(--line);border-radius:10px;padding:8px 12px}
+  details.add-chk summary{cursor:pointer;font-weight:700;color:var(--accent)}
   /* ===== Etiquetas A4 ===== */
   #previa{background:#ccc;padding:12px;border-radius:10px;overflow:auto;max-height:70vh}
   .folha{width:210mm;height:297mm;background:#fff;position:relative;margin:0 auto 12px;overflow:hidden}
@@ -144,6 +164,8 @@
     header #versao{font-size:11px;top:8px;left:10px}
     .abas{display:grid;grid-template-columns:repeat(3,1fr);padding:0 12px;margin-top:12px}
     .chk{grid-template-columns:1fr}
+    .mat-cab{flex-direction:column;align-items:stretch}
+    .mat-foto img,.mat-foto .vazia{width:100%;height:180px}
     .chk .bts{justify-content:flex-start}
     .abas button{min-width:0;padding:9px 4px;font-size:14px}
   }
@@ -160,7 +182,7 @@
 <body>
 <header>
   <div class="marca"><svg class="logo" viewBox="0 0 285.46 69" role="img" aria-label="Label Tag"><title>Label Tag</title><path fill="currentColor" d="M 235.45 64.27 L 238.35 64.27 L 236.9 60.42 Z M 239.27 66.71 L 238.61 64.94 L 235.19 64.94 L 234.52 66.71 L 233.76 66.71 L 236.53 59.52 L 237.27 59.52 L 240.04 66.71 Z M 227.34 66.83 C 226.25 66.83 225.35 66.48 224.64 65.75 C 223.92 65.04 223.57 64.16 223.57 63.11 C 223.57 62.07 223.92 61.19 224.64 60.47 C 225.35 59.75 226.25 59.39 227.34 59.39 C 228 59.39 228.61 59.55 229.17 59.87 C 229.72 60.19 230.15 60.62 230.45 61.16 L 229.82 61.53 C 229.59 61.09 229.25 60.74 228.81 60.48 C 228.36 60.22 227.88 60.09 227.34 60.09 C 226.44 60.09 225.71 60.38 225.14 60.96 C 224.57 61.55 224.29 62.26 224.29 63.11 C 224.29 63.96 224.57 64.68 225.14 65.26 C 225.71 65.84 226.44 66.14 227.34 66.14 C 227.88 66.14 228.36 66 228.81 65.75 C 229.25 65.48 229.59 65.13 229.82 64.7 L 230.45 65.05 C 230.16 65.6 229.73 66.03 229.17 66.35 C 228.61 66.67 228 66.83 227.34 66.83 Z M 215.48 60.2 L 215.48 63.15 L 217.64 63.15 C 218.03 63.15 218.37 63.01 218.65 62.72 C 218.93 62.43 219.07 62.08 219.07 61.68 C 219.07 61.26 218.93 60.91 218.65 60.62 C 218.37 60.34 218.03 60.2 217.64 60.2 Z M 219.18 66.71 L 217.5 63.83 L 215.48 63.83 L 215.48 66.71 L 214.76 66.71 L 214.76 59.52 L 217.64 59.52 C 218.23 59.52 218.74 59.73 219.16 60.15 C 219.58 60.57 219.79 61.08 219.79 61.68 C 219.79 62.16 219.65 62.59 219.36 62.97 C 219.07 63.36 218.7 63.61 218.24 63.74 L 220 66.71 Z M 206.3 64.27 L 209.2 64.27 L 207.75 60.42 Z M 210.12 66.71 L 209.45 64.94 L 206.04 64.94 L 205.37 66.71 L 204.61 66.71 L 207.38 59.52 L 208.12 59.52 L 210.88 66.71 Z M 200.73 59.52 L 200.73 66.71 L 200.02 66.71 L 200.02 60.61 L 197.5 64.82 L 197.39 64.82 L 194.88 60.61 L 194.88 66.71 L 194.16 66.71 L 194.16 59.52 L 195.04 59.52 L 197.45 63.54 L 199.85 59.52 Z M 183.12 64.27 L 186.03 64.27 L 184.57 60.42 Z M 186.95 66.71 L 186.29 64.94 L 182.87 64.94 L 182.2 66.71 L 181.44 66.71 L 184.21 59.52 L 184.95 59.52 L 187.71 66.71 Z M 177.13 66.14 C 176.64 66.6 176 66.83 175.2 66.83 C 174.41 66.83 173.76 66.6 173.27 66.14 C 172.77 65.67 172.53 65.05 172.53 64.27 L 172.53 59.52 L 173.25 59.52 L 173.25 64.27 C 173.25 64.84 173.42 65.3 173.76 65.63 C 174.11 65.97 174.59 66.14 175.2 66.14 C 175.82 66.14 176.3 65.97 176.64 65.63 C 176.98 65.3 177.15 64.84 177.15 64.27 L 177.15 59.52 L 177.88 59.52 L 177.88 64.27 C 177.88 65.05 177.63 65.67 177.13 66.14 Z M 166.02 66.83 C 165.36 66.83 164.8 66.68 164.33 66.37 C 163.86 66.05 163.54 65.62 163.35 65.07 L 163.96 64.71 C 164.09 65.16 164.34 65.51 164.68 65.76 C 165.04 66.01 165.48 66.14 166.03 66.14 C 166.57 66.14 166.98 66.02 167.28 65.78 C 167.58 65.54 167.73 65.23 167.73 64.84 C 167.73 64.46 167.59 64.18 167.32 63.99 C 167.04 63.79 166.59 63.6 165.96 63.39 C 165.21 63.14 164.72 62.95 164.48 62.79 C 163.93 62.46 163.66 61.99 163.66 61.37 C 163.66 60.75 163.87 60.27 164.29 59.92 C 164.72 59.57 165.24 59.39 165.87 59.39 C 166.43 59.39 166.91 59.54 167.33 59.83 C 167.74 60.12 168.04 60.49 168.24 60.95 L 167.64 61.29 C 167.3 60.49 166.71 60.09 165.87 60.09 C 165.42 60.09 165.06 60.2 164.79 60.42 C 164.51 60.64 164.38 60.95 164.38 61.34 C 164.38 61.69 164.5 61.96 164.75 62.14 C 164.99 62.32 165.4 62.5 165.97 62.68 C 166.23 62.77 166.42 62.83 166.53 62.87 C 166.64 62.91 166.81 62.97 167.02 63.05 C 167.24 63.14 167.4 63.22 167.5 63.28 C 167.61 63.35 167.73 63.44 167.88 63.55 C 168.02 63.66 168.13 63.78 168.2 63.89 C 168.26 64 168.32 64.14 168.37 64.3 C 168.42 64.46 168.45 64.63 168.45 64.82 C 168.45 65.43 168.22 65.92 167.78 66.29 C 167.33 66.65 166.75 66.83 166.02 66.83 Z M 154.54 66.86 C 156.1 66.86 157.21 66.03 157.21 64.64 C 157.21 63.12 155.99 62.74 154.9 62.41 C 153.78 62.07 153.6 61.85 153.6 61.52 C 153.6 61.23 153.86 60.97 154.38 60.97 C 155.03 60.97 155.37 61.29 155.62 61.81 L 157.01 61 C 156.48 59.94 155.55 59.37 154.38 59.37 C 153.13 59.37 151.96 60.17 151.96 61.56 C 151.96 62.94 153.01 63.45 154.07 63.75 C 155.16 64.05 155.57 64.22 155.57 64.66 C 155.57 64.94 155.37 65.25 154.59 65.25 C 153.78 65.25 153.34 64.85 153.08 64.25 L 151.66 65.07 C 152.06 66.14 153.03 66.86 154.54 66.86 Z M 144.66 65.25 C 143.49 65.25 142.56 64.4 142.56 63.11 C 142.56 61.83 143.49 60.97 144.66 60.97 C 145.83 60.97 146.76 61.83 146.76 63.11 C 146.76 64.4 145.83 65.25 144.66 65.25 Z M 144.66 66.86 C 146.73 66.86 148.4 65.23 148.4 63.11 C 148.4 61 146.73 59.37 144.66 59.37 C 142.59 59.37 140.92 61 140.92 63.11 C 140.92 65.23 142.59 66.86 144.66 66.86 Z M 137.04 59.52 L 135.4 59.52 L 133.45 62.71 L 131.49 59.52 L 129.85 59.52 L 129.85 66.71 L 131.49 66.71 L 131.49 62.53 L 133.35 65.58 L 133.54 65.58 L 135.4 62.53 L 135.4 66.71 L 137.04 66.71 Z M 121.94 64.04 L 122.79 61.39 L 123.63 64.04 Z M 124.48 66.71 L 126.28 66.71 L 123.83 59.52 L 121.74 59.52 L 119.29 66.71 L 121.09 66.71 L 121.45 65.58 L 124.12 65.58 Z M 114.08 59.52 L 114.08 63.42 L 111.3 59.52 L 110.07 59.52 L 110.07 66.71 L 111.71 66.71 L 111.71 62.8 L 114.49 66.71 L 115.72 66.71 L 115.72 59.52 Z M 104.24 66.71 L 105.89 66.71 L 105.89 59.52 L 104.24 59.52 Z M 97.85 66.86 C 99.41 66.86 100.52 66.03 100.52 64.64 C 100.52 63.12 99.3 62.74 98.21 62.41 C 97.09 62.07 96.91 61.85 96.91 61.52 C 96.91 61.23 97.17 60.97 97.68 60.97 C 98.34 60.97 98.68 61.29 98.93 61.81 L 100.32 61 C 99.79 59.94 98.87 59.37 97.68 59.37 C 96.44 59.37 95.27 60.17 95.27 61.56 C 95.27 62.94 96.32 63.45 97.39 63.75 C 98.46 64.05 98.88 64.22 98.88 64.66 C 98.88 64.94 98.68 65.25 97.9 65.25 C 97.09 65.25 96.64 64.85 96.39 64.25 L 94.97 65.07 C 95.37 66.14 96.34 66.86 97.85 66.86 Z M 89.09 66.86 C 90.65 66.86 91.76 66.03 91.76 64.64 C 91.76 63.12 90.54 62.74 89.45 62.41 C 88.33 62.07 88.15 61.85 88.15 61.52 C 88.15 61.23 88.41 60.97 88.93 60.97 C 89.58 60.97 89.92 61.29 90.17 61.81 L 91.56 61 C 91.03 59.94 90.11 59.37 88.93 59.37 C 87.68 59.37 86.51 60.17 86.51 61.56 C 86.51 62.94 87.56 63.45 88.62 63.75 C 89.71 64.05 90.12 64.22 90.12 64.66 C 90.12 64.94 89.92 65.25 89.14 65.25 C 88.33 65.25 87.89 64.85 87.63 64.25 L 86.21 65.07 C 86.61 66.14 87.58 66.86 89.09 66.86 Z M 78.82 64.04 L 79.66 61.39 L 80.51 64.04 Z M 81.36 66.71 L 83.16 66.71 L 80.71 59.52 L 78.61 59.52 L 76.17 66.71 L 77.96 66.71 L 78.33 65.58 L 81 65.58 Z M 81.36 66.71 "/><path fill="currentColor" d="M 14.1 39.7 L 14.1 0.98 L 2.75 0.98 L 2.75 50.62 L 31.81 50.62 L 31.81 39.7 Z M 59.77 15.17 L 59.77 18.5 C 57.44 15.81 53.95 14.18 49.2 14.18 C 39.91 14.18 32.24 22.34 32.24 32.89 C 32.24 43.47 39.91 51.63 49.2 51.63 C 53.95 51.63 57.44 50 59.77 47.29 L 59.77 50.62 L 70.41 50.62 L 70.41 15.17 Z M 51.34 41.56 C 46.43 41.56 42.88 38.23 42.88 32.89 C 42.88 27.58 46.43 24.25 51.34 24.25 C 56.21 24.25 59.77 27.58 59.77 32.89 C 59.77 38.23 56.21 41.56 51.34 41.56 Z M 97.38 14.18 C 92.63 14.18 89.13 15.81 86.8 18.5 L 86.8 0.98 L 76.17 0.98 L 76.17 50.62 L 86.8 50.62 L 86.8 47.29 C 89.13 50 92.63 51.63 97.38 51.63 C 106.67 51.63 114.33 43.47 114.33 32.89 C 114.33 22.34 106.67 14.18 97.38 14.18 Z M 95.23 41.56 C 90.36 41.56 86.8 38.23 86.8 32.89 C 86.8 27.58 90.36 24.25 95.23 24.25 C 100.14 24.25 103.7 27.58 103.7 32.89 C 103.7 38.23 100.14 41.56 95.23 41.56 Z M 127.82 37.15 L 152.98 37.15 C 153.26 35.81 153.41 34.39 153.41 32.89 C 153.41 22.18 145.75 14.18 135.39 14.18 C 124.2 14.18 116.54 22.34 116.54 32.89 C 116.54 43.47 124.05 51.63 136.18 51.63 C 142.9 51.63 148.17 49.15 151.63 44.32 C 148.78 42.69 145.93 41.05 143.11 39.42 C 141.7 40.99 139.22 42.11 136.31 42.11 C 132.41 42.11 129.16 40.85 127.82 37.15 Z M 127.6 29.21 C 128.58 25.61 131.28 23.61 135.33 23.61 C 138.52 23.61 141.7 25.1 142.84 29.21 Z M 157.39 50.62 L 168.03 50.62 L 168.03 0.98 L 157.39 0.98 Z M 207.48 0.98 L 170.61 0.98 L 170.61 11.91 L 183.36 11.91 L 183.36 50.62 L 194.7 50.62 L 194.7 11.91 L 207.48 11.91 Z M 229.4 15.17 L 229.4 18.5 C 227.07 15.81 223.57 14.18 218.82 14.18 C 209.54 14.18 201.87 22.34 201.87 32.89 C 201.87 43.47 209.54 51.63 218.82 51.63 C 223.57 51.63 227.07 50 229.4 47.29 L 229.4 50.62 L 240.04 50.62 L 240.04 15.17 Z M 220.97 41.56 C 216.06 41.56 212.51 38.23 212.51 32.89 C 212.51 27.58 216.06 24.25 220.97 24.25 C 225.84 24.25 229.4 27.58 229.4 32.89 C 229.4 38.23 225.84 41.56 220.97 41.56 Z M 271.82 15.17 L 271.82 18.78 C 269.49 15.88 266.09 14.18 261.46 14.18 C 251.41 14.18 244.02 22.41 244.02 32.18 C 244.02 41.98 251.41 50.21 261.46 50.21 C 266.09 50.21 269.49 48.5 271.82 45.59 L 271.82 50.07 C 271.82 55.1 268.75 57.65 263.82 57.65 C 259.13 57.65 257.08 55.68 255.73 53.2 C 252.69 54.94 249.66 56.69 246.66 58.44 C 249.91 64.25 256.07 67.04 263.45 67.04 C 272.89 67.04 282.18 62 282.18 50.07 L 282.18 15.17 Z M 263.24 40.41 C 258.21 40.41 254.66 37.08 254.66 32.18 C 254.66 27.31 258.21 23.98 263.24 23.98 C 268.27 23.98 271.82 27.31 271.82 32.18 C 271.82 37.08 268.27 40.41 263.24 40.41 "/></svg><div><h1>Estoque</h1><small>matérias-primas · etiquetas · baixas</small></div></div>
-  <span id="versao" title="Data e hora desta versão">Versão 09/10/2026 11:16</span>
+  <span id="versao" title="Data e hora desta versão">Versão 09/10/2026 11:35</span>
   <div class="h-dir"><small id="quem"></small><button id="btnSair" class="btn-h oculto" type="button">Sair</button></div>
 </header>
 <nav id="abas" class="abas oculto">
@@ -556,7 +578,7 @@ async function carregarEstoque() {
   try {
     const reqs = [
       sb.from("vw_saldo_estoque").select("*"),
-      sb.from("materiais").select("id,codigo_interno,codigo_cigam,nome_labeltag,nome_fornecedor,codigo_fornecedor,categoria,tipo_volume,unidade_volume,unidade_estoque,unidade_compra,largura_mm,espessura_mm,acabamento,origem,fator_conversao,fornecedor_id,estoque_minimo,ponto_pedido,lead_time_dias,observacoes,foto_caminho,ativo,fornecedores(nome)").eq("ativo", true),
+      sb.from("materiais").select("id,codigo_interno,codigo_cigam,nome_labeltag,nome_fornecedor,codigo_fornecedor,categoria,tipo_volume,unidade_volume,unidade_estoque,unidade_compra,largura_mm,espessura_mm,acabamento,origem,fator_conversao,fornecedor_id,estoque_minimo,ponto_pedido,lead_time_dias,observacoes,foto_caminho,instrucoes_recebimento,ativo,fornecedores(nome)").eq("ativo", true),
       sb.from("vw_nomes").select("id,nome"),
       sb.from("fornecedores").select("id,nome,pais,cnpj,contato,ativo").order("nome"),
     ];
@@ -666,6 +688,7 @@ async function abrirMaterial(id) {
       <dt>Mínimo / ponto de pedido</dt><dd>${fmt(m.estoque_minimo)} / ${fmt(m.ponto_pedido)} ${u}</dd>
       ${c ? `<dt>Custo</dt><dd>${fmtR(c.custo_unid_estoque)} por ${u}${c.custo_ultima_compra ? " · última compra " + fmtR(c.custo_ultima_compra) : ""}</dd>` : ""}
       ${ref ? `<dt>AppSheet (referência)</dt><dd>${fmt(ref.saldo_atual)} (${esc(ref.unidade_cigam)})</dd>` : ""}
+      ${m.instrucoes_recebimento ? `<dt>O que cuidar</dt><dd>${esc(m.instrucoes_recebimento)}</dd>` : ""}
       ${m.observacoes ? `<dt>Observações</dt><dd>${esc(m.observacoes)}</dd>` : ""}
     </dl>`;
   const tabela = error ? `<div class="msg erro">${erroTxt(error)}</div>` : abertos.length ? `
@@ -801,6 +824,7 @@ function abrirEdicao(m, temVolumes) {
         <div class="estreito"><button class="sec" type="button" id="mChkAdd">+ Acrescentar</button></div></div>
       <p class="sub" style="margin:8px 0 0">Vale para os próximos recebimentos. O que já está em inspeção não muda. Salva na hora (não depende do botão Salvar).</p></fieldset>`}
     ${!novo && ehProv(m) ? `<div class="msg prov" style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="mConferido" style="width:auto"> <label for="mConferido" style="margin:0;color:inherit">Cadastro conferido: tirar a marca de <b>provisório</b></label></div>` : ""}
+    <label>O que cuidar no recebimento (aparece para quem recebe)</label><textarea id="mInstr" rows="2" placeholder="ex.: Tirar um pedaço de cada lote e testar a gravação no laser antes de guardar">${esc(m.instrucoes_recebimento || "")}</textarea>
     <label>Observações</label><textarea id="mObs" rows="2">${esc(((m.observacoes || "").replace(MARCA_PROV, "").trim()) || "")}</textarea>
     <label style="display:flex;gap:8px;align-items:center;color:var(--ink)"><input type="checkbox" id="mAtivo" style="width:auto" ${m.ativo !== false ? "checked" : ""}> Material ativo (desmarcado some das listas)</label>
     <div class="acoes"><button class="prim" type="button" id="mSalvar">${novo ? "Cadastrar" : "Salvar alterações"}</button></div>
@@ -897,6 +921,7 @@ function abrirEdicao(m, temVolumes) {
       origem: q("mOrig").value, espessura_mm: n("mEsp"), largura_mm: n("mLarg"), acabamento: v("mAcab") || null,
       unidade_compra: q("mUC").value, fator_conversao: n("mFator", 1),
       estoque_minimo: n("mMin", 0), ponto_pedido: n("mPP", 0), lead_time_dias: parseInt(v("mLead")) || 0,
+      instrucoes_recebimento: v("mInstr") || null,
       observacoes: ([v("mObs"), (!novo && ehProv(m) && !(q("mConferido") && q("mConferido").checked)) ? MARCA_PROV : ""].filter(Boolean).join(" · ")) || null, ativo: q("mAtivo").checked,
     };
     if (!temVolumes) Object.assign(reg, { tipo_volume: q("mTipo").value, unidade_volume: q("mUV").value, unidade_estoque: q("mUE").value });
@@ -1102,130 +1127,185 @@ function fatorItem(it) {
 }
 const itensRec = {};
 const passo = (n, titulo, ok, extra = "") => `<div class="passo"><span class="num ${ok ? "ok" : ""}">${ok ? "✓" : n}</span><h3>${titulo}</h3>${extra}</div>`;
-async function abrirRecebimento(id) {
+let itemAberto = null;
+const somaVol = (vs, campo) => vs.reduce((s, v) => s + Number(v[campo] || 0), 0);
+function resumoItem(i) {
+  const m = i.materiais, vs = i.volumes || [], bons = vs.filter(v => v.status !== "reprovado"), rep = vs.length - bons.length;
+  const uV = UNID[m.unidade_volume], uE = UNID[m.unidade_estoque], linear = m.unidade_volume === "m";
+  const rec = vs.length ? `${vs.length} ${esc(m.tipo_volume)}(s)${linear ? " · " + fmt(somaVol(vs, "qtd_etiqueta")) + " " + uV : ""} · ${fmt(somaVol(vs, "qtd_inicial"))} ${uE}` : "nada lançado";
+  return { rec, bons: `${bons.length} · ${fmt(somaVol(bons, "qtd_inicial"))} ${uE}`, rep };
+}
+async function abrirRecebimento(id, itemId) {
   const mesmo = recAtual === id, rolar = window.scrollY;
+  if (!mesmo) itemAberto = null;
+  if (itemId !== undefined) itemAberto = itemId;
+  const mudouTela = !mesmo || itemId !== undefined;
   recAtual = id;
   $("rLista").classList.add("oculto");
   const box = $("rDetalhe"); box.classList.remove("oculto");
   if (!mesmo) box.innerHTML = `<div class="card sub">Carregando…</div>`;
   const [r, it, ft] = await Promise.all([
     sb.from("recebimentos").select("*,fornecedores(nome)").eq("id", id).single(),
-    sb.from("recebimento_itens").select("*,materiais(id,codigo_interno,nome_labeltag,unidade_compra,unidade_volume,unidade_estoque,largura_mm,fator_conversao,tipo_volume),recebimento_inspecoes(*),volumes(id,codigo,lote,qtd_etiqueta,largura_mm,qtd_inicial,status,motivo)").eq("recebimento_id", id),
+    sb.from("recebimento_itens").select("*,materiais(id,codigo_interno,nome_labeltag,categoria,unidade_compra,unidade_volume,unidade_estoque,largura_mm,fator_conversao,tipo_volume,foto_caminho,instrucoes_recebimento,observacoes),recebimento_inspecoes(*),volumes(id,codigo,lote,qtd_etiqueta,largura_mm,qtd_inicial,status,motivo)").eq("recebimento_id", id),
     sb.from("recebimento_fotos").select("*").eq("recebimento_id", id).order("enviado_em"),
   ]);
   const erro = [r, it, ft].find(x => x.error);
   if (erro) { box.innerHTML = `<div class="card msg erro">${erroTxt(erro.error)}</div>`; return; }
   const rec = r.data, itens = it.data.sort((a, b) => a.materiais.nome_labeltag.localeCompare(b.materiais.nome_labeltag, "pt-BR")), fotos = ft.data;
   itens.forEach(i => itensRec[i.id] = i);
+  if (itemAberto && !itens.some(i => i.id === itemAberto)) itemAberto = null;
   let precos = {};
   if (perfil.ve_custos && itens.length) {
     const { data } = await sb.from("recebimento_custo").select("*").in("item_id", itens.map(i => i.id));
     (data || []).forEach(p => precos[p.item_id] = p);
   }
-  const fotosRec = fotos.filter(f => !f.item_id && !f.volume_id && !f.inspecao_id);
   const temNF = fotos.some(f => f.tipo === "nota_fiscal");
   const pend = itens.filter(i => i.status === "aguardando").length;
   const dias = diasDesde(rec.data_chegada);
-  const resumo = [
-    `<span class="tag ${temNF ? "disponivel" : "reprovado"}">${temNF ? "✓" : "✗"} foto da NF</span>`,
-    `<span class="tag ${itens.length ? "disponivel" : ""}">${itens.length} item(ns)</span>`,
-    itens.length ? `<span class="tag ${pend ? "em_inspecao" : "disponivel"}">${pend ? pend + " aguardando liberação" : "✓ tudo decidido"}</span>` : "",
-  ].join(" ");
-  box.innerHTML = `
-  <div class="card">
-    <button class="sec mini" type="button" data-r="voltar" style="margin-bottom:8px">← Recebimentos</button>
+  const cab = `<div class="card">
+    <button class="sec mini" type="button" data-r="${itemAberto ? "fechar-item" : "voltar"}" style="margin-bottom:8px">← ${itemAberto ? "Voltar para a NF " + esc(rec.nf_numero) : "Recebimentos"}</button>
     <h2 style="margin:0">NF ${esc(rec.nf_numero)} · ${esc(rec.fornecedores.nome)}</h2>
     <div class="sub">Chegada ${fmtData(rec.data_chegada)} · recebido por ${esc(nomes[rec.recebido_por] || "–")}${rec.transportadora ? " · " + esc(rec.transportadora) : ""}${pend ? ` · <span class="${dias >= 2 ? "atrasado pisca" : ""}">${dias} dia(s) aguardando</span>` : ""}</div>
     ${rec.observacao ? `<div class="sub">Obs.: ${esc(rec.observacao)}</div>` : ""}
-    <div style="margin-top:8px">${resumo}</div>
-  </div>
-  <div class="card">
-    ${passo(1, "Fotos da nota e da carga", temNF)}
-    ${temNF ? "" : `<div class="msg aviso">Tire a <b>foto da nota fiscal</b>. Sem ela não dá para liberar os itens.</div>`}
-    <div class="acoes" style="margin-top:4px">${btFoto('data-fotorec="nota_fiscal"', "📷 Foto da NF")}${btFoto('data-fotorec="carga"', "📷 Foto da carga")}</div>
-    ${thumbs(fotosRec)}
-  </div>
-  <div class="card">
-    ${passo(2, "Itens da nota", itens.length > 0)}
-    <p class="sub" style="margin:0 0 6px">Um item para cada linha da nota fiscal. Depois, em cada item, siga os passos 3 a 6.</p>
-    <div class="linha">
-      <div style="flex:3"><label>Material</label><input id="raMat" list="iMatLista" placeholder="digite o nome ou o código"></div>
-      <div><label>A NF vem em</label><select id="raUn">${UN_NF.map(([k, t]) => `<option value="${k}">${t}</option>`).join("")}</select></div>
-      <div><label>Quantidade na NF</label><input id="raQtd" inputmode="decimal"></div>
-      <div class="estreito"><button class="prim" type="button" data-r="add-item">+ Acrescentar</button></div></div>
-    <p class="sub" style="margin:8px 0 0">Material não está na lista? <a href="#" data-r="provisorio">Cadastrar provisório</a> (o administrador completa depois).</p>
-    <div id="raMsg"></div>
-  </div>
-  ${itens.map(i => renderItemRec(i, fotos, precos[i.id])).join("")}`;
+    <div style="margin-top:8px"><span class="tag ${temNF ? "disponivel" : "reprovado"}">${temNF ? "✓" : "✗"} foto da NF</span>
+      <span class="tag ${itens.length ? "disponivel" : ""}">${itens.length} item(ns)</span>
+      ${itens.length ? `<span class="tag ${pend ? "em_inspecao" : "disponivel"}">${pend ? pend + " aguardando liberação" : "✓ tudo decidido"}</span>` : ""}</div>
+  </div>`;
+  if (itemAberto) {
+    const i = itens.find(x => x.id === itemAberto);
+    box.innerHTML = cab + renderItemRec(i, fotos, precos[i.id], temNF);
+  } else {
+    const fotosRec = fotos.filter(f => !f.item_id && !f.volume_id && !f.inspecao_id);
+    box.innerHTML = cab + `
+    <div class="card">
+      ${passo(1, "Fotos da nota e da carga", temNF)}
+      ${temNF ? "" : `<div class="msg aviso">Tire a <b>foto da nota fiscal</b>. Sem ela não dá para liberar os itens.</div>`}
+      <div class="acoes" style="margin-top:4px">${btFoto('data-fotorec="nota_fiscal"', "📷 Foto da NF")}${btFoto('data-fotorec="carga"', "📷 Foto da carga")}</div>
+      ${thumbs(fotosRec)}
+    </div>
+    <div class="card">
+      ${passo(2, "Itens da nota", itens.length > 0)}
+      <p class="sub" style="margin:0 0 6px">Um item para cada linha da nota fiscal. Toque no item para lançar os rolos, conferir e liberar.</p>
+      <div class="linha">
+        <div style="flex:3"><label>Material</label><input id="raMat" list="iMatLista" placeholder="digite o nome ou o código"></div>
+        <div><label>A NF vem em</label><select id="raUn">${UN_NF.map(([k, t]) => `<option value="${k}">${t}</option>`).join("")}</select></div>
+        <div><label>Quantidade na NF</label><input id="raQtd" inputmode="decimal"></div>
+        <div class="estreito"><button class="prim" type="button" data-r="add-item">+ Acrescentar</button></div></div>
+      <p class="sub" style="margin:8px 0 0">Material não está na lista? <a href="#" data-r="provisorio">Cadastrar provisório</a> (o administrador completa depois).</p>
+      <div id="raMsg"></div>
+      <div style="margin-top:12px">${itens.map(i => {
+        const m = i.materiais, rs = resumoItem(i), insp = i.recebimento_inspecoes || [], ok = insp.filter(x => x.resultado).length;
+        const st = { aguardando: '<span class="tag em_inspecao">em inspeção</span>', aprovado: '<span class="tag disponivel">liberado</span>', aprovado_parcial: '<span class="tag em_inspecao">liberado parcial</span>', reprovado: '<span class="tag reprovado">reprovado</span>' }[i.status];
+        return `<div class="item-resumo" data-r="abrir-item" data-id="${i.id}">
+          ${m.foto_caminho ? `<img data-cam="${esc(m.foto_caminho)}" alt="" class="mini-foto">` : `<div class="mini-foto vazia">sem foto</div>`}
+          <div style="flex:1;min-width:0"><b>${esc(m.nome_labeltag)}</b>${porId[m.id] ? tagMat(porId[m.id]) : ""}
+            <div class="sub">NF: ${fmt(i.qtd_nf)} ${esc(nomeUnNf(i.unidade_nf || m.unidade_compra))} · recebido: ${rs.rec}${rs.rep ? ` · <span class="atrasado">${rs.rep} reprovado(s)</span>` : ""}</div>
+            <div class="sub">Verificações: ${insp.length ? ok + " de " + insp.length : "nenhuma"}</div></div>
+          <div style="text-align:right">${st}<div class="sub" style="margin-top:6px">abrir ›</div></div></div>`; }).join("")}</div>
+    </div>`;
+    $("raMat").addEventListener("change", () => {
+      const m = materialDoTexto($("raMat").value);
+      if (m && m.id !== box.dataset.ultMat) { box.dataset.ultMat = m.id; if (UN_NF.some(o => o[0] === m.unidade_compra)) $("raUn").value = m.unidade_compra; }
+    });
+  }
   preencherFotos(box);
-  window.scrollTo(0, mesmo ? rolar : 0);
-  // sugere a unidade do cadastro só quando o material muda (não desfaz a escolha do usuário)
-  let ultimoMatRa = null;
-  $("raMat").addEventListener("change", () => {
-    const m = materialDoTexto($("raMat").value);
-    if (m && m.id !== ultimoMatRa) { ultimoMatRa = m.id; if (UN_NF.some(o => o[0] === m.unidade_compra)) $("raUn").value = m.unidade_compra; }
-  });
+  window.scrollTo(0, mudouTela ? 0 : rolar);
 }
-function renderItemRec(i, fotos, preco) {
+function renderItemRec(i, fotos, preco, temNF) {
   const m = i.materiais, ag = i.status === "aguardando", linear = m.unidade_volume === "m";
   const uE = UNID[m.unidade_estoque], uc = i.unidade_nf || m.unidade_compra, uNf = nomeUnNf(uc);
   const vols = (i.volumes || []).sort((a, b) => a.codigo.localeCompare(b.codigo));
   const insp = (i.recebimento_inspecoes || []).sort((a, b) => a.ordem - b.ordem);
   const pend = insp.filter(x => x.obrigatorio && !x.resultado).length, nok = insp.filter(x => x.resultado === "nok").length;
-  const div = divergenciaItem(i);
-  const totalOk = vols.filter(v => v.status !== "reprovado").reduce((s, v) => s + Number(v.qtd_inicial), 0);
+  const div = divergenciaItem(i), rs = resumoItem(i);
   const stTag = { aguardando: '<span class="tag em_inspecao">em inspeção</span>', aprovado: '<span class="tag disponivel">liberado</span>', aprovado_parcial: '<span class="tag em_inspecao">liberado parcial</span>', reprovado: '<span class="tag reprovado">reprovado</span>' }[i.status];
   const fVol = id => fotos.filter(f => f.volume_id === id), fChk = id => fotos.filter(f => f.inspecao_id === id);
-  const volsHtml = vols.length ? `<div class="rolagem"><table><thead><tr><th>Código</th><th>Etiqueta</th><th class="esconde-cel">Lote</th><th class="num">Estoque</th><th>Situação</th>${ag ? "<th></th>" : ""}</tr></thead><tbody>
-    ${vols.map(v => `<tr><td style="white-space:nowrap"><b>${esc(v.codigo)}</b>${thumbs(fVol(v.id))}</td><td>${fmt(v.qtd_etiqueta)} ${UNID[m.unidade_volume]}${v.largura_mm ? " × " + fmt(v.largura_mm, 1) + " mm" : ""}</td>
-      <td class="esconde-cel">${esc(v.lote || "–")}</td><td class="num">${fmt(v.qtd_inicial)} ${uE}</td>
-      <td><span class="tag ${v.status}">${STATUS[v.status]}</span>${v.motivo && v.status === "reprovado" ? `<div class="sub">${esc(v.motivo)}</div>` : ""}</td>
+  const nome = m.tipo_volume === "rolo" ? "rolo" : m.tipo_volume;
+  // cabeçalho do material
+  const cabMat = `
+    <div class="mat-cab">
+      <div class="mat-foto">${m.foto_caminho ? `<img data-cam="${esc(m.foto_caminho)}" alt="foto do material">` : `<div class="vazia">sem foto do material</div>`}
+        <div style="margin-top:6px">${btFoto(`data-fotomatrec="${m.id}"`, m.foto_caminho ? "📷 Trocar foto" : "📷 Foto do material")}</div></div>
+      <div style="flex:1;min-width:0">
+        <div class="linha" style="align-items:flex-start;gap:6px"><div><h2 style="margin:0">${esc(m.nome_labeltag)}${porId[m.id] ? tagMat(porId[m.id]) : ""}</h2>
+          <div class="sub">${esc(m.codigo_interno)} · ${esc(m.categoria)}${m.largura_mm ? " · largura padrão " + fmt(m.largura_mm, 1) + " mm" : ""}</div></div>
+          <div class="estreito">${stTag}</div></div>
+        <div class="instr">
+          <div class="instr-tit">⚠️ O que cuidar neste material</div>
+          <div class="instr-txt">${m.instrucoes_recebimento ? esc(m.instrucoes_recebimento).replace(/\n/g, "<br>") : '<span class="sub">Nenhuma instrução ainda. Ex.: "Tirar um pedaço de cada lote e testar a gravação no laser antes de guardar."</span>'}</div>
+          <details style="margin-top:6px"><summary class="sub" style="cursor:pointer">✏️ ${m.instrucoes_recebimento ? "Editar" : "Escrever"} instruções</summary>
+            <textarea data-instr="${m.id}" rows="3" style="margin-top:6px">${esc(m.instrucoes_recebimento || "")}</textarea>
+            <div class="acoes" style="margin-top:6px"><button class="sec mini" type="button" data-r="instr-salvar" data-id="${m.id}">Salvar instruções</button><span class="sub" style="align-self:center">vale para todos os próximos recebimentos deste material</span></div></details>
+        </div>
+      </div>
+    </div>
+    <div class="resumo-item">
+      <div><span class="sub">Na nota</span><b>${fmt(i.qtd_nf)} ${esc(uNf)}</b></div>
+      <div><span class="sub">Recebido</span><b>${rs.rec}</b></div>
+      <div><span class="sub">Bons</span><b>${rs.bons}</b></div>
+      ${rs.rep ? `<div><span class="sub">Reprovados</span><b class="atrasado">${rs.rep}</b></div>` : ""}
+    </div>
+    ${ag ? `<div class="linha" style="margin-top:4px"><div class="estreito"><label>A NF vem em</label><select data-unnf="${i.id}">${UN_NF.map(([k, t]) => `<option value="${k}" ${k === uc ? "selected" : ""}>${t}</option>`).join("")}</select></div>
+      <div class="estreito"><label>Quantidade na NF</label><input data-qtdnf="${i.id}" inputmode="decimal" value="${numBR(i.qtd_nf)}" style="width:120px"></div></div>` : ""}
+    ${div ? `<div class="msg aviso">Diferença em relação à nota: ${div}</div>` : ""}`;
+  // rolos
+  const form = ag ? `<div class="form-rolo">
+      <div class="linha">
+        <div><label>${linear ? "Metros na etiqueta do " + esc(nome) : UNID_ETIQ[m.unidade_volume] + " na etiqueta"}</label><input data-vq="${i.id}" inputmode="decimal"></div>
+        ${linear ? `<div><label>Largura do ${esc(nome)} (mm)</label><input data-vlarg="${i.id}" inputmode="decimal" value="${m.largura_mm ? numBR(m.largura_mm) : ""}"></div>` : ""}
+        <div><label>Lote</label><input data-vlote="${i.id}"></div>
+        <div class="estreito"><label>Nº de ${esc(nome)}s iguais</label><input data-vn="${i.id}" type="number" min="1" max="200" value="1" style="width:100px"></div>
+      </div>
+      <div class="linha" style="margin-top:8px;align-items:center"><div class="conv" data-vprev="${i.id}" style="margin:0">Preencha a etiqueta para ver a conta.</div>
+        <div class="estreito"><button class="prim" type="button" data-r="add-vol" data-id="${i.id}">Lançar</button></div></div>
+    </div>` : "";
+  const volsHtml = vols.length ? `<div class="rolagem"><table><thead><tr><th>Código</th><th>Etiqueta</th><th class="esconde-cel">Lote</th><th class="num">${uE}</th><th>Conferência</th>${ag ? "<th></th>" : ""}</tr></thead><tbody>
+    ${vols.map(v => `<tr class="${v.status === "reprovado" ? "linha-rep" : ""}"><td style="white-space:nowrap"><b>${esc(v.codigo)}</b>${thumbs(fVol(v.id))}</td><td>${fmt(v.qtd_etiqueta)} ${UNID[m.unidade_volume]}${v.largura_mm ? " × " + fmt(v.largura_mm, 1) + " mm" : ""}</td>
+      <td class="esconde-cel">${esc(v.lote || "–")}</td><td class="num">${fmt(v.qtd_inicial)}</td>
+      <td>${v.status === "reprovado" ? `<span class="tag reprovado">✗ reprovado</span><div class="sub">${esc(v.motivo || "")}</div>` : v.status === "em_inspecao" ? '<span class="tag disponivel">✓ OK</span>' : `<span class="tag ${v.status}">${STATUS[v.status]}</span>`}</td>
       ${ag ? `<td style="white-space:nowrap">${btFoto(`data-fotovol="${v.id}" data-item="${i.id}"`, "📷")}
-        ${v.status === "reprovado" ? `<button class="sec mini" type="button" data-r="desrep-vol" data-id="${v.id}" title="Desfazer reprovação">↺</button>` : `<button class="perigo mini" type="button" data-r="rep-vol" data-id="${v.id}" title="Reprovar este volume">Reprovar</button>`}
-        <button class="sec mini" type="button" data-r="del-vol" data-id="${v.id}" title="Remover (lançado errado)">✕</button></td>` : ""}</tr>`).join("")}
-    </tbody></table></div>` : ag ? `<p class="sub" style="margin:0">Lance cada ${esc(m.tipo_volume)} que chegou, com a medida da <b>etiqueta do fornecedor</b>.</p>` : "";
-  const addVol = ag ? `<div class="linha" style="margin-top:8px">
-      <div><label>${UNID_ETIQ[m.unidade_volume]}</label><input data-vq="${i.id}" inputmode="decimal"></div>
-      ${linear ? `<div><label>Largura (mm)</label><input data-vlarg="${i.id}" inputmode="decimal" value="${m.largura_mm ? numBR(m.largura_mm) : ""}"></div>` : ""}
-      <div><label>Lote</label><input data-vlote="${i.id}"></div>
-      <div class="estreito"><label>Quantos iguais</label><input data-vn="${i.id}" type="number" min="1" max="200" value="1" style="width:90px"></div>
-      <div class="estreito"><button class="sec" type="button" data-r="add-vol" data-id="${i.id}">+ Volume</button></div></div>` : "";
-  const chkHtml = insp.length ? insp.map(x => `<div class="chk">
-      <div><b>${esc(x.descricao)}</b>${x.obrigatorio ? ' <span class="sub">(obrigatória)</span>' : ""}
+        ${v.status === "reprovado" ? `<button class="sec mini" type="button" data-r="desrep-vol" data-id="${v.id}">↺ Desfazer</button>` : `<button class="perigo mini" type="button" data-r="rep-vol" data-id="${v.id}">✗ Reprovar</button>`}
+        <button class="sec mini" type="button" data-r="del-vol" data-id="${v.id}" title="Apagar (lançado errado)">🗑</button></td>` : ""}</tr>`).join("")}
+    </tbody></table></div>${ag ? '<p class="sub" style="margin:6px 0 0">Todo ' + esc(nome) + ' entra como ✓ OK. Só mexa no que tiver problema.</p>' : ""}` : "";
+  // verificações
+  const chkHtml = (insp.length ? insp.map(x => `<div class="chk">
+      <div><b>${esc(x.descricao)}</b>${x.obrigatorio ? ' <span class="sub">(obrigatória)</span>' : ' <span class="sub">(opcional)</span>'}
         ${x.feito_em ? `<div class="sub">${esc(nomes[x.feito_por] || "")} · ${fmtData(x.feito_em)}</div>` : ""}
         ${ag ? `<input data-chkobs="${x.id}" value="${esc(x.observacao || "")}" placeholder="observação${x.resultado === "nok" ? " (obrigatória no NOK)" : ""}" style="margin-top:6px">` : x.observacao ? `<div class="sub">${esc(x.observacao)}</div>` : ""}
         ${thumbs(fChk(x.id))}</div>
       <div class="bts">${ag ? ["ok", "nok", "na"].map(v => `<button type="button" class="bt-r ${x.resultado === v ? "on-" + v : ""}" data-r="chk" data-id="${x.id}" data-v="${v}">${{ ok: "OK", nok: "NOK", na: "N/A" }[v]}</button>`).join("") + btFoto(`data-fotochk="${x.id}" data-item="${i.id}"`, "📷")
         : `<span class="tag ${x.resultado === "ok" ? "disponivel" : x.resultado === "nok" ? "reprovado" : ""}">${{ ok: "OK", nok: "NOK", na: "N/A" }[x.resultado] || "–"}</span>`}</div></div>`).join("")
-    : `<p class="sub" style="margin:0">Nenhuma verificação cadastrada para este material.${perfil.admin ? " Cadastre em Estoque → material → Editar cadastro." : ""}</p>`;
+    : `<p class="sub" style="margin:0">Nenhuma verificação para este material.</p>`)
+    + (ag ? `<details class="add-chk" ${insp.length ? "" : "open"}><summary>+ Acrescentar verificação</summary>
+      <div class="linha" style="margin-top:6px"><div style="flex:3"><label>O que verificar</label><input data-chkdesc="${i.id}" placeholder="ex.: Testar gravação no laser · Conferir largura · Testar aplicação"></div>
+        <div class="estreito"><label style="display:flex;gap:6px;align-items:center;color:var(--ink)"><input type="checkbox" data-chkobr="${i.id}" checked style="width:auto"> Obrigatória</label></div></div>
+      <label style="display:flex;gap:6px;align-items:center;color:var(--ink);margin-top:8px"><input type="checkbox" data-chkguardar="${i.id}" checked style="width:auto"> Guardar para os próximos recebimentos deste material</label>
+      <div class="acoes" style="margin-top:6px"><button class="sec" type="button" data-r="add-chk" data-id="${i.id}">Acrescentar</button></div></details>` : "");
   const fat = fatorItem(i);
-  const precoHtml = perfil.ve_custos ? `${passo(5, "Preço desta compra", !!preco, '<span class="sub">só quem vê custos</span>')}
+  const precoHtml = perfil.ve_custos ? `${passo(3, "Preço desta compra", !!preco, '<span class="sub">só quem vê custos</span>')}
     <div class="linha"><div><label>Preço por ${esc(uNf)} (como na NF)</label><input data-preco="${i.id}" inputmode="decimal" value="${preco && preco.preco_nf != null ? numBR(preco.preco_nf) : ""}"></div>
       <div style="align-self:center;padding-top:22px"><span class="sub" data-precoconv="${i.id}">${preco ? "= " + fmtR(preco.custo_unitario) + " por " + uE : fat == null ? "lance os volumes para calcular o custo por " + uE : ""}</span></div>
       <div class="estreito"><label style="display:flex;gap:6px;align-items:center;color:var(--ink)"><input type="checkbox" data-precocad="${i.id}" checked style="width:auto"> Atualizar custo do cadastro</label></div>
       <div class="estreito"><button class="sec" type="button" data-r="preco" data-id="${i.id}">Salvar preço</button></div></div>` : "";
-  const nLib = perfil.ve_custos ? 6 : 5;
+  const nLib = perfil.ve_custos ? 4 : 3;
+  const bloqueios = [!temNF ? "falta a <b>foto da NF</b>" : "", !vols.length ? "lance os " + esc(nome) + "s" : "", pend ? `faltam <b>${pend}</b> verificação(ões) obrigatória(s)` : ""].filter(Boolean);
   const decisao = ag ? `${passo(nLib, "Liberar para o estoque", false)}
-    ${!vols.length ? `<div class="msg aviso">Lance os volumes (passo 3) antes de liberar.</div>` : pend ? `<div class="msg aviso">Faltam ${pend} verificação(ões) obrigatória(s) (passo 4).</div>` : ""}
+    ${bloqueios.length ? `<div class="msg aviso">Antes de liberar: ${bloqueios.join(" · ")}.${!temNF ? `<div style="margin-top:6px">${btFoto('data-fotorec="nota_fiscal"', "📷 Tirar foto da NF agora")}</div>` : ""}</div>` : `<div class="msg ok">Tudo conferido. Os ${esc(nome)}s ✓ OK entram no estoque ao liberar.</div>`}
     ${nok ? `<label>Justificativa para liberar mesmo com NOK</label><input data-just="${i.id}">` : ""}
     <div class="acoes"><button class="prim" type="button" data-r="aprovar" data-id="${i.id}">✓ Aprovar e liberar</button>
       <button class="perigo" type="button" data-r="reprovar" data-id="${i.id}">Reprovar item inteiro</button>
       ${!vols.length ? `<button class="sec" type="button" data-r="del-item" data-id="${i.id}">Remover item</button>` : ""}</div>`
     : `${passo(nLib, "Liberar para o estoque", i.status !== "reprovado")}
       <div class="msg ${i.status === "reprovado" ? "erro" : "ok"}">Decidido por ${esc(nomes[i.decidido_por] || "–")} em ${fmtData(i.decidido_em)}${i.decisao_obs ? " · " + esc(i.decisao_obs) : ""}</div>
-      ${vols.some(v => v.status === "disponivel") ? `<div class="acoes"><button class="prim" type="button" data-r="etq" data-id="${i.id}">🏷️ Imprimir etiquetas dos volumes liberados</button></div>` : ""}
+      ${vols.some(v => v.status === "disponivel") ? `<div class="acoes"><button class="prim" type="button" data-r="etq" data-id="${i.id}">🏷️ Imprimir etiquetas dos ${esc(nome)}s liberados</button></div>` : ""}
       ${["reprovado", "aprovado_parcial"].includes(i.status) ? `<div class="linha" style="margin-top:6px"><div><label>NF de devolução</label><input data-devnf="${i.id}" value="${esc(i.nf_devolucao || "")}"></div>
         <div><label>Fornecedor avisado em</label><input type="date" data-devdt="${i.id}" value="${i.fornecedor_avisado_em ? String(i.fornecedor_avisado_em).slice(0, 10) : ""}"></div>
         <div class="estreito"><button class="sec" type="button" data-devsalvar="${i.id}">Salvar</button></div></div>` : ""}`;
   return `<div class="card item-card" data-item-card="${i.id}" data-mat="${m.id}">
-    <div class="linha" style="align-items:flex-start"><div><h2 style="margin:0">${esc(m.nome_labeltag)}${porId[m.id] ? tagMat(porId[m.id]) : ""}</h2>
-      <div class="sub">${esc(m.codigo_interno)} · NF: ${fmt(i.qtd_nf)} ${esc(uNf)} · ${vols.length} volume(s) · ${fmt(totalOk)} ${uE} bons</div></div>
-      <div class="estreito">${stTag}</div></div>
-    ${ag ? `<div class="linha" style="margin-top:6px"><div class="estreito"><label>A NF vem em</label><select data-unnf="${i.id}">${UN_NF.map(([k, t]) => `<option value="${k}" ${k === uc ? "selected" : ""}>${t}</option>`).join("")}</select></div>
-      <div class="estreito"><label>Quantidade na NF</label><input data-qtdnf="${i.id}" inputmode="decimal" value="${numBR(i.qtd_nf)}" style="width:120px"></div></div>` : ""}
-    ${div ? `<div class="msg aviso">Diferença em relação à nota: ${div}</div>` : ""}
-    ${passo(3, "Volumes recebidos", vols.length > 0)}${volsHtml}${addVol}
-    ${passo(4, "Verificações", insp.length > 0 && !pend, insp.length ? `<span class="sub">${insp.length - pend} de ${insp.length}</span>` : "")}${chkHtml}
+    ${cabMat}
+    ${passo(1, `${m.tipo_volume === "rolo" ? "Rolos" : "Volumes"} que chegaram — conforme a etiqueta do fornecedor`, vols.length > 0)}
+    ${form}${volsHtml}
+    ${passo(2, "Verificações", insp.length > 0 && !pend, insp.length ? `<span class="sub">${insp.length - pend} de ${insp.length}</span>` : "")}${chkHtml}
     ${precoHtml}${decisao}
     <div data-itemmsg="${i.id}"></div></div>`;
 }
@@ -1240,12 +1320,26 @@ $("rDetalhe").addEventListener("click", async ev => {
       const m = materialDoTexto($("raMat").value), q = num($("raQtd").value);
       if (!m) return msgEm($("raMsg"), "erro", "Escolha o material na lista.");
       if (!(q > 0)) return msgEm($("raMsg"), "erro", "Informe a quantidade da NF.");
-      const { error } = await sb.from("recebimento_itens").insert({ recebimento_id: recAtual, material_id: m.id, qtd_nf: q, unidade_nf: $("raUn").value });
+      const { data: novo, error } = await sb.from("recebimento_itens").insert({ recebimento_id: recAtual, material_id: m.id, qtd_nf: q, unidade_nf: $("raUn").value }).select("id").single();
       if (error) throw error;
-      return recarrega();
+      return abrirRecebimento(recAtual, novo.id);
     }
     if (acao === "provisorio") { ev.preventDefault(); return cadastroProvisorio(); }
-    if (acao === "del-item") { if (!confirm("Remover este item do recebimento?")) return; const { error } = await sb.from("recebimento_itens").delete().eq("id", id); if (error) throw error; return recarrega(); }
+    if (acao === "abrir-item") return abrirRecebimento(recAtual, id);
+    if (acao === "fechar-item") return abrirRecebimento(recAtual, null);
+    if (acao === "instr-salvar") {
+      const t = document.querySelector(`[data-instr="${id}"]`).value;
+      const { error } = await sb.rpc("est_fn_instrucoes_material", { p_material: id, p_texto: t });
+      if (error) throw error; toast("Instruções salvas"); return recarrega();
+    }
+    if (acao === "add-chk") {
+      const d = document.querySelector(`[data-chkdesc="${id}"]`).value.trim();
+      if (!d) return msgItem(id, "erro", "Descreva o que verificar.");
+      const { error } = await sb.rpc("est_fn_add_verificacao", { p_item: id, p_descricao: d,
+        p_obrigatorio: document.querySelector(`[data-chkobr="${id}"]`).checked, p_guardar: document.querySelector(`[data-chkguardar="${id}"]`).checked });
+      if (error) throw error; toast("Verificação acrescentada"); return recarrega();
+    }
+    if (acao === "del-item") { if (!confirm("Remover este item do recebimento?")) return; const { error } = await sb.from("recebimento_itens").delete().eq("id", id); if (error) throw error; return abrirRecebimento(recAtual, null); }
     if (acao === "add-vol") {
       const card = b.closest("[data-item-card]");
       const q = num(card.querySelector(`[data-vq="${id}"]`).value);
@@ -1313,6 +1407,14 @@ $("rDetalhe").addEventListener("change", async ev => {
     }
     if (inp.type !== "file" || !inp.files || !inp.files[0]) return;
     const file = inp.files[0];
+    if (inp.dataset.fotomatrec) {
+      inp.closest("label").classList.add("enviando");
+      const cam = await subirFoto("materiais/" + inp.dataset.fotomatrec, file);
+      const { error } = await sb.rpc("est_fn_foto_material", { p_material: inp.dataset.fotomatrec, p_caminho: cam });
+      if (error) throw error;
+      if (porId[inp.dataset.fotomatrec]) porId[inp.dataset.fotomatrec].foto_caminho = cam;
+      toast("Foto do material salva"); return abrirRecebimento(recAtual);
+    }
     const reg = { recebimento_id: recAtual };
     if (inp.dataset.fotorec) reg.tipo = inp.dataset.fotorec;
     else if (inp.dataset.fotovol) Object.assign(reg, { tipo: "etiqueta_rolo", volume_id: inp.dataset.fotovol, item_id: inp.dataset.item });
@@ -1326,6 +1428,20 @@ $("rDetalhe").addEventListener("change", async ev => {
   } catch (e) { toast("Erro: " + (e.message || e)); const l = inp.closest && inp.closest("label"); if (l) l.classList.remove("enviando"); }
 });
 $("rDetalhe").addEventListener("input", ev => {
+  const card = ev.target.closest("[data-item-card]");
+  if (card && (ev.target.dataset.vq !== undefined || ev.target.dataset.vlarg !== undefined || ev.target.dataset.vn !== undefined)) {
+    const id = card.dataset.itemCard, it = itensRec[id], m = it.materiais;
+    const q = num(card.querySelector(`[data-vq="${id}"]`).value), lEl = card.querySelector(`[data-vlarg="${id}"]`), l = lEl ? num(lEl.value) : null;
+    const n = Math.min(200, Math.max(1, parseInt(card.querySelector(`[data-vn="${id}"]`).value) || 1));
+    const el = card.querySelector(`[data-vprev="${id}"]`), uE = UNID[m.unidade_estoque], nome = m.tipo_volume;
+    let cada = null;
+    if (q > 0) cada = m.unidade_volume === "m" ? (l > 0 ? m2DeMetros(q, l) : null) : q;
+    el.className = "conv" + (cada == null ? " ruim" : "");
+    el.innerHTML = cada == null ? (q > 0 ? "Informe a largura." : "Preencha a etiqueta para ver a conta.")
+      : (m.unidade_volume === "m" ? `${fmt(q)} m × ${fmt(l, 1)} mm = <b>${fmt(cada)} ${uE}</b> cada` : `<b>${fmt(cada)} ${uE}</b> cada`) + (n > 1 ? ` · ${n} ${nome}s = <b>${fmt(cada * n)} ${uE}</b>` : "");
+    const bt = card.querySelector(`[data-r="add-vol"]`); if (bt) bt.textContent = n > 1 ? `Lançar ${n} ${nome}s` : `Lançar ${nome}`;
+    return;
+  }
   const p = ev.target.dataset.preco; if (p === undefined) return;
   const it = itensRec[p], v = num(ev.target.value), fat = it ? fatorItem(it) : null;
   const el = document.querySelector(`[data-precoconv="${p}"]`);
